@@ -1,0 +1,322 @@
+/* Display Case Styles for Gateaux */
+
+/* ── Hero wrapper — the case is one object, so this is just layout, not a second frame ── */
+.display-case-section {
+    position: relative;
+    z-index: 1;
+}
+
+.display-case {
+    position: relative;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    background: linear-gradient(160deg, #fdfaf6 0%, #ece6de 100%);
+    background-image:
+        radial-gradient(ellipse 100% 70% at 50% 0%, rgba(255,248,235,.6) 0%, rgba(245,237,227,0) 100%),
+        linear-gradient(160deg, #fdfaf6 0%, #ece6de 100%);
+    border: 1.5px solid rgba(107,58,42,.20);
+    border-radius: var(--r-lg);
+    padding: var(--sp-3);
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.7),   /* top glass highlight */
+        inset 0 -1px 0 rgba(60,36,21,.06),    /* bottom inner shadow */
+        var(--elev-2);
+}
+
+.display-case::-webkit-scrollbar { display: none; }
+
+/* Glass highlight arc */
+.display-case::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40%;
+    background: linear-gradient(180deg,
+        rgba(255,255,255,.22) 0%,
+        rgba(255,255,255,0) 100%);
+    border-radius: var(--r-md) var(--r-md) 0 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Display Shelves */
+.display-shelf {
+    background: linear-gradient(180deg, #d8ae82 0%, #c09260 55%, #b8935f 100%);
+    border-radius: var(--r-sm);
+    padding: var(--sp-2) var(--sp-3);
+    margin-bottom: var(--sp-2);
+    box-shadow:
+        0 1px 0 rgba(255,255,255,.35) inset,  /* plank top highlight */
+        var(--elev-1);
+}
+
+.display-shelf:last-child {
+    margin-bottom: 0;
+}
+
+/* Shelf header: label + warning in one row */
+.shelf-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.shelf-label {
+    font-size: 0.95rem;
+    font-weight: bold;
+    color: var(--coffee-dark);
+}
+
+/* Cake Container — fixed-width columns so the grid scrolls horizontally on narrow screens */
+.cake-container {
+    display: grid;
+    grid-template-columns: repeat(8, 52px);
+    gap: 6px;
+    padding: 6px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    width: max-content;
+}
+
+/* Cake Slots */
+.cake-slot {
+    aspect-ratio: 1;
+    background: rgba(255, 255, 255, 0.25);
+    border: 1.5px dashed rgba(139, 69, 19, 0.20);
+    border-radius: var(--r-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--t-slow) var(--ease-out);
+    /* subtle inner highlight to simulate glass shelf under each cake */
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.4);
+}
+
+.cake-slot.empty {
+    opacity: 0.38;
+}
+
+.cake-slot.filled {
+    border: none;
+    background: rgba(255, 255, 255, 0.55);
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.5),
+        0 1px 4px rgba(60,36,21,.12);
+}
+
+/* Cake Visuals */
+.cake-visual {
+    transition: transform 0.3s ease;
+    filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.15));
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.cake-visual.fresh {
+    animation: freshBounce 2s ease-in-out infinite;
+}
+
+.cake-visual.day-old {
+    opacity: 0.8;
+    filter: grayscale(20%) drop-shadow(0 1px 3px rgba(0, 0, 0, 0.15));
+}
+
+.cake-visual.stale {
+    opacity: 0.6;
+    filter: grayscale(50%) drop-shadow(0 1px 3px rgba(0, 0, 0, 0.15));
+}
+
+@keyframes freshBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-2px); }
+}
+
+/* Per-cake timer label */
+.cake-timer {
+    position: absolute;
+    bottom: 2px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 0.55rem;
+    font-weight: bold;
+    color: var(--text-dark);
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 4px;
+    padding: 1px 2px;
+    line-height: 1;
+}
+
+/* Stock Warnings — inline, not absolute */
+.low-stock-warning,
+.empty-stock-warning {
+    padding: 3px 10px;
+    border-radius: 10px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.low-stock-warning {
+    background: var(--accent-gold);
+    color: var(--text-dark);
+}
+
+.empty-stock-warning {
+    background: var(--accent-red);
+    color: white;
+}
+
+/* ── Language Selection Cards ("bake ticket" chips) ── */
+
+.language-selection {
+    position: relative;
+    z-index: 2;
+    margin: 0;
+}
+
+.language-section-label {
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-light);
+    margin-bottom: var(--sp-1);
+    padding-left: 2px;
+}
+
+.language-cards {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-2);
+}
+
+/* Horizontal "ticket" layout — compact, so display case stays hero */
+.language-card {
+    background: var(--warm-white);
+    border: 1.5px solid rgba(107,58,42,.14);
+    border-radius: var(--r-md);
+    padding: var(--sp-2) var(--sp-3);
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--sp-2);
+    transition: transform var(--t-base) var(--ease-spring),
+                box-shadow var(--t-base) var(--ease-out),
+                border-color var(--t-slow) var(--ease-out);
+    text-align: left;
+    box-shadow: var(--elev-1);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.language-card:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--elev-2);
+    border-color: rgba(196,154,48,.5);
+}
+
+.language-card:active {
+    transform: scale(.97);
+    transition-duration: var(--t-fast);
+}
+
+.cake-preview {
+    flex-shrink: 0;
+}
+
+.cake-card-image {
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+    display: block;
+    border-radius: var(--r-sm);
+    /* rescue grey-backdrop cakes with a subtle tinted bg */
+    background: rgba(245,237,227,.8);
+    filter: saturate(.9) contrast(1.02);
+}
+
+.card-body {
+    flex: 1;
+    min-width: 0;
+}
+
+.card-body h4 {
+    font-size: var(--fs-sm);
+    font-weight: 700;
+    color: var(--cafe-brown);
+    margin: 0 0 1px 0;
+    line-height: 1.2;
+}
+
+.cake-type {
+    font-size: var(--fs-xs);
+    color: var(--text-medium);
+    font-style: italic;
+    margin-bottom: 4px;
+}
+
+/* Bake Button — sits inline right side of card */
+.btn-bake {
+    background: var(--cafe-brown);
+    color: var(--cream);
+    border: none;
+    padding: 8px 14px;
+    border-radius: var(--r-md);
+    font-size: var(--fs-xs);
+    font-family: var(--font-heading);
+    font-weight: 700;
+    min-height: 40px;
+    cursor: pointer;
+    transition: transform var(--t-base) var(--ease-spring),
+                box-shadow var(--t-base) var(--ease-out);
+    width: auto;
+    flex-shrink: 0;
+    -webkit-tap-highlight-color: transparent;
+    letter-spacing: 0.3px;
+    box-shadow: var(--elev-1);
+}
+
+.btn-bake:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--elev-2);
+}
+
+.btn-bake:active {
+    transform: scale(.96);
+    transition-duration: var(--t-fast);
+}
+
+/* ── Responsive ── */
+
+@media (max-width: 480px) {
+    .language-card {
+        min-width: 0;
+    }
+}
+
+/* Cake addition animation */
+@keyframes cakeAppear {
+    0% {
+        transform: scale(0) rotate(180deg);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2) rotate(90deg);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+.cake-slot.adding .cake-visual {
+    animation: cakeAppear 0.6s ease-out;
+}

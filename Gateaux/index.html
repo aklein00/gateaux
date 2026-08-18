@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Gateaux - Your Language Learning Café</title>
+    <link rel="stylesheet" href="src/css/main.css">
+    <link rel="stylesheet" href="src/css/displayCase.css">
+    <link rel="stylesheet" href="src/css/lessons.css">
+    <link rel="stylesheet" href="src/css/placeholders.css">
+    <link rel="stylesheet" href="src/css/mobile.css">
+    <link rel="stylesheet" href="src/css/startScreen.css">
+    <link rel="stylesheet" href="src/css/recipeBook.css">
+</head>
+<body>
+    <!-- Start Screen -->
+    <div id="start-screen" class="start-screen">
+        <img src="assets/images/splash_logo.png" alt="Gateaux" class="splash-logo">
+        <img src="assets/images/splash_characters.png" alt="" class="splash-characters">
+        <button id="start-game-btn" class="btn-start">Start</button>
+    </div>
+
+    <div id="game-container" style="display: none;">
+        <!-- Stat Bar -->
+        <div class="stat-bar">
+            <div class="stat-bar-left">
+                <div class="stat-pill">
+                    <img src="assets/images/ui/coin.png" alt="Coins" class="stat-icon">
+                    <span id="total-tips">0</span>
+                </div>
+                <div class="stat-pill level-pill" id="level-pill">
+                    <span class="level-pill-label">Lv</span>
+                    <span id="player-level">1</span>
+                    <div class="level-progress-track">
+                        <div id="level-progress-fill" class="level-progress-fill"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="stat-bar-right">
+                <button class="stat-pill recipe-book-btn" id="recipe-book-btn" title="Recipe Book">
+                    Recipe Book
+                </button>
+                <button class="stat-pill mute-btn" id="mute-btn" title="Toggle Sound" aria-label="Toggle Sound">
+                    <span class="mute-icon-on">&#9834;</span>
+                    <span class="mute-icon-off">&#9834;&#x20D8;</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Game Area -->
+        <div class="main-game-area">
+            <div id="welcome-banner" class="welcome-banner">
+                <p id="welcome-text">Pick a language. We'll start with how locals say hi.</p>
+            </div>
+            <!-- Display Case — hero element -->
+            <div class="display-case-section">
+                <div id="display-case" class="display-case">
+                    <!-- Shelves dynamically added -->
+                </div>
+            </div>
+
+            <!-- Language Cards — compact bake action row -->
+            <div class="language-selection">
+                <p class="language-section-label">Bake</p>
+                <div class="language-cards">
+                    <div class="language-card" data-language="spanish">
+                        <div class="cake-preview">
+                            <img src="assets/images/cakes/tres_leches_fresh.png" alt="Tres Leches" class="cake-card-image">
+                        </div>
+                        <div class="card-body">
+                            <h4>Spanish</h4>
+                            <div class="cake-type">Tres Leches</div>
+                        </div>
+                        <button class="btn-bake" data-language="spanish">Bake</button>
+                    </div>
+
+                    <div class="language-card" data-language="french">
+                        <div class="cake-preview">
+                            <img src="assets/images/cakes/eclair_fresh.png" alt="Eclair" class="cake-card-image">
+                        </div>
+                        <div class="card-body">
+                            <h4>French</h4>
+                            <div class="cake-type">Eclair</div>
+                        </div>
+                        <button class="btn-bake" data-language="french">Bake</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customer Area (hidden when no cakes) -->
+            <div class="customer-section" id="customer-section">
+                <h3>Cafe Counter</h3>
+                <div class="customer-area">
+                    <div id="customer-idle" class="customer-idle">
+                        <p>Someone's about to walk in. Think fast when they order.</p>
+                    </div>
+
+                    <div id="current-customer" class="customer" style="display: none;">
+                        <div class="customer-sprite-container">
+                            <div class="customer-sprite placeholder-square" data-image-name="Customer"></div>
+                        </div>
+                        <div class="customer-speech">
+                            <div class="customer-speech-text">
+                                <p id="customer-request">Hello! I'd like a coffee, please.</p>
+                                <p id="customer-hint" class="customer-hint"></p>
+                            </div>
+                            <button class="btn-audio" id="play-customer-audio">Hear it</button>
+                        </div>
+                    </div>
+
+                    <div id="response-area" class="response-area" style="display: none;">
+                        <p class="response-prompt">What did they say?</p>
+                        <div id="response-options" class="response-options">
+                            <!-- Response options will be added dynamically -->
+                        </div>
+                    </div>
+
+                    <button id="new-customer-btn" class="btn-primary">Next up</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Full-Screen Lesson Overlay -->
+    <div id="lesson-overlay" class="lesson-overlay" style="display: none;">
+
+        <!-- Screen 0: Recipe Picker -->
+        <div id="recipe-picker-screen" class="lesson-screen" style="display: none;">
+            <div class="lesson-top-bar">
+                <button id="close-recipe-picker" class="btn-close-lesson">X</button>
+                <h3 class="lesson-bar-title">Choose a Recipe</h3>
+            </div>
+            <div class="recipe-picker-scroll">
+                <div id="recipe-picker-grid" class="recipe-picker-grid">
+                    <!-- Recipe cards dynamically added -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 1: Lesson Selection -->
+        <div id="lesson-select-screen" class="lesson-screen" style="display: none;">
+            <div class="lesson-top-bar">
+                <button id="back-to-recipes" class="btn-close-lesson">&larr;</button>
+                <h3 id="lesson-language-title" class="lesson-bar-title">Lessons</h3>
+            </div>
+            <div id="region-selector" class="region-selector"></div>
+            <div class="lesson-scroll-area">
+                <div id="lesson-categories" class="lesson-categories-list"></div>
+            </div>
+        </div>
+
+        <!-- Screen 2: Quiz -->
+        <div id="lesson-quiz-screen" class="lesson-screen" style="display: none;">
+            <div class="quiz-top-bar">
+                <button id="quit-lesson" class="btn-close-lesson">X</button>
+                <div class="quiz-progress-bar">
+                    <div id="quiz-progress-fill" class="quiz-progress-fill"></div>
+                </div>
+                <div id="streak-display" class="streak-display" style="display:none;">
+                    <span id="streak-count" class="streak-count">0</span>
+                    <span id="streak-label" class="streak-label"></span>
+                </div>
+            </div>
+
+            <div class="quiz-phrase-area">
+                <div class="quiz-character-row">
+                    <div class="portrait-cake-stack">
+                        <div class="portrait-timer-wrapper">
+                            <svg class="timer-ring" viewBox="0 0 80 80">
+                                <circle class="timer-ring-bg" cx="40" cy="40" r="36"/>
+                                <circle id="timer-ring-progress" class="timer-ring-progress" cx="40" cy="40" r="36"/>
+                            </svg>
+                            <img id="quiz-character-img" class="quiz-character-portrait"
+                                 src="" alt="Teacher" data-image-name="Teacher">
+                            <div id="expression-badge" class="expression-badge">🤔</div>
+                        </div>
+                        <div id="quiz-cake-preview" class="quiz-cake-preview" style="display: none;">
+                            <img id="quiz-cake-img" class="quiz-cake-img" src="" alt="">
+                        </div>
+                    </div>
+                    <div class="quiz-phrase-content">
+                        <p id="quiz-phrase-native" class="quiz-phrase-native"></p>
+                        <p id="quiz-phrase-pronunciation" class="quiz-phrase-pronunciation"></p>
+                        <p id="quiz-phrase-context" class="quiz-phrase-context"></p>
+                        <button id="quiz-listen-btn" class="btn-listen" type="button" style="display:none;">Play it again</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quiz-spacer"></div>
+
+            <div class="quiz-answer-area">
+                <div id="quiz-options" class="quiz-options-grid"></div>
+                <button id="quiz-action-btn" class="btn-quiz-action" disabled>That's the one</button>
+            </div>
+
+            <!-- Correct feedback -->
+            <div id="correct-feedback" class="feedback-overlay feedback-correct" style="display: none;">
+                <div class="feedback-flash"></div>
+                <div id="confetti-container" class="confetti-container"></div>
+                <div class="correct-bar">
+                    <div class="correct-bar-header">
+                        <div class="correct-bar-icon">✓</div>
+                        <h3 class="correct-bar-title" id="correct-bar-title">That's the one</h3>
+                    </div>
+                    <p id="correct-bar-phrase" class="correct-bar-phrase"></p>
+                    <p id="correct-bar-translation" class="correct-bar-translation"></p>
+                    <p id="correct-bar-note" class="correct-bar-note"></p>
+                    <button id="correct-continue-btn" class="correct-bar-continue">Go on</button>
+                </div>
+            </div>
+
+            <!-- Wrong feedback -->
+            <div id="wrong-feedback" class="feedback-overlay feedback-wrong" style="display: none;">
+                <div class="wrong-modal">
+                    <div class="wrong-modal-header">
+                        <img id="wrong-teacher-img" class="wrong-teacher-portrait" src="" alt="" data-image-name="Teacher">
+                        <div>
+                            <h3 id="wrong-modal-title" class="wrong-modal-title"></h3>
+                            <span id="wrong-teacher-name" class="wrong-teacher-name"></span>
+                        </div>
+                    </div>
+                    <p id="wrong-correct-answer" class="wrong-correct-text"></p>
+                    <p id="wrong-explanation" class="wrong-explanation-text"></p>
+                    <button id="wrong-continue-btn" class="btn-primary">Try that again</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 3: Lesson Complete -->
+        <div id="lesson-complete-screen" class="lesson-screen" style="display: none;">
+            <div class="completion-content">
+                <h2>You baked it.</h2>
+                <p>Go show off that <span id="cake-baked-name">cake</span>.</p>
+                <img id="cake-reward-img" class="cake-reward-img" src="" alt=""
+                     data-image-name="Cake Reward" style="width:120px;height:120px;margin:20px auto;display:block;">
+                <div class="completion-buttons">
+                    <button id="bake-another-btn" class="btn-primary">One more</button>
+                    <button id="back-to-cafe-btn" class="btn-secondary">Back to the café</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recipe Book Overlay -->
+    <div id="recipe-book-overlay" class="recipe-book-overlay" style="display: none;">
+        <div class="recipe-book-top-bar">
+            <button id="close-recipe-book" class="btn-close-lesson">X</button>
+            <h3 class="lesson-bar-title">Recipe Book</h3>
+        </div>
+        <div class="recipe-book-level-bar">
+            <span id="recipe-book-level-label" class="rb-level-label">Apprentice Baker</span>
+            <div class="rb-level-track">
+                <div id="rb-level-fill" class="rb-level-fill"></div>
+            </div>
+            <span id="recipe-book-level-tips" class="rb-level-tips"></span>
+        </div>
+        <div class="recipe-book-tabs">
+            <button class="rb-tab active" data-rb-lang="french">French</button>
+            <button class="rb-tab" data-rb-lang="spanish">Spanish</button>
+        </div>
+        <div id="recipe-book-grid" class="recipe-book-grid">
+            <!-- Cake cards dynamically added -->
+        </div>
+
+        <!-- Cake Detail Popup -->
+        <div id="cake-detail-popup" class="cake-detail-popup" style="display: none;">
+            <div class="cake-detail-modal">
+                <button id="close-cake-detail" class="btn-close-lesson cake-detail-close">X</button>
+                <img id="cake-detail-img" class="cake-detail-img" src="" alt="" data-image-name="Cake">
+                <h3 id="cake-detail-name" class="cake-detail-name"></h3>
+                <span id="cake-detail-rarity" class="cake-detail-rarity"></span>
+                <p id="cake-detail-desc" class="cake-detail-desc"></p>
+                <div class="cake-detail-stats">
+                    <div class="cake-stat"><span class="cake-stat-label">Decay</span><span id="cake-detail-decay"></span></div>
+                    <div class="cake-stat"><span class="cake-stat-label">Tips</span><span id="cake-detail-tips"></span></div>
+                    <div class="cake-stat"><span class="cake-stat-label">Teacher</span><span id="cake-detail-teacher"></span></div>
+                </div>
+                <div class="cake-detail-ai-section">
+                    <h4>Conversation Effect</h4>
+                    <p id="cake-detail-ai-effect" class="cake-detail-ai-text"></p>
+                </div>
+                <div id="cake-detail-baked" class="cake-detail-baked"></div>
+                <button id="cake-detail-bake-btn" class="btn-primary cake-detail-bake-btn">Bake This</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Level Up Celebration -->
+    <div id="level-up-overlay" class="level-up-overlay" style="display: none;">
+        <div class="level-up-content">
+            <h2 class="level-up-title">Level Up!</h2>
+            <div class="level-up-badge">
+                <span id="level-up-number" class="level-up-number">2</span>
+            </div>
+            <p id="level-up-label" class="level-up-label">Pastry Student</p>
+            <p id="level-up-unlock" class="level-up-unlock">New recipes unlocked!</p>
+        </div>
+    </div>
+
+    <!-- Tip Feedback (floating) -->
+    <div id="tip-feedback" class="tip-feedback" style="display: none;">
+        <span id="tip-feedback-text">+10</span>
+    </div>
+
+    <!-- First-run: pick a language, land in Marcel's lesson -->
+    <div id="first-run-overlay" class="tutorial-overlay" style="display: none;">
+        <div class="tutorial-modal first-run-modal">
+            <img class="first-run-marcel"
+                 src="assets/images/characters/marcel_concept.png"
+                 alt="Marcel">
+            <h2 class="tutorial-title">Come on, just say hi.</h2>
+            <p class="first-run-line">Don't get it wrong!</p>
+            <p class="first-run-sub">Spanish or French — five tiny questions, no clock.</p>
+            <div class="first-run-langs">
+                <button class="btn-primary first-run-lang-btn" data-first-lang="spanish">Spanish</button>
+                <button class="btn-primary first-run-lang-btn" data-first-lang="french">French</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Development controls — intentionally available above every screen -->
+    <button id="debug-menu-btn" class="debug-menu-btn" type="button"
+            aria-label="Open debug menu" aria-expanded="false">D</button>
+    <div id="debug-menu-panel" class="debug-menu-panel" style="display: none;">
+        <div class="debug-menu-header">
+            <strong>Debug</strong>
+            <button id="debug-close-btn" class="debug-close-btn" type="button"
+                    aria-label="Close debug menu">&times;</button>
+        </div>
+        <p id="debug-menu-status" class="debug-menu-status">Choose an action.</p>
+        <div class="debug-menu-actions">
+            <button id="debug-back-btn" type="button">Back out</button>
+            <button id="debug-finish-btn" type="button">Finish lesson</button>
+            <button id="debug-restart-btn" class="debug-danger-btn" type="button">Restart fresh</button>
+        </div>
+    </div>
+
+    <!-- Audio elements (kept for Venus SDK compatibility) -->
+    <audio id="customer-audio" preload="auto"></audio>
+
+    <!-- Scripts -->
+    <script type="module" src="src/js/main.js"></script>
+</body>
+</html>

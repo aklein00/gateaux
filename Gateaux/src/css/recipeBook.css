@@ -1,0 +1,708 @@
+/* Recipe Book, Recipe Picker, Level-Up, Tip Feedback */
+
+/* ── Stat Bar: Level Pill ── */
+
+.level-pill {
+    position: relative;
+    gap: 4px;
+    min-width: 60px;
+    overflow: hidden;
+}
+
+.level-pill-label {
+    font-size: var(--fs-xs);
+    opacity: 0.6;
+    font-family: var(--font-body);
+}
+
+.level-progress-track {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: rgba(60, 36, 21, 0.15);
+    border-radius: 0 0 var(--r-pill) var(--r-pill);
+}
+
+.level-progress-fill {
+    height: 100%;
+    background: var(--coffee-dark);
+    transition: width 0.5s var(--ease-spring);
+    width: 0%;
+    border-radius: 0 0 var(--r-pill) var(--r-pill);
+}
+
+.recipe-book-btn {
+    border: 1.5px solid rgba(107, 58, 42, 0.20);
+    cursor: pointer;
+    padding: 6px 14px;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform var(--t-base) var(--ease-spring),
+                background var(--t-base) var(--ease-out);
+}
+
+.recipe-book-btn:hover {
+    background: rgba(107,58,42,.20);
+}
+
+.recipe-book-btn:active {
+    transform: scale(0.94);
+    transition-duration: var(--t-fast);
+}
+
+.recipe-book-icon {
+    font-size: 0.9rem;
+    line-height: 1;
+}
+
+/* ── Recipe Picker (inside lesson overlay) ── */
+
+.recipe-picker-scroll {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    -webkit-overflow-scrolling: touch;
+}
+
+.recipe-picker-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.recipe-picker-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--sp-1);
+    padding: var(--sp-3) var(--sp-2);
+    border: 1.5px solid rgba(107,58,42,.14);
+    border-radius: var(--r-md);
+    background: var(--warm-white);
+    cursor: pointer;
+    transition: transform var(--t-base) var(--ease-spring),
+                box-shadow var(--t-base) var(--ease-out),
+                border-color var(--t-slow) var(--ease-out);
+    -webkit-tap-highlight-color: transparent;
+    box-shadow: var(--elev-1);
+}
+
+.recipe-picker-card:hover:not(.locked) {
+    transform: translateY(-1px);
+    box-shadow: var(--elev-2);
+    border-color: rgba(196,154,48,.4);
+}
+
+.recipe-picker-card:active:not(.locked) {
+    transform: scale(0.96);
+    transition-duration: var(--t-fast);
+}
+
+.recipe-picker-card.locked {
+    opacity: 0.45;
+    cursor: default;
+    filter: grayscale(0.4);
+    box-shadow: none;
+}
+
+.recipe-picker-card.locked:active {
+    transform: none;
+}
+
+.rp-cake-img {
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.locked .rp-cake-img {
+    filter: brightness(0.2);
+}
+
+.rp-cake-name {
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: var(--text-dark);
+    text-align: center;
+    line-height: 1.2;
+}
+
+.rp-rarity-badge {
+    font-size: 0.7rem;
+    font-weight: bold;
+    padding: 2px 8px;
+    border-radius: 8px;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.rp-rarity-badge.rarity-common { background: var(--accent-green); }
+.rp-rarity-badge.rarity-uncommon { background: var(--accent-gold); }
+.rp-rarity-badge.rarity-rare { background: #7a5a90; }
+.rp-rarity-badge.rarity-legendary {
+    background: linear-gradient(135deg, #b87820, var(--accent-gold));
+    animation: legendaryShimmer 2s var(--ease-out) infinite;
+}
+
+@keyframes legendaryShimmer {
+    0%, 100% { filter: brightness(1); }
+    50% { filter: brightness(1.18); }
+}
+
+.rp-teacher-name {
+    font-size: 0.7rem;
+    color: var(--text-light);
+}
+
+.rp-lock-label {
+    font-size: 0.7rem;
+    color: var(--text-light);
+    font-weight: bold;
+}
+
+/* ── Recipe Book Overlay ── */
+
+.recipe-book-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: var(--warm-white);
+    z-index: 2500;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.recipe-book-top-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    flex-shrink: 0;
+}
+
+.recipe-book-level-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 16px 12px;
+    flex-shrink: 0;
+}
+
+.rb-level-label {
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: var(--cafe-brown);
+    white-space: nowrap;
+}
+
+.rb-level-track {
+    flex: 1;
+    height: 8px;
+    background: var(--coffee-light);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.rb-level-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent-gold), #FF8C00);
+    border-radius: 4px;
+    transition: width 0.5s ease;
+    width: 0%;
+}
+
+.rb-level-tips {
+    font-size: 0.7rem;
+    color: var(--text-light);
+    white-space: nowrap;
+}
+
+.recipe-book-tabs {
+    display: flex;
+    gap: 0;
+    padding: 0 16px;
+    flex-shrink: 0;
+}
+
+.rb-tab {
+    flex: 1;
+    padding: 10px;
+    border: 1.5px solid rgba(107,58,42,.18);
+    background: var(--cream);
+    font-family: var(--font-heading);
+    font-size: var(--fs-sm);
+    font-weight: 700;
+    color: var(--text-medium);
+    cursor: pointer;
+    transition: transform var(--t-base) var(--ease-spring),
+                background var(--t-base) var(--ease-out),
+                color var(--t-base) var(--ease-out);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.rb-tab:first-child { border-radius: var(--r-md) 0 0 var(--r-md); }
+.rb-tab:last-child { border-radius: 0 var(--r-md) var(--r-md) 0; }
+
+.rb-tab:active:not(.active) {
+    transform: scale(.96);
+    transition-duration: var(--t-fast);
+}
+
+.rb-tab.active {
+    background: var(--cafe-brown);
+    color: var(--cream);
+    border-color: var(--cafe-brown);
+}
+
+.recipe-book-grid {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    align-content: start;
+    -webkit-overflow-scrolling: touch;
+}
+
+.rb-cake-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--sp-1);
+    padding: var(--sp-3) var(--sp-2) var(--sp-2);
+    border: 1.5px solid rgba(107,58,42,.14);
+    border-radius: var(--r-md);
+    background: var(--warm-white);
+    cursor: pointer;
+    transition: transform var(--t-base) var(--ease-spring),
+                box-shadow var(--t-base) var(--ease-out),
+                border-color var(--t-slow) var(--ease-out);
+    position: relative;
+    -webkit-tap-highlight-color: transparent;
+    box-shadow: var(--elev-1);
+}
+
+.rb-cake-card:hover:not(.locked) {
+    transform: translateY(-1px);
+    box-shadow: var(--elev-2);
+    border-color: rgba(196,154,48,.40);
+}
+
+.rb-cake-card:active:not(.locked) {
+    transform: scale(0.96);
+    transition-duration: var(--t-fast);
+}
+
+/* Locked cakes: silhouetted with a gold rim hint */
+.rb-cake-card.locked {
+    opacity: 0.6;
+    box-shadow: none;
+    border-color: rgba(196,154,48,.25);
+    background: rgba(245,237,227,.5);
+}
+
+.rb-cake-card.locked:active {
+    transform: none;
+}
+
+.rb-cake-img {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+/* Locked cakes render as dark silhouette with faint gold tint */
+.locked .rb-cake-img {
+    filter: brightness(0.12) sepia(.4) saturate(2);
+}
+
+.rb-cake-name {
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: var(--text-dark);
+    text-align: center;
+    line-height: 1.2;
+}
+
+.rb-baked-count {
+    font-size: 0.7rem;
+    color: var(--text-light);
+}
+
+.rb-lock-info {
+    font-size: 0.7rem;
+    color: var(--text-light);
+    font-weight: bold;
+}
+
+/* ── Cake Detail Popup ── */
+
+.cake-detail-popup {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: flex-end;
+    z-index: 10;
+}
+
+.cake-detail-modal {
+    width: 100%;
+    max-height: 85vh;
+    background: var(--warm-white);
+    border-radius: var(--r-lg) var(--r-lg) 0 0;
+    padding: var(--sp-4) var(--sp-4) var(--sp-5);
+    overflow-y: auto;
+    animation: slideUp 0.28s var(--ease-spring);
+    position: relative;
+    -webkit-overflow-scrolling: touch;
+    box-shadow: 0 -4px 24px rgba(60,36,21,.12);
+}
+
+.cake-detail-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+}
+
+.cake-detail-img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto 12px;
+    border-radius: 12px;
+}
+
+.cake-detail-name {
+    text-align: center;
+    font-size: 1.2rem;
+    color: var(--cafe-brown);
+    margin: 0 0 6px 0;
+}
+
+.cake-detail-rarity {
+    display: block;
+    text-align: center;
+    margin: 0 auto 12px;
+    width: fit-content;
+    font-size: 0.7rem;
+    font-weight: bold;
+    padding: 3px 12px;
+    border-radius: 10px;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.cake-detail-rarity.rarity-common { background: var(--accent-green); }
+.cake-detail-rarity.rarity-uncommon { background: var(--accent-gold); }
+.cake-detail-rarity.rarity-rare { background: #7a5a90; }
+.cake-detail-rarity.rarity-legendary {
+    background: linear-gradient(135deg, #b87820, var(--accent-gold));
+}
+
+.cake-detail-desc {
+    font-size: 0.85rem;
+    color: var(--text-medium);
+    line-height: 1.5;
+    margin: 0 0 16px 0;
+    font-style: italic;
+    text-align: center;
+}
+
+.cake-detail-stats {
+    display: flex;
+    justify-content: space-around;
+    gap: 8px;
+    margin-bottom: 16px;
+    padding: 10px;
+    background: rgba(139, 69, 19, 0.06);
+    border-radius: 10px;
+}
+
+.cake-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.cake-stat-label {
+    font-size: 0.7rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: var(--text-light);
+    letter-spacing: 0.5px;
+}
+
+.cake-stat span:last-child {
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: var(--cafe-brown);
+}
+
+.cake-detail-ai-section {
+    margin-bottom: 16px;
+}
+
+.cake-detail-ai-section h4 {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-light);
+    margin: 0 0 6px 0;
+}
+
+.cake-detail-ai-text {
+    font-size: 0.8rem;
+    color: var(--text-medium);
+    line-height: 1.4;
+    margin: 0;
+    padding: 10px;
+    background: rgba(139, 69, 19, 0.04);
+    border-radius: 8px;
+    border-left: 3px solid var(--accent-gold);
+}
+
+.cake-detail-baked {
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--text-light);
+    margin-bottom: 12px;
+}
+
+.cake-detail-bake-btn {
+    width: 100%;
+}
+
+.cake-detail-bake-btn.locked {
+    opacity: 0.5;
+    cursor: default;
+    background: var(--coffee-light);
+    color: var(--text-medium);
+}
+
+/* ── Quiz: Cake Preview ── */
+
+.portrait-cake-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+.quiz-cake-preview {
+    width: 56px;
+    height: 56px;
+}
+
+.quiz-cake-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 6px;
+    border: 2px solid var(--coffee-light);
+}
+
+.quiz-cake-preview .quiz-cake-img {
+    filter: saturate(.9) contrast(1.02);
+    background: rgba(245,237,227,.8);
+}
+
+.quiz-cake-preview.rarity-common .quiz-cake-img { border-color: var(--accent-green); }
+.quiz-cake-preview.rarity-uncommon .quiz-cake-img { border-color: var(--accent-gold); }
+.quiz-cake-preview.rarity-rare .quiz-cake-img {
+    border-color: #7a5a90;
+    box-shadow: 0 0 8px rgba(122,90,144,.28);
+}
+.quiz-cake-preview.rarity-legendary .quiz-cake-img {
+    border-color: var(--accent-gold);
+    box-shadow: 0 0 10px rgba(196,154,48,.38);
+    animation: legendaryGlow 2s var(--ease-out) infinite;
+}
+
+@keyframes legendaryGlow {
+    0%, 100% { box-shadow: 0 0 8px rgba(196,154,48,.28); }
+    50% { box-shadow: 0 0 16px rgba(196,154,48,.52); }
+}
+
+/* ── Level-Up Celebration ── */
+
+.level-up-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(30,16,8,.72);
+    z-index: 3000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeInOverlay 0.25s var(--ease-out);
+}
+
+@keyframes fadeInOverlay {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.level-up-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--sp-3);
+    animation: levelUpBounce 0.45s var(--ease-spring);
+    position: relative;
+}
+
+/* Radial shine sweep behind the badge */
+.level-up-content::before {
+    content: '';
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    border-radius: var(--r-pill);
+    background: radial-gradient(circle, rgba(196,154,48,.30) 0%, rgba(196,154,48,0) 70%);
+    animation: levelUpShine 1.2s var(--ease-out) forwards;
+    pointer-events: none;
+    z-index: -1;
+}
+
+@keyframes levelUpShine {
+    0%   { transform: scale(.6); opacity: 0; }
+    40%  { opacity: 1; }
+    100% { transform: scale(1.8); opacity: 0; }
+}
+
+@keyframes levelUpBounce {
+    0% { transform: scale(0.5) translateY(40px); opacity: 0; }
+    60% { transform: scale(1.08) translateY(-4px); opacity: 1; }
+    100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+.level-up-title {
+    font-size: var(--fs-xl);
+    font-family: var(--font-heading);
+    color: var(--accent-gold);
+    text-shadow: 0 1px 6px rgba(0,0,0,.25);
+    margin: 0;
+}
+
+.level-up-badge {
+    width: 80px;
+    height: 80px;
+    border-radius: var(--r-pill);
+    background: linear-gradient(135deg, var(--accent-gold) 0%, #a87820 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--elev-3), 0 0 0 4px rgba(196,154,48,.25);
+    border: 3px solid rgba(255,255,255,.6);
+}
+
+.level-up-number {
+    font-size: var(--fs-display);
+    font-weight: 700;
+    font-family: var(--font-heading);
+    color: white;
+    text-shadow: 0 2px 4px rgba(0,0,0,.20);
+}
+
+.level-up-label {
+    font-size: var(--fs-lg);
+    font-family: var(--font-heading);
+    color: rgba(255,255,255,.95);
+    margin: 0;
+    font-weight: 700;
+}
+
+.level-up-unlock {
+    font-size: var(--fs-sm);
+    color: rgba(255,255,255,.72);
+    margin: 0;
+}
+
+/* ── Tip Feedback (floating coin arc) ── */
+
+.tip-feedback {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3500;
+    pointer-events: none;
+}
+
+.tip-feedback span {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: var(--fs-lg);
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--accent-gold);
+    text-shadow: 0 1px 6px rgba(60,36,21,.3);
+    animation: tipArc 1.1s var(--ease-spring) forwards;
+    background: rgba(245,237,227,.88);
+    padding: 6px 14px;
+    border-radius: var(--r-pill);
+    box-shadow: var(--elev-2);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+/* Arc upward toward top-left (toward the stat pill) */
+@keyframes tipArc {
+    0%   { opacity: 0; transform: translate(0,0) scale(.7); }
+    15%  { opacity: 1; transform: translate(0,-8px) scale(1.05); }
+    80%  { opacity: 1; transform: translate(-60px,-80px) scale(0.85); }
+    100% { opacity: 0; transform: translate(-80px,-100px) scale(.6); }
+}
+
+/* Pulse the stat pill when a coin arrives */
+@keyframes pillPulse {
+    0%   { transform: scale(1); }
+    35%  { transform: scale(1.18); }
+    100% { transform: scale(1); }
+}
+
+.stat-pill.pulse {
+    animation: pillPulse 0.35s var(--ease-spring);
+}
+
+/* ── Display case rarity borders ── */
+
+.cake-visual.rarity-uncommon .cake-image-placeholder {
+    border: 1px solid #DAA520;
+}
+
+.cake-visual.rarity-rare .cake-image-placeholder {
+    border: 1px solid #9C27B0;
+}
+
+.cake-visual.rarity-legendary .cake-image-placeholder {
+    border: 1px solid #FF8C00;
+    box-shadow: 0 0 6px rgba(255, 140, 0, 0.3);
+}
+
+/* ── Completion screen cake image ── */
+
+.cake-reward-img {
+    border-radius: 12px;
+}

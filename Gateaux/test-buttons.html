@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gateaux Button Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        #console {
+            background: #f0f0f0;
+            padding: 10px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+        .log-entry {
+            margin: 2px 0;
+        }
+        .error { color: red; }
+        .success { color: green; }
+        .info { color: blue; }
+    </style>
+</head>
+<body>
+    <h1>Gateaux Button Test Page</h1>
+    
+    <div class="test-section">
+        <h2>Test 1: Direct Button Click</h2>
+        <button onclick="testDirectClick()">Test Direct Click</button>
+        <button id="test-listener">Test Event Listener</button>
+    </div>
+    
+    <div class="test-section">
+        <h2>Test 2: Main Game Buttons</h2>
+        <button class="btn-bake" data-language="french">Bake French Cakes</button>
+        <button class="btn-bake" data-language="spanish">Bake Spanish Cakes</button>
+    </div>
+    
+    <div class="test-section">
+        <h2>Test 3: Lesson Panel</h2>
+        <button onclick="testOpenPanel()">Open Panel Manually</button>
+        <button onclick="testClosePanel()">Close Panel</button>
+    </div>
+    
+    <div id="console">
+        <div class="log-entry info">Console output will appear here...</div>
+    </div>
+    
+    <!-- Test panel elements -->
+    <div id="lesson-panel" style="position: fixed; right: -400px; top: 0; width: 400px; height: 100vh; background: white; box-shadow: -2px 0 10px rgba(0,0,0,0.3); transition: right 0.3s;">
+        <h2 style="padding: 20px;">Lesson Panel</h2>
+        <div id="lesson-selection">Selection Content</div>
+        <div id="lesson-content" style="display: none;">Lesson Content</div>
+        <div id="lesson-complete" style="display: none;">Complete Content</div>
+    </div>
+    <div id="panel-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); opacity: 0; visibility: hidden; transition: opacity 0.3s;"></div>
+    
+    <script>
+        // Custom console
+        const customConsole = document.getElementById('console');
+        function log(message, type = 'info') {
+            const entry = document.createElement('div');
+            entry.className = `log-entry ${type}`;
+            entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            customConsole.appendChild(entry);
+            customConsole.scrollTop = customConsole.scrollHeight;
+            console.log(message);
+        }
+        
+        // Override console methods
+        window.console.log = function(...args) {
+            log(args.join(' '), 'info');
+        };
+        window.console.error = function(...args) {
+            log(args.join(' '), 'error');
+        };
+        
+        // Test functions
+        function testDirectClick() {
+            log('Direct click works!', 'success');
+        }
+        
+        function testOpenPanel() {
+            log('Opening panel manually...');
+            const panel = document.getElementById('lesson-panel');
+            const overlay = document.getElementById('panel-overlay');
+            if (panel && overlay) {
+                panel.style.right = '0';
+                overlay.style.opacity = '1';
+                overlay.style.visibility = 'visible';
+                log('Panel opened!', 'success');
+            } else {
+                log('Panel elements not found!', 'error');
+            }
+        }
+        
+        function testClosePanel() {
+            log('Closing panel...');
+            const panel = document.getElementById('lesson-panel');
+            const overlay = document.getElementById('panel-overlay');
+            if (panel && overlay) {
+                panel.style.right = '-400px';
+                overlay.style.opacity = '0';
+                overlay.style.visibility = 'hidden';
+                log('Panel closed!', 'success');
+            }
+        }
+        
+        // Test event listener
+        document.getElementById('test-listener').addEventListener('click', () => {
+            log('Event listener works!', 'success');
+        });
+        
+        // Wait for DOM then test game buttons
+        document.addEventListener('DOMContentLoaded', () => {
+            log('DOM loaded, setting up game button listeners...');
+            
+            // Test bake buttons
+            const bakeButtons = document.querySelectorAll('.btn-bake');
+            log(`Found ${bakeButtons.length} bake buttons`);
+            
+            bakeButtons.forEach(btn => {
+                const lang = btn.dataset.language;
+                log(`Adding listener to ${lang} button`);
+                btn.addEventListener('click', (e) => {
+                    log(`Bake button clicked: ${lang}`, 'success');
+                    testOpenPanel();
+                });
+            });
+        });
+        
+        // Load modules to test
+        log('Loading game modules...');
+        import('./src/js/languageData.js').then(module => {
+            log('languageData module loaded', 'success');
+            // Test if we can get lessons
+            setTimeout(() => {
+                if (module.getLessons) {
+                    const lessons = module.getLessons('french', 'paris');
+                    log(`French lessons: ${lessons.length} found`);
+                }
+            }, 1000);
+        }).catch(err => {
+            log(`Failed to load languageData: ${err.message}`, 'error');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+{
+  "style_name": "Gateaux Characters",
+  "style_description": "Painterly soft-cel illustration style. Anthropomorphic cat characters with expressive faces and strong personality silhouettes. TRANSPARENT PNG backgrounds required on ALL assets — no baked-in background colors or grey backdrops. Warm and cozy café mood. Thick-ish outlines, clean digital art with soft shading (not hard cel-flat). Consistent lighting direction: warm top-left key light, cool bottom-right shadow.",
+
+  "palette": {
+    "primary": ["#6B3A2A", "#F5EDE3", "#FFF8F0", "#3C2415", "#D4A574"],
+    "accent":  ["#C49A30", "#C9807A", "#7AB87A", "#87CEEB"],
+    "rule":    "Clamp ALL asset colors to the palette above. No fluorescent values. No pure-white highlights — use #FFF8F0. No pure-black — use #2F1B14."
+  },
+
+  "asset_types": {
+    "characters": {
+      "reference_images": [
+        "dist/assets/images/characters/amelie_concept.png",
+        "dist/assets/images/characters/gaston_concept.png",
+        "dist/assets/images/characters/marcel_concept.png",
+        "dist/assets/images/characters/bisou_concept.png",
+        "dist/assets/images/characters/cafe_concept.png"
+      ],
+      "framing": "Full-body, center-aligned, subject fills 70-80% of canvas height. Consistent subject height across all sprites so they sit at the same visual weight when placed side-by-side.",
+      "portrait_variant": "Shoulders-up crop at 1:1 ratio (512×512px). Same lighting, same expression consistency.",
+      "expressions_required": ["neutral", "happy", "disappointed", "thinking"],
+      "background": "TRANSPARENT — no background fill of any kind.",
+      "size": "512x512px for full-body, 256x256px for portrait crops.",
+      "style_notes": "All characters are anthropomorphic cats. Proportions: expressive head ~40% of body height, compact body, visible tail. Soft-cel shading with warm top-left key. TRANSPARENT background required. Same scale and proportions across all sprites."
+    },
+
+    "cakes": {
+      "states_required": ["fresh", "day_old", "stale"],
+      "fresh":    "Vivid, vibrant presentation — peak glow, garnishes intact.",
+      "day_old":  "Slightly duller — 80% saturation, minor settling.",
+      "stale":    "Noticeably faded — 50% saturation, drooping garnish, slight greyness.",
+      "background": "TRANSPARENT — no grey backdrop, no plate shadow baked in.",
+      "style":    "Isometric-ish top-down 3/4 view. Soft gouache/painterly look. Palette-clamped colors.",
+      "size":     "256x256px",
+      "catalogue": [
+        { "id": "tres_leches", "language": "spanish", "description": "Three-milk sponge cake, white layered with cream and a dusting of cinnamon" },
+        { "id": "eclair", "language": "french", "description": "Elegant choux pastry éclair with glossy dark chocolate glaze and cream filling — on-palette browns and creams only" },
+        { "id": "tiramisu", "language": "italian", "description": "Layered tiramisu with coffee-dusted mascarpone layers" },
+        { "id": "black_forest", "language": "german", "description": "Black Forest cake with cherries, whipped cream, and chocolate shavings" },
+        { "id": "matcha_roll", "language": "japanese", "description": "Matcha Swiss roll with muted green sponge and cream filling" }
+      ]
+    },
+
+    "customers": {
+      "target_count": 8,
+      "style_notes": "Human or stylized humanoid characters (NOT cats). Bust / portrait crop at 1:1. TRANSPARENT background. Warm top-left key lighting matching the character art. Each customer should read as a distinct archetype (tourist, hipster, foodie, romantic, business, student, elder local, artist).",
+      "size": "256x256px"
+    },
+
+    "ui": {
+      "coin": "Small gold coin icon, painterly not flat vector, on-palette gold (#C49A30). TRANSPARENT background. 64x64px.",
+      "shelf_plank": "Single wooden café shelf plank, warm oak tone (#D4A574 to #B8935F). Slight top highlight (white gleam). Transparent above and below — just the plank shape. 512x64px."
+    },
+
+    "environment": {
+      "reference_images": ["dist/assets/images/wallpaper.png"],
+      "style_notes": "Warm French café interior. Wooden shelves, warm ambient lighting, chalkboard menus, pastry display. Painterly style matching character art. Warm espresso and cream palette."
+    }
+  },
+
+  "seed": null,
+  "exploration_mode": false,
+  "style_notes": "Mobile HTML5 language learning game. Warm, whimsical, approachable tone. All sprites MUST have transparent PNG backgrounds. Consistent lighting across all assets: warm key top-left, cool shadow bottom-right. Colors must stay within the defined palette — no fluorescents, no pure black/white."
+}

@@ -1,0 +1,139 @@
+/* Image Placeholder Styles for Gateaux */
+/* Canvas-generated gray placeholders handle missing image text labels (see main.js) */
+
+/* ── CSS Art Rescue — applied to ALL real game images ── */
+
+/* Character portraits: consistent filter + floor shadow */
+.quiz-character-portrait,
+.lesson-teacher-portrait,
+.wrong-teacher-portrait {
+    filter: saturate(.9) contrast(1.02);
+}
+
+/* Floor shadow oval beneath lesson path portrait nodes */
+.lesson-portrait-wrap {
+    position: relative;
+}
+
+.lesson-portrait-wrap::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70%;
+    height: 10px;
+    background: radial-gradient(ellipse, rgba(60,36,21,.22) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Cake images: tinted cream background rescues grey-backdrop PNGs */
+.cake-card-image,
+.rp-cake-img,
+.rb-cake-img,
+.cake-detail-img,
+.cake-reward-img {
+    filter: saturate(.9) contrast(1.02);
+    background: rgba(245,237,227,.75);
+}
+
+/* Customer portraits */
+.customer-sprite-container img,
+.wrong-teacher-portrait {
+    filter: saturate(.9) contrast(1.02);
+}
+
+/* Generic gray placeholder square */
+.placeholder-square {
+    width: 100px;
+    height: 100px;
+    background-color: rgba(200,192,184,.5);
+    border: 1.5px dashed rgba(160,144,128,.5);
+    border-radius: var(--r-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px auto;
+    color: var(--text-light);
+    font-size: var(--fs-xs);
+    text-align: center;
+    padding: 8px;
+}
+
+.placeholder-square::after {
+    content: attr(data-image-name);
+}
+
+/* Customer Images - 120x120px */
+.customer-image-placeholder {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin: 0 auto;
+    display: block;
+    object-fit: cover;
+    background-color: #c8c0b8;
+}
+
+/* Character (Cat) Images - 100x100px */
+.character-image-placeholder {
+    width: 100px;
+    height: 100px;
+    border-radius: var(--r-md);
+    display: block;
+    object-fit: cover;
+    background-color: rgba(200,192,184,.5);
+}
+
+/* Cake Images */
+.cake-image-placeholder {
+    width: 100%;
+    height: 100%;
+    border-radius: var(--r-sm);
+    display: block;
+    object-fit: cover;
+    background-color: rgba(200,192,184,.4);
+}
+
+/* Cake card preview on language cards */
+.cake-card-image {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+}
+
+.cake-preview {
+    padding: 6px 0;
+}
+
+/* UI Icon placeholders */
+.icon-placeholder {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+/* Display Case Specific */
+.cake-slot .cake-image-placeholder {
+    margin: 0 auto;
+}
+
+/* Character Selection Specific */
+.character-choice .character-image-placeholder {
+    margin: 0 auto 8px;
+}
+
+/* Customer sprite placeholder in cafe counter */
+.customer-sprite-container {
+    flex-shrink: 0;
+}
+
+.customer-sprite-container .placeholder-square {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}

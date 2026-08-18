@@ -1,0 +1,375 @@
+// Customer Service Module for Gateaux
+// Handles NPC customers with audio-only speech
+
+import { gameState } from './gameState.js';
+import { getRecipeById } from './recipeData.js';
+import { audioManager } from './audioManager.js';
+
+export class CustomerService {
+    constructor(displayCase = null) {
+        this.currentCustomer = null;
+        this.displayCase = displayCase;
+        this.customerTypes = [
+            { sprite: 'Bunny', name: 'Bunny', personality: 'friendly' },
+            { sprite: 'Cat', name: 'Cat', personality: 'sophisticated' },
+            { sprite: 'Dog', name: 'Dog', personality: 'enthusiastic' },
+            { sprite: 'Bear', name: 'Bear', personality: 'gentle' },
+            { sprite: 'Fox', name: 'Fox', personality: 'clever' }
+        ];
+
+        this.setupEventListeners();
+    }
+
+    setupEventListeners() {
+        // Response option clicks are handled dynamically
+    }
+
+    // Generate a new customer
+    generateNewCustomer() {
+        // Check if display case has any cakes
+        const displayStatus = this.getDisplayStatus();
+        if (!displayStatus.hasAnyCakes) {
+            this.showNoCakesMessage();
+            return;
+        }
+
+        // Choose random customer type
+        const customerType = this.customerTypes[Math.floor(Math.random() * this.customerTypes.length)];
+
+        // Choose language based on available cakes
+        const language = this.chooseCustomerLanguage(displayStatus);
+
+        // Generate request
+        const request = this.generateRequest(language);
+
+        this.currentCustomer = {
+            ...customerType,
+            language: language,
+            request: request
+        };
+
+        // Display customer
+        this.displayCustomer();
+    }
+
+    // Get display case status
+    getDisplayStatus() {
+        if (!this.displayCase) {
+            return {
+                hasAnyCakes: false,
+                hasSpanishCakes: false,
+                hasFrenchCakes: false,
+                status: {}
+            };
+        }
+
+        const status = this.displayCase.getInventoryStatus();
+
+        const hasSpanishCakes = status.spanish?.count > 0;
+        const hasFrenchCakes = status.french?.count > 0;
+
+        return {
+            hasAnyCakes: hasSpanishCakes || hasFrenchCakes,
+            hasSpanishCakes,
+            hasFrenchCakes,
+            status
+        };
+    }
+
+    // Choose customer language based on available cakes
+    chooseCustomerLanguage(displayStatus) {
+        const lastLang = gameState.getLastLesson()?.language;
+        if (lastLang === 'spanish' && displayStatus.hasSpanishCakes) return 'spanish';
+        if (lastLang === 'french' && displayStatus.hasFrenchCakes) return 'french';
+
+        const availableLanguages = [];
+        if (displayStatus.hasSpanishCakes) availableLanguages.push('spanish');
+        if (displayStatus.hasFrenchCakes) availableLanguages.push('french');
+        return availableLanguages[Math.floor(Math.random() * availableLanguages.length)] || 'spanish';
+    }
+
+    // Prefer phrases from the lesson the player just baked
+    generateRequest(language) {
+        const last = gameState.getLastLesson();
+        if (last?.language === language && last.phrases?.length) {
+            const phrase = last.phrases[Math.floor(Math.random() * last.phrases.length)];
+            return {
+                english: phrase.english,
+                native: phrase.native,
+                expectedResponse: phrase.english,
+                fromLastLesson: true
+            };
+        }
+
+        const requests = {
+            spanish: [
+                {
+                    english: "Hello! I'd like a coffee, please.",
+                    native: "¡Hola! Quisiera un café, por favor.",
+                    expectedResponse: "Hello! I'd like a coffee, please."
+                },
+                {
+                    english: "Good morning! How are you?",
+                    native: "¡Buenos días! ¿Cómo estás?",
+                    expectedResponse: "Good morning! How are you?"
+                },
+                {
+                    english: "Thank you very much!",
+                    native: "¡Muchas gracias!",
+                    expectedResponse: "Thank you very much!"
+                },
+                {
+                    english: "How much is it?",
+                    native: "¿Cuánto cuesta?",
+                    expectedResponse: "How much is it?"
+                }
+            ],
+            french: [
+                {
+                    english: "Hello! I'd like a coffee, please.",
+                    native: "Bonjour! Je voudrais un café, s'il vous plaît.",
+                    expectedResponse: "Hello! I'd like a coffee, please."
+                },
+                {
+                    english: "Good evening! How are you?",
+                    native: "Bonsoir! Comment allez-vous?",
+                    expectedResponse: "Good evening! How are you?"
+                },
+                {
+                    english: "Thank you very much!",
+                    native: "Merci beaucoup!",
+                    expectedResponse: "Thank you very much!"
+                },
+                {
+                    english: "The bill, please.",
+                    native: "L'addition, s'il vous plaît.",
+                    expectedResponse: "The bill, please."
+                }
+            ]
+        };
+
+        const languageRequests = requests[language] || requests.spanish;
+        return languageRequests[Math.floor(Math.random() * languageRequests.length)];
+    }
+
+    // Display customer
+    displayCustomer() {
+        const customerEl = document.getElementById('current-customer');
+        const requestEl = document.getElementById('customer-request');
+        const spriteEl = customerEl?.querySelector('.customer-sprite');
+        const idleEl = document.getElementById('customer-idle');
+        const responseAreaEl = document.getElementById('response-area');
+
+        if (!customerEl || !requestEl) return;
+
+        // Show customer, hide the idle invitation
+        customerEl.style.display = 'block';
+        if (idleEl) idleEl.style.display = 'none';
+        if (responseAreaEl) responseAreaEl.style.display = 'block';
+
+        // Update sprite with customer bust image
+        if (spriteEl) {
+            const imageMap = {
+                Bunny: 'tourist_bust.png',
+                Cat: 'hipster_bust.png',
+                Dog: 'business_bust.png',
+                Bear: 'love_struck_bust.png',
+                Fox: 'foodie_bust.png'
+            };
+            const imgFile = imageMap[this.currentCustomer.name] || 'tourist_bust.png';
+            spriteEl.innerHTML = '';
+            spriteEl.style.backgroundImage = `url(assets/images/customers/${imgFile})`;
+            spriteEl.style.backgroundSize = 'cover';
+            spriteEl.style.backgroundPosition = 'center';
+        }
+
+        // Native first; English sits underneath as a hint
+        requestEl.textContent = this.currentCustomer.request.native;
+        const hintEl = document.getElementById('customer-hint');
+        if (hintEl) {
+            hintEl.textContent = this.currentCustomer.request.english;
+            hintEl.style.display = 'block';
+        }
+
+        // Generate response options
+        this.generateResponseOptions();
+        this.playCustomerAudio();
+    }
+
+    // Generate response options
+    generateResponseOptions() {
+        const container = document.getElementById('response-options');
+        if (!container) return;
+
+        container.innerHTML = '';
+
+        // Get correct response and generate wrong options
+        const correct = this.currentCustomer.request.expectedResponse;
+        const options = this.generateOptions(correct, this.currentCustomer.language);
+
+        options.forEach(option => {
+            const btn = document.createElement('button');
+            btn.className = 'response-option';
+            btn.textContent = option;
+            btn.addEventListener('click', () => {
+                this.handleResponse(btn, option === correct);
+            });
+            container.appendChild(btn);
+        });
+    }
+
+    // Generate response options
+    generateOptions(correctAnswer, language) {
+        const last = gameState.getLastLesson();
+        const fromLesson = (last?.language === language ? last.phrases : [])
+            .map(p => p.english)
+            .filter(text => text && text !== correctAnswer);
+
+        const fallback = [
+            'Very well, thank you', 'Good morning', 'With pleasure',
+            'Please', 'Excuse me', 'I would like', 'I do not understand',
+            'See you later', 'One moment', 'Of course', 'You are welcome'
+        ].filter(opt => opt !== correctAnswer);
+
+        const pool = this.shuffleArray([...fromLesson, ...fallback]);
+        return this.shuffleArray([correctAnswer, ...pool.slice(0, 2)]);
+    }
+
+    shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    // Handle response selection
+    handleResponse(button, isCorrect) {
+        // Disable all buttons
+        document.querySelectorAll('.response-option').forEach(btn => {
+            btn.disabled = true;
+        });
+
+        if (isCorrect) {
+            button.classList.add('correct');
+            this.handleCorrectResponse();
+        } else {
+            button.classList.add('incorrect');
+            this.handleIncorrectResponse();
+        }
+
+        // Hide customer after delay
+        setTimeout(() => {
+            this.hideCustomer();
+        }, 2000);
+    }
+
+    // Handle correct response
+    handleCorrectResponse() {
+        // Update customer sprite to happy
+        const spriteEl = document.querySelector('.customer-sprite');
+        if (spriteEl) {
+            spriteEl.style.transform = 'scale(1.2)';
+        }
+
+        audioManager.playCorrect();
+
+        let tipAmount = 10; // Base tip
+
+        // Remove a cake and apply its tip multiplier
+        if (this.displayCase) {
+            const inventory = this.displayCase.inventory[this.currentCustomer.language];
+            if (inventory && inventory.length > 0) {
+                const cake = inventory[0];
+                const recipe = getRecipeById(cake.recipeId);
+                if (recipe) {
+                    tipAmount = Math.round(10 * recipe.tipMultiplier);
+                }
+                this.displayCase.removeCake(this.currentCustomer.language, cake.id);
+            }
+        }
+
+        gameState.addTips(tipAmount);
+        this.showTipFeedback(tipAmount);
+    }
+
+    // Show floating tip feedback
+    showTipFeedback(amount) {
+        const feedbackEl = document.getElementById('tip-feedback');
+        const textEl = document.getElementById('tip-feedback-text');
+        if (!feedbackEl || !textEl) return;
+
+        // Clone to restart CSS animation, then set text on the new node
+        const newText = textEl.cloneNode(true);
+        newText.textContent = `+${amount} tips`;
+        textEl.parentNode.replaceChild(newText, textEl);
+        feedbackEl.style.display = 'block';
+
+        setTimeout(() => {
+            feedbackEl.style.display = 'none';
+        }, 1200);
+    }
+
+    // Handle incorrect response
+    handleIncorrectResponse() {
+        // Update customer sprite to confused
+        const spriteEl = document.querySelector('.customer-sprite');
+        if (spriteEl) {
+            spriteEl.style.transform = 'rotate(-10deg)';
+        }
+
+        audioManager.playWrong();
+    }
+
+    // Hide customer
+    hideCustomer() {
+        const customerEl = document.getElementById('current-customer');
+        if (customerEl) {
+            customerEl.style.display = 'none';
+        }
+        const hintEl = document.getElementById('customer-hint');
+        if (hintEl) hintEl.textContent = '';
+
+        // Clear response options and go back to the idle invitation
+        const container = document.getElementById('response-options');
+        if (container) {
+            container.innerHTML = '';
+        }
+        const responseAreaEl = document.getElementById('response-area');
+        if (responseAreaEl) responseAreaEl.style.display = 'none';
+        const idleEl = document.getElementById('customer-idle');
+        if (idleEl) idleEl.style.display = 'block';
+    }
+
+    // Show no cakes message
+    showNoCakesMessage() {
+        const idleEl = document.getElementById('customer-idle');
+        const responseAreaEl = document.getElementById('response-area');
+        if (responseAreaEl) responseAreaEl.style.display = 'none';
+        if (idleEl) {
+            idleEl.style.display = 'block';
+            idleEl.innerHTML = '<p>Case is empty. Bake a cake first, then come back.</p>';
+        }
+    }
+
+    // Play customer audio (NPC speech)
+    playCustomerAudio() {
+        if (!this.currentCustomer) return;
+
+        // In a real implementation, this would play the audio file
+        // For now, we'll use the Web Speech API as a placeholder
+        if ('speechSynthesis' in window) {
+            const utterance = new SpeechSynthesisUtterance(this.currentCustomer.request.native);
+
+            // Set language
+            if (this.currentCustomer.language === 'spanish') {
+                utterance.lang = 'es-ES';
+            } else if (this.currentCustomer.language === 'french') {
+                utterance.lang = 'fr-FR';
+            }
+
+            utterance.rate = 0.9; // Slightly slower for clarity
+            speechSynthesis.speak(utterance);
+        }
+    }
+}

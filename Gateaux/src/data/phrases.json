@@ -1,0 +1,2181 @@
+{
+  "metadata": {
+    "version": "2.0",
+    "lastUpdated": "2024-01-01",
+    "description": "Master phrase database for Gateaux language learning game - Customer interaction focused"
+  },
+  "languages": {
+    "french": {
+      "name": "French",
+      "regions": [
+        {"id": "france", "name": "France", "flag": "fr"},
+        {"id": "quebec", "name": "Quebec", "flag": "ca"}
+      ]
+    },
+    "spanish": {
+      "name": "Spanish",
+      "regions": [
+        {"id": "spain", "name": "Spain", "flag": "es"},
+        {"id": "mexico", "name": "Mexico", "flag": "mx"},
+        {"id": "argentina", "name": "Argentina", "flag": "ar"}
+      ]
+    }
+  },
+  "customerTypes": [
+    {
+      "id": "elderly_tourist",
+      "name": "Elderly Tourist",
+      "image": "elderly-tourist.png",
+      "personality": "Polite but confused",
+      "preferredTeacher": "amelie",
+      "scenarios": [
+        "Looking for directions to the Eiffel Tower",
+        "Wants to order a simple coffee",
+        "Asking about the weather",
+        "Needs help with the menu"
+      ]
+    },
+    {
+      "id": "hipster_local",
+      "name": "Hipster Local",
+      "image": "hipster-local.png",
+      "personality": "Too cool for school",
+      "preferredTeacher": "marcel",
+      "scenarios": [
+        "Wants the WiFi password",
+        "Ordering an overly complicated coffee",
+        "Complaining about tourists",
+        "Asking about the music playing"
+      ]
+    },
+    {
+      "id": "rushed_business",
+      "name": "Rushed Business Person",
+      "image": "business-person.png",
+      "personality": "No time for nonsense",
+      "preferredTeacher": "cafe",
+      "scenarios": [
+        "Needs coffee ASAP",
+        "Taking a work call while ordering",
+        "Asking if you have oat milk",
+        "Complaining about the wait"
+      ]
+    },
+    {
+      "id": "love_struck",
+      "name": "Love-Struck Customer",
+      "image": "romantic-customer.png",
+      "personality": "Head in the clouds",
+      "preferredTeacher": "bisou",
+      "scenarios": [
+        "On a first date",
+        "Writing poetry in the corner",
+        "Asking for romantic music",
+        "Ordering two of everything"
+      ]
+    },
+    {
+      "id": "picky_foodie",
+      "name": "Picky Foodie",
+      "image": "food-critic.png",
+      "personality": "Nothing is ever good enough",
+      "preferredTeacher": "gaston",
+      "scenarios": [
+        "Complaining about the coffee temperature",
+        "Asking about gluten-free options",
+        "Taking photos of everything",
+        "Comparing to other cafés"
+      ]
+    }
+  ],
+  "categories": {
+    "greetings_casual": {
+      "name": "How locals say hi",
+      "teacher": "marcel",
+      "description": "The hellos people use off the page",
+      "difficulty": 1,
+      "sortOrder": 1
+    },
+    "cafe_slang": {
+      "name": "The usual",
+      "teacher": "marcel",
+      "description": "Fast, casual counter talk",
+      "difficulty": 1,
+      "sortOrder": 2
+    },
+    "small_talk": {
+      "name": "Filling the silence",
+      "teacher": "marcel",
+      "description": "Chat while the coffee pours",
+      "difficulty": 2,
+      "sortOrder": 3
+    },
+    "farewells": {
+      "name": "See you later",
+      "teacher": "amelie",
+      "description": "Sending people off without sounding stiff",
+      "difficulty": 1,
+      "sortOrder": 4
+    },
+    "greetings_formal": {
+      "name": "Fancy hellos",
+      "teacher": "amelie",
+      "description": "When you want to sound extra polite",
+      "difficulty": 1,
+      "sortOrder": 5
+    },
+    "taking_orders": {
+      "name": "Taking the order",
+      "teacher": "amelie",
+      "description": "The polished version, for Amélie",
+      "difficulty": 2,
+      "sortOrder": 6
+    },
+    "apologies_excuses": {
+      "name": "Oops, sorry",
+      "teacher": "amelie",
+      "description": "Graceful ways to say sorry (or not)",
+      "difficulty": 2,
+      "sortOrder": 7
+    },
+    "food_praise": {
+      "name": "This slaps",
+      "teacher": "bisou",
+      "description": "Gushing about everything on the menu",
+      "difficulty": 2,
+      "sortOrder": 8
+    },
+    "handling_rush": {
+      "name": "Everything's on fire",
+      "teacher": "cafe",
+      "description": "When three people are yelling at once",
+      "difficulty": 3,
+      "sortOrder": 9
+    },
+    "sweet_talk": {
+      "name": "A little charm",
+      "teacher": "bisou",
+      "description": "Compliments that stay PG-13",
+      "difficulty": 3,
+      "sortOrder": 10
+    },
+    "complaints_dept": {
+      "name": "They're already mad",
+      "teacher": "gaston",
+      "description": "Dealing with difficult customers",
+      "difficulty": 3,
+      "sortOrder": 11
+    },
+    "passive_aggressive": {
+      "name": "Saying nothing nicely",
+      "teacher": "gaston",
+      "description": "Gaston's masterclass in shade",
+      "difficulty": 3,
+      "sortOrder": 12
+    }
+  },
+  "phrases": [
+    {
+      "id": "fr_greet_formal_1",
+      "language": "french",
+      "category": "greetings_formal",
+      "french": "Bonjour, bienvenue chez Gateaux!",
+      "english": "Hello, welcome to Gateaux!",
+      "pronunciation": "bon-ZHOOR, bee-yan-veh-NEW shay gah-TOH",
+      "context": "Greeting customers as they enter",
+      "correction": "\"Au revoir\" means goodbye -- quite the opposite of what we need here. \"Bienvenue\" literally means \"well come\" -- you're inviting them in, not sending them away or asking them to wait.",
+      "formality": "formal",
+      "wrong_answers_en": [
+        "Goodbye, thank you for visiting!",
+        "Sorry, the cafe is closed right now",
+        "Please wait, we'll seat you shortly"
+      ],
+      "wrong_answers_native": [
+        "Au revoir, merci de votre visite!",
+        "Désolé, le café est fermé",
+        "Veuillez patienter, on vous installe"
+      ]
+    },
+    {
+      "id": "fr_greet_formal_2",
+      "language": "french",
+      "category": "greetings_formal",
+      "french": "Comment puis-je vous aider?",
+      "english": "How may I help you?",
+      "pronunciation": "koh-MAHN pwee-zhuh voo zeh-DAY",
+      "context": "Offering assistance politely",
+      "correction": "\"Aider\" means to help -- an open, gracious offer. The other options presume what the customer wants: showing menus, taking orders, or asking what they seek. A proper host offers assistance first, then listens.",
+      "formality": "formal",
+      "wrong_answers_en": [
+        "What are you looking for?",
+        "Would you like to see the menu?",
+        "Are you ready to order?"
+      ],
+      "wrong_answers_native": [
+        "Que cherchez-vous?",
+        "Voulez-vous voir le menu?",
+        "Êtes-vous prêt à commander?"
+      ]
+    },
+    {
+      "id": "fr_greet_formal_3",
+      "language": "french",
+      "category": "greetings_formal",
+      "french": "Que désirez-vous?",
+      "english": "What would you like?",
+      "pronunciation": "kuh day-zee-ray VOO",
+      "context": "Taking an order formally",
+      "correction": "\"Désirez-vous\" asks what someone desires -- elegant and open-ended. \"Avez-vous décidé\" asks if they've decided, which is presumptuous. \"Puis-je prendre\" jumps straight to taking the order. Patience and refinement, please.",
+      "formality": "formal",
+      "wrong_answers_en": [
+        "Have you decided yet?",
+        "Can I take your order now?",
+        "What brings you in today?"
+      ],
+      "wrong_answers_native": [
+        "Avez-vous décidé?",
+        "Puis-je prendre votre commande?",
+        "Qu'est-ce qui vous amène aujourd'hui?"
+      ]
+    },
+    {
+      "id": "fr_greet_formal_4",
+      "language": "french",
+      "category": "greetings_formal",
+      "french": "Ce sera tout?",
+      "english": "Will that be all?",
+      "pronunciation": "suh suh-RAH too",
+      "context": "Confirming the order",
+      "correction": "\"Ce sera tout\" elegantly confirms completeness -- \"will that be all?\" The other phrases offer more items or question correctness. We are confirming, not upselling. There is a distinction between closing an order gracefully and pushing dessert.",
+      "formality": "formal",
+      "wrong_answers_en": [
+        "Would you like anything else?",
+        "Is this order correct?",
+        "Can I get you a dessert?"
+      ],
+      "wrong_answers_native": [
+        "Désirez-vous autre chose?",
+        "La commande est correcte?",
+        "Puis-je vous apporter un dessert?"
+      ]
+    },
+    {
+      "id": "fr_greet_formal_5",
+      "language": "french",
+      "category": "greetings_formal",
+      "french": "Merci et bonne journée!",
+      "english": "Thank you and have a good day!",
+      "pronunciation": "mehr-SEE ay bun zhoor-NAY",
+      "context": "Polite farewell",
+      "correction": "\"Bonne journée\" wishes someone a good day ahead -- it is a farewell, not an invitation to return. \"Revenez nous voir\" asks them to come back, while \"à demain\" assumes they'll return tomorrow. A proper goodbye makes no demands.",
+      "formality": "formal",
+      "wrong_answers_en": [
+        "Please come again soon!",
+        "Goodbye, see you tomorrow!",
+        "Thank you for your patience!"
+      ],
+      "wrong_answers_native": [
+        "Revenez nous voir bientôt!",
+        "Au revoir, à demain!",
+        "Merci pour votre patience!"
+      ]
+    },
+    {
+      "id": "fr_greet_casual_1",
+      "language": "french",
+      "category": "greetings_casual",
+      "french": "Salut! Ça va?",
+      "english": "Hey! How's it going?",
+      "pronunciation": "sah-LOO! sah VAH",
+      "context": "Marcel leans against the counter like he owns the place -- this is how you greet people when you know the room",
+      "correction": "\"Enchanté\" is way too formal -- that's what Amelie would say at a dinner party. \"Ça fait longtemps\" means long time no see, and \"quoi de neuf\" means what's new. \"Ça va\" is the casual everyday check-in, like a fist bump in words.",
+      "formality": "casual",
+      "wrong_answers_en": [
+        "Hello! Nice to meet you!",
+        "Hey! Long time no see!",
+        "Hi! What's new with you?"
+      ],
+      "wrong_answers_native": [
+        "Bonjour! Enchanté!",
+        "Salut! Ça fait longtemps!",
+        "Coucou! Quoi de neuf?"
+      ]
+    },
+    {
+      "id": "fr_greet_casual_2",
+      "language": "french",
+      "category": "greetings_casual",
+      "french": "Qu'est-ce que je te sers?",
+      "english": "What can I get you?",
+      "pronunciation": "kess-kuh zhuh tuh SAIR",
+      "context": "Marcel snaps his fingers twice -- none of that 'how may I help you' nonsense, this is how the REAL locals do it",
+      "correction": "\"Sers\" means to serve -- you're asking what to get them. \"Recommandes\" means recommend, \"essayé\" means tried, and \"prêt à payer\" means ready to pay. Bro, we haven't even started yet, don't jump to the bill.",
+      "formality": "casual",
+      "wrong_answers_en": [
+        "What would you recommend?",
+        "Have you tried our specials?",
+        "Are you ready to pay?"
+      ],
+      "wrong_answers_native": [
+        "Qu'est-ce que tu recommandes?",
+        "Tu as essayé nos spécialités?",
+        "Tu es prêt à payer?"
+      ]
+    },
+    {
+      "id": "fr_greet_casual_3",
+      "language": "french",
+      "category": "greetings_casual",
+      "french": "Comme d'hab?",
+      "english": "The usual?",
+      "pronunciation": "kohm dahb",
+      "context": "Marcel already knows your order before you open your mouth -- he raises one eyebrow and starts making your drink without waiting for an answer",
+      "correction": "\"D'hab\" is short for \"d'habitude\" -- as usual. The other options ask about something different, the same table, or a favorite spot. None of those are about your regular order. Know the difference between \"the usual\" and \"your usual seat.\"",
+      "formality": "slang",
+      "wrong_answers_en": [
+        "Something different today?",
+        "Same table as always?",
+        "Your favorite spot is free!"
+      ],
+      "wrong_answers_native": [
+        "Quelque chose de différent?",
+        "La même table que d'habitude?",
+        "Ta place préférée est libre!"
+      ]
+    },
+    {
+      "id": "fr_greet_casual_4",
+      "language": "french",
+      "category": "greetings_casual",
+      "french": "Ça roule, ma poule?",
+      "english": "How's it rolling, buddy?",
+      "pronunciation": "sah rool, mah pool",
+      "context": "Marcel says this with a sly grin, daring you to use it on an actual French person -- it rhymes on purpose and yes, you WILL sound ridiculous, that's the point",
+      "correction": "\"Ça roule\" literally means \"it's rolling\" -- a playful check-in. \"Ma poule\" (my hen) is a goofy term of endearment. \"Tout va bien, mon ami\" is way too proper, and the others miss the rhyming slang vibe completely.",
+      "formality": "slang",
+      "humor": true,
+      "wrong_answers_en": [
+        "Everything good, my friend?",
+        "What's cooking, good looking?",
+        "Ready for your morning coffee?"
+      ],
+      "wrong_answers_native": [
+        "Tout va bien, mon ami?",
+        "Qu'est-ce qui mijote, beauté?",
+        "Prêt pour ton café du matin?"
+      ]
+    },
+    {
+      "id": "fr_greet_casual_5",
+      "language": "french",
+      "category": "greetings_casual",
+      "french": "À plus!",
+      "english": "See ya!",
+      "pronunciation": "ah PLOOS",
+      "context": "Marcel tosses this over his shoulder without even looking back -- forget 'au revoir,' that's for textbooks and tourists",
+      "correction": "\"À plus\" is short for \"à plus tard\" -- see you later, super casual. \"Fais attention\" means be careful, \"bonne soirée\" means good evening, and \"reviens vite\" means come back soon. None of those are a chill goodbye toss.",
+      "formality": "casual",
+      "wrong_answers_en": [
+        "Take care!",
+        "Have a great evening!",
+        "Come back soon!"
+      ],
+      "wrong_answers_native": [
+        "Fais attention!",
+        "Bonne soirée!",
+        "Reviens vite!"
+      ]
+    },
+    {
+      "id": "fr_order_formal_1",
+      "language": "french",
+      "category": "taking_orders",
+      "french": "Voulez-vous un café ou un thé?",
+      "english": "Would you like coffee or tea?",
+      "pronunciation": "voo-lay VOO uhn kah-FEH oo uhn TAY",
+      "context": "Offering beverage choices",
+      "correction": "\"Café ou thé\" presents a specific, elegant choice between two beverages. Asking about hot versus cold, offering water, or suggesting pastries are all different conversations entirely. One must present the proper options first.",
+      "formality": "formal",
+      "wrong_answers_en": [
+        "Do you prefer hot or cold drinks?",
+        "Can I offer you some water?",
+        "Would you like to see our pastries?"
+      ],
+      "wrong_answers_native": [
+        "Préférez-vous chaud ou froid?",
+        "Puis-je vous offrir de l'eau?",
+        "Voulez-vous voir nos pâtisseries?"
+      ]
+    },
+    {
+      "id": "fr_order_formal_2",
+      "language": "french",
+      "category": "taking_orders",
+      "french": "Avec du lait ou sans lait?",
+      "english": "With or without milk?",
+      "pronunciation": "ah-VEK doo LEH oo sahn LEH",
+      "context": "Coffee customization",
+      "correction": "\"Lait\" means milk -- \"avec\" is with, \"sans\" is without. \"Sucre\" means sugar, \"crème\" means cream, and \"glacé\" means iced. These are entirely different customizations. Precision in service reflects precision in character.",
+      "formality": "formal",
+      "wrong_answers_en": [
+        "Do you want sugar with that?",
+        "Would you like cream instead?",
+        "Hot or iced?"
+      ],
+      "wrong_answers_native": [
+        "Voulez-vous du sucre avec?",
+        "Préférez-vous de la crème?",
+        "Chaud ou glacé?"
+      ]
+    },
+    {
+      "id": "fr_order_formal_3",
+      "language": "french",
+      "category": "taking_orders",
+      "french": "Sur place ou à emporter?",
+      "english": "For here or to go?",
+      "pronunciation": "soor plahs oo ah ahm-por-TAY",
+      "context": "Dining preference",
+      "correction": "\"Sur place\" means on the premises, \"à emporter\" means to take away. \"À l'intérieur ou en terrasse\" asks about inside versus terrace seating -- a different question entirely. And asking if someone is dining alone is simply impolite.",
+      "formality": "formal",
+      "wrong_answers_en": [
+        "Inside or on the terrace?",
+        "Would you like it wrapped up?",
+        "Are you eating alone or with someone?"
+      ],
+      "wrong_answers_native": [
+        "À l'intérieur ou en terrasse?",
+        "Voulez-vous un emballage?",
+        "Vous mangez seul ou accompagné?"
+      ]
+    },
+    {
+      "id": "fr_order_formal_4",
+      "language": "french",
+      "category": "taking_orders",
+      "french": "Cela fera 4 euros, s'il vous plaît",
+      "english": "That will be 4 euros, please",
+      "pronunciation": "suh-LAH fuh-RAH katr uh-ROH, seel voo PLEH",
+      "context": "Stating the price",
+      "correction": "\"Cela fera\" means \"that will come to\" -- a precise statement of the total. Saying 6 euros is simply the wrong amount, mentioning a discount implies a reduction that was never offered, and asking about tips is a separate matter entirely.",
+      "formality": "formal",
+      "wrong_answers_en": [
+        "Your total comes to 6 euros",
+        "That's 4 euros with the discount",
+        "Would you like to add a tip?"
+      ],
+      "wrong_answers_native": [
+        "Votre total est de 6 euros",
+        "Ça fait 4 euros avec la réduction",
+        "Souhaitez-vous ajouter un pourboire?"
+      ]
+    },
+    {
+      "id": "fr_order_formal_5",
+      "language": "french",
+      "category": "taking_orders",
+      "french": "Voici votre monnaie",
+      "english": "Here's your change",
+      "pronunciation": "vwah-SEE votr moh-NEH",
+      "context": "Returning change",
+      "correction": "\"Monnaie\" means change -- the coins returned after payment. \"Reçu\" is a receipt, \"commande\" is an order, and \"vérifier le total\" means checking the total. One must know the difference between handing back coins and handing over paperwork.",
+      "formality": "formal",
+      "wrong_answers_en": [
+        "Here's your receipt",
+        "Your order is ready",
+        "Please check the total"
+      ],
+      "wrong_answers_native": [
+        "Voici votre reçu",
+        "Votre commande est prête",
+        "Veuillez vérifier le total"
+      ]
+    },
+    {
+      "id": "fr_slang_1",
+      "language": "french",
+      "category": "cafe_slang",
+      "french": "Un p'tit noir pour toi!",
+      "english": "A little black (espresso) for you!",
+      "pronunciation": "uhn ptee NWAHR poor twah",
+      "context": "Marcel slides the espresso across the counter like a bartender in a Western -- only posers call it an 'espresso,' the cool kids say 'p'tit noir'",
+      "correction": "\"P'tit noir\" literally means \"little black\" -- street French for a straight espresso. A \"café au lait\" has milk in it, \"bien chaud\" just means nice and hot, and \"double offert\" means a free double. None of those are the same as a simple, no-nonsense espresso.",
+      "formality": "casual",
+      "wrong_answers_en": [
+        "A large latte coming up!",
+        "One dark roast, nice and hot!",
+        "A double shot on the house!"
+      ],
+      "wrong_answers_native": [
+        "Un grand café au lait pour toi!",
+        "Un café bien chaud, voilà!",
+        "Un double offert par la maison!"
+      ]
+    },
+    {
+      "id": "fr_slang_2",
+      "language": "french",
+      "category": "cafe_slang",
+      "french": "Ça déchire, non?",
+      "english": "It's awesome, right?",
+      "pronunciation": "sah day-SHEER, nohn",
+      "context": "Marcel leans in with a smug look, fishing for compliments on his coffee skills -- he already knows the answer, he just wants to hear you say it",
+      "correction": "\"Déchire\" literally means \"rips\" or \"tears\" -- slang for something being amazing. \"Pas mal\" means not bad (way too tame), \"assez fort\" means strong enough, and \"ça te plaît\" means do you like it. None of those hit as hard as \"this RIPS.\"",
+      "formality": "slang",
+      "wrong_answers_en": [
+        "It's not bad, huh?",
+        "It's pretty strong, isn't it?",
+        "You like it, don't you?"
+      ],
+      "wrong_answers_native": [
+        "C'est pas mal, hein?",
+        "C'est assez fort, non?",
+        "Ça te plaît, non?"
+      ]
+    },
+    {
+      "id": "fr_slang_3",
+      "language": "french",
+      "category": "cafe_slang",
+      "french": "T'as la dalle?",
+      "english": "You hungry?",
+      "pronunciation": "tah lah dahl",
+      "context": "Marcel rolls his eyes -- tourists always say 'J'ai faim' like a textbook robot, but this is how the streets of Paris say it",
+      "correction": "\"Avoir la dalle\" is slang for being hungry -- forget \"j'ai faim\" from your textbook. \"Soif\" means thirsty, \"grignoter\" means to snack, and \"déjà mangé\" means already eaten. We're asking if you're hungry, not offering a snack run.",
+      "formality": "slang",
+      "wrong_answers_en": [
+        "Are you thirsty?",
+        "Do you want a snack?",
+        "Have you eaten yet?"
+      ],
+      "wrong_answers_native": [
+        "T'as soif?",
+        "Tu veux un truc à grignoter?",
+        "T'as déjà mangé?"
+      ]
+    },
+    {
+      "id": "fr_slang_4",
+      "language": "french",
+      "category": "cafe_slang",
+      "french": "C'est parti!",
+      "english": "Here we go!",
+      "pronunciation": "say par-TEE",
+      "context": "Marcel cracks his knuckles and gets to work -- this is his battle cry before making the sickest latte art you've ever seen",
+      "correction": "\"C'est parti\" means \"it's gone\" -- as in we're off, let's do this. \"C'est prêt\" means it's ready (we haven't started yet!), \"ça arrive\" means it's coming, and \"on commence\" means let's begin (too formal). \"C'est parti\" has that energy, you know?",
+      "formality": "casual",
+      "wrong_answers_en": [
+        "It's ready!",
+        "Coming right up!",
+        "Let's get started!"
+      ],
+      "wrong_answers_native": [
+        "C'est prêt!",
+        "Ça arrive tout de suite!",
+        "On commence!"
+      ]
+    },
+    {
+      "id": "fr_slang_5",
+      "language": "french",
+      "category": "cafe_slang",
+      "french": "Ça passe crème!",
+      "english": "It goes down smooth!",
+      "pronunciation": "sah pahs krehm",
+      "context": "Marcel winks after you take your first sip -- it literally means 'it goes down like cream,' and yes, it's a pun, and yes, he's very proud of it",
+      "correction": "\"Passe crème\" is slang meaning it goes down smooth as cream -- it's about how easy and pleasant something is. \"Onctueux\" means creamy texture, \"tu veux de la crème\" is offering actual cream, and \"meilleur mélange\" means best blend. It's a vibe, not a description.",
+      "formality": "slang",
+      "humor": true,
+      "wrong_answers_en": [
+        "It's creamy and rich!",
+        "Would you like some cream?",
+        "That's the best blend we have!"
+      ],
+      "wrong_answers_native": [
+        "C'est onctueux et riche!",
+        "Tu veux de la crème?",
+        "C'est notre meilleur mélange!"
+      ]
+    },
+    {
+      "id": "fr_rush_1",
+      "language": "french",
+      "category": "handling_rush",
+      "french": "Deux secondes, j'arrive!",
+      "english": "Two seconds, I'm coming!",
+      "pronunciation": "duh suh-GOHND, zhah-REEV",
+      "context": "Cafe shouts this while juggling three orders and a broken milk steamer -- spoiler: it will NOT be two seconds",
+      "correction": "\"Deux secondes\" -- two seconds. Specific. Urgent. A lie, but a hopeful one. \"Attendez\" means hold on, \"une minute\" is a whole minute (way too honest), and \"désolé du retard\" is an apology. We don't apologize mid-chaos, we make promises we can't keep!",
+      "formality": "casual",
+      "wrong_answers_en": [
+        "Hold on, I'll be right there!",
+        "Just a minute, please wait!",
+        "Sorry for the delay, almost done!"
+      ],
+      "wrong_answers_native": [
+        "Attendez, j'arrive tout de suite!",
+        "Une minute, veuillez patienter!",
+        "Désolé du retard, c'est presque prêt!"
+      ]
+    },
+    {
+      "id": "fr_rush_2",
+      "language": "french",
+      "category": "handling_rush",
+      "french": "La machine est en panne!",
+      "english": "The machine is broken!",
+      "pronunciation": "lah mah-SHEEN eh tahn pahn",
+      "context": "Cafe announces this with the flat calm of someone who has died inside -- the espresso machine breaks every Tuesday and management still won't replace it",
+      "correction": "\"En panne\" means broken, kaput, dead. \"Chauffe encore\" means still warming up (wishful thinking), \"plus de grains\" means out of beans, and \"besoin d'un nettoyage\" means needs cleaning. No. It's BROKEN. There's a difference between dirty and dead.",
+      "formality": "casual",
+      "wrong_answers_en": [
+        "The machine is warming up!",
+        "We're out of coffee beans!",
+        "The machine needs cleaning!"
+      ],
+      "wrong_answers_native": [
+        "La machine chauffe encore!",
+        "On n'a plus de grains de café!",
+        "La machine a besoin d'un nettoyage!"
+      ]
+    },
+    {
+      "id": "fr_rush_3",
+      "language": "french",
+      "category": "handling_rush",
+      "french": "On est débordés!",
+      "english": "We're swamped!",
+      "pronunciation": "ohn eh day-bor-DAY",
+      "context": "Cafe mutters this through gritted teeth while smiling at customers -- the universal barista skill of screaming internally while looking professional",
+      "correction": "\"Débordés\" means overflowing, overwhelmed -- swamped. \"Manque de provisions\" means running low on supplies, \"sous-effectif\" means short-staffed, and \"ferme plus tôt\" means closing early. We're not out of stuff, we're drowning in PEOPLE.",
+      "formality": "casual",
+      "wrong_answers_en": [
+        "We're running out of supplies!",
+        "We're short-staffed today!",
+        "We're closing early today!"
+      ],
+      "wrong_answers_native": [
+        "On manque de provisions!",
+        "On est en sous-effectif aujourd'hui!",
+        "On ferme plus tôt aujourd'hui!"
+      ]
+    },
+    {
+      "id": "fr_rush_4",
+      "language": "french",
+      "category": "handling_rush",
+      "french": "C'est le coup de feu!",
+      "english": "It's the rush hour!",
+      "pronunciation": "say luh koo duh FUH",
+      "context": "Cafe says this like a soldier describing a warzone -- in French cafe culture, rush hour is literally called 'the gunshot,' which tells you everything you need to know",
+      "correction": "\"Coup de feu\" literally means gunshot -- French kitchen slang for the peak rush. The other options are just describing how busy it is in regular words. This is THE term, the war cry. It's not just busy, it's a battlefield.",
+      "formality": "casual",
+      "wrong_answers_en": [
+        "It's the busiest we've been all week!",
+        "We have a big event today!",
+        "There's a line out the door!"
+      ],
+      "wrong_answers_native": [
+        "C'est la journée la plus chargée de la semaine!",
+        "On a un gros événement aujourd'hui!",
+        "Il y a la queue jusqu'à la porte!"
+      ]
+    },
+    {
+      "id": "fr_rush_5",
+      "language": "french",
+      "category": "handling_rush",
+      "french": "J'ai que deux mains!",
+      "english": "I only have two hands!",
+      "pronunciation": "zhay kuh duh MAHN",
+      "context": "Said with the dead-eyed stare of someone on their 12th hour -- Cafe holds up both hands as evidence while four people wave receipts at them",
+      "correction": "\"Deux mains\" -- two hands. It's a literal, exasperated statement about physical limitations. \"Je fais de mon mieux\" means I'm doing my best (too polite), \"un à la fois\" means one at a time (too organized), and \"patience est une vertu\" -- yeah, we're way past virtues.",
+      "formality": "casual",
+      "humor": true,
+      "wrong_answers_en": [
+        "I'm doing the best I can!",
+        "One at a time, please!",
+        "Patience is a virtue!"
+      ],
+      "wrong_answers_native": [
+        "Je fais de mon mieux!",
+        "Un à la fois, s'il vous plaît!",
+        "La patience est une vertu!"
+      ]
+    },
+    {
+      "id": "fr_sweet_1",
+      "language": "french",
+      "category": "sweet_talk",
+      "french": "Votre sourire illumine le café",
+      "english": "Your smile lights up the café",
+      "pronunciation": "votr soo-REER ee-loo-meen luh kah-FEH",
+      "context": "Bisou places one hand over their heart, voice trembling with emotion -- they genuinely believe every customer is the love of their life until the next one walks in",
+      "correction": "Oh mon coeur, \"sourire illumine\" means your smile literally lights up the room -- it is poetry! \"Ravissante\" just means you look lovely (flattering but common), and the others compliment the cafe or the customer's eyes. But the SMILE lighting up the cafe? That is romance, darling.",
+      "formality": "casual",
+      "wrong_answers_en": [
+        "You look lovely today!",
+        "The café looks beautiful tonight!",
+        "Your eyes sparkle like coffee!"
+      ],
+      "wrong_answers_native": [
+        "Vous êtes ravissante aujourd'hui!",
+        "Le café est magnifique ce soir!",
+        "Vos yeux brillent comme le café!"
+      ]
+    },
+    {
+      "id": "fr_sweet_2",
+      "language": "french",
+      "category": "sweet_talk",
+      "french": "Un café aussi doux que vous?",
+      "english": "A coffee as sweet as you?",
+      "pronunciation": "uhn kah-FEH oh-SEE doo kuh voo",
+      "context": "Delivered with a lingering gaze and a perfectly timed hair flip -- Bisou has been rehearsing this line since they opened this morning",
+      "correction": "\"Doux\" means sweet or gentle -- comparing the coffee's sweetness to the customer's. \"Fort que votre charme\" means strong as your charm (flirty, but different), \"sucre en plus\" is just offering extra sugar (how unromantic!), and \"quelque chose de sucré\" asks if they want something sweet. The metaphor, darling, is everything!",
+      "formality": "casual",
+      "humor": true,
+      "wrong_answers_en": [
+        "A coffee as strong as your charm?",
+        "A coffee with extra sugar for you?",
+        "Would you like something sweet?"
+      ],
+      "wrong_answers_native": [
+        "Un café aussi fort que votre charme?",
+        "Un café avec du sucre en plus?",
+        "Vous voulez quelque chose de sucré?"
+      ]
+    },
+    {
+      "id": "fr_sweet_3",
+      "language": "french",
+      "category": "sweet_talk",
+      "french": "C'est pour offrir?",
+      "english": "Is it a gift (for someone special)?",
+      "pronunciation": "say poor oh-FREER",
+      "context": "Bisou's eyes widen with the desperate hope that love is happening right here, right now, in their cafe -- every pastry box is a potential love letter in disguise",
+      "correction": "\"Offrir\" means to give as a gift -- there is love implied in every gift, non? \"Emporter\" is just takeaway (so cold!), \"vous faites plaisir\" means treating yourself (sweet but selfish), and \"emballage cadeau\" is asking about gift wrapping. We are asking about the LOVE behind the gift, not the packaging!",
+      "formality": "casual",
+      "wrong_answers_en": [
+        "Is this for takeaway?",
+        "Are you treating yourself?",
+        "Would you like it gift-wrapped?"
+      ],
+      "wrong_answers_native": [
+        "C'est pour emporter?",
+        "Vous vous faites plaisir?",
+        "Vous voulez un emballage cadeau?"
+      ]
+    },
+    {
+      "id": "fr_sweet_4",
+      "language": "french",
+      "category": "sweet_talk",
+      "french": "L'amour est dans l'air!",
+      "english": "Love is in the air!",
+      "pronunciation": "lah-MOOR eh dahn LAIR",
+      "context": "Bisou swoons dramatically while saying this, clutching the espresso machine for support -- two people made eye contact and that's basically a wedding in Bisou's world",
+      "correction": "\"L'amour dans l'air\" -- love, floating, invisible, everywhere! \"Beau couple\" comments on a specific pair, \"romance partout\" is too general, and \"ambiance romantique\" describes the setting. But love in the AIR, mon cher? That is universal, it is cosmic, it is Bisou's entire reason for being!",
+      "formality": "casual",
+      "wrong_answers_en": [
+        "What a beautiful couple!",
+        "Romance is everywhere today!",
+        "The atmosphere is so romantic!"
+      ],
+      "wrong_answers_native": [
+        "Quel beau couple!",
+        "La romance est partout aujourd'hui!",
+        "L'ambiance est si romantique!"
+      ]
+    },
+    {
+      "id": "fr_sweet_5",
+      "language": "french",
+      "category": "sweet_talk",
+      "french": "Fait avec amour!",
+      "english": "Made with love!",
+      "pronunciation": "feh ah-VEK ah-MOOR",
+      "context": "Bisou whispers this like a sacred vow while presenting a croissant on a napkin as if it were an engagement ring on a velvet pillow",
+      "correction": "\"Avec amour\" -- with love, the secret ingredient! \"Juste pour vous\" means just for you (flattering but ordinary), \"recette secrète\" means secret recipe (mysterious but loveless), and \"tout droit du coeur\" means straight from the heart. Close, but \"made with love\" is the purest declaration there is.",
+      "formality": "casual",
+      "wrong_answers_en": [
+        "Made fresh just for you!",
+        "Our secret recipe!",
+        "Straight from the heart!"
+      ],
+      "wrong_answers_native": [
+        "Préparé juste pour vous!",
+        "Notre recette secrète!",
+        "Tout droit du cœur!"
+      ]
+    },
+    {
+      "id": "fr_complaint_1",
+      "language": "french",
+      "category": "complaints_dept",
+      "french": "C'est pas ma faute!",
+      "english": "It's not my fault!",
+      "pronunciation": "say pah mah foht",
+      "context": "Gaston says this with the confidence of a man who has never once been wrong in his entire life -- the customer ordered badly, and that's simply not his problem",
+      "correction": "\"Pas ma faute\" -- not my fault. Beautiful in its simplicity and total lack of remorse. \"Désolé\" means sorry (absolutely not), \"je vais arranger ça\" means I'll fix it (why would I?), and \"chercher mon responsable\" means getting the manager. Please. The manager agrees with me.",
+      "formality": "casual",
+      "wrong_answers_en": [
+        "I'm sorry about that!",
+        "I'll fix it right away!",
+        "Let me get my manager!"
+      ],
+      "wrong_answers_native": [
+        "Je suis désolé pour ça!",
+        "Je vais arranger ça tout de suite!",
+        "Je vais chercher mon responsable!"
+      ]
+    },
+    {
+      "id": "fr_complaint_2",
+      "language": "french",
+      "category": "complaints_dept",
+      "french": "Vous voulez quoi au juste?",
+      "english": "What exactly do you want?",
+      "pronunciation": "voo voo-LAY kwah oh ZHOOST",
+      "context": "Gaston crosses his arms and stares like a disappointed parent -- this customer has changed their order three times and his patience left the building two orders ago",
+      "correction": "\"Au juste\" means exactly, precisely -- the verbal equivalent of a raised eyebrow. \"Comment arranger ça\" means how can I fix this (not my job), \"remboursement\" means refund (over my dead body), and \"proposer autre chose\" means suggesting alternatives. No. I want to know what you ACTUALLY want. Decide.",
+      "formality": "casual",
+      "humor": true,
+      "wrong_answers_en": [
+        "How can I make this right?",
+        "Would you like a refund?",
+        "Can I offer you something else?"
+      ],
+      "wrong_answers_native": [
+        "Comment puis-je arranger ça?",
+        "Voulez-vous un remboursement?",
+        "Puis-je vous proposer autre chose?"
+      ]
+    },
+    {
+      "id": "fr_complaint_3",
+      "language": "french",
+      "category": "complaints_dept",
+      "french": "C'est comme ça ici!",
+      "english": "That's how it is here!",
+      "pronunciation": "say kohm SAH ee-SEE",
+      "context": "Delivered with the contempt of a Michelin reviewer at a fast food joint -- Gaston gestures around the cafe like it's a cathedral and you just asked for ketchup",
+      "correction": "\"Comme ça ici\" -- that's how it is HERE, in this establishment, take it or leave it. \"On fait toujours comme ça\" means we always do it this way (too explanatory), \"spécialité maison\" is a house specialty (too friendly), and \"recette traditionnelle\" implies tradition. This isn't tradition. This is law.",
+      "formality": "casual",
+      "wrong_answers_en": [
+        "We always do it this way!",
+        "That's our house specialty!",
+        "This is a traditional recipe!"
+      ],
+      "wrong_answers_native": [
+        "On fait toujours comme ça!",
+        "C'est notre spécialité maison!",
+        "C'est une recette traditionnelle!"
+      ]
+    },
+    {
+      "id": "fr_complaint_4",
+      "language": "french",
+      "category": "complaints_dept",
+      "french": "Personne vous retient!",
+      "english": "Nobody's keeping you here!",
+      "pronunciation": "pair-SUHN voo ruh-TYAHN",
+      "context": "Gaston says this with a sneer that could curdle milk, already turning away before the customer can respond -- the door is right there, he's not going to miss you",
+      "correction": "\"Personne vous retient\" -- nobody is holding you back, the exit exists, use it. \"La porte est juste là\" points at the door (too helpful), \"libre de partir\" means free to leave (too polite), and \"on ne vous regrettera pas\" means we won't miss you. That last one is true, but I prefer the elegant dismissal.",
+      "formality": "casual",
+      "humor": true,
+      "wrong_answers_en": [
+        "The door is right there!",
+        "You're free to leave anytime!",
+        "We won't miss you!"
+      ],
+      "wrong_answers_native": [
+        "La porte est juste là!",
+        "Vous êtes libre de partir!",
+        "On ne vous regrettera pas!"
+      ]
+    },
+    {
+      "id": "fr_complaint_5",
+      "language": "french",
+      "category": "complaints_dept",
+      "french": "La prochaine fois, allez chez Starbucks!",
+      "english": "Next time, go to Starbucks!",
+      "pronunciation": "lah proh-SHEN fwah, ah-LAY shay star-BOOKS",
+      "context": "Gaston spits this out like the word 'Starbucks' physically wounds him -- in his world, suggesting someone go there is the nuclear option, the ultimate culinary insult",
+      "correction": "Sending someone to Starbucks is the gravest insult in French cafe culture. \"Le café d'en face\" means the place across the street (too mild), \"on espère vous revoir\" means we hope to see you again (never), and \"venez plus tôt\" means come earlier next time. No. I am banishing you to the land of pumpkin spice.",
+      "formality": "casual",
+      "humor": true,
+      "wrong_answers_en": [
+        "Maybe try the café across the street!",
+        "We hope to see you again!",
+        "Next time, come earlier for the best selection!"
+      ],
+      "wrong_answers_native": [
+        "Essayez le café d'en face!",
+        "On espère vous revoir bientôt!",
+        "La prochaine fois, venez plus tôt!"
+      ]
+    },
+    {
+      "id": "es_greet_formal_1",
+      "language": "spanish",
+      "category": "greetings_formal",
+      "spanish": "Buenos días, bienvenido a Gateaux",
+      "english": "Good morning, welcome to Gateaux",
+      "pronunciation": "BWAY-nohs DEE-ahs, bee-ehn-veh-NEE-doh ah gah-TOH",
+      "context": "Morning greeting",
+      "correction": "\"Buenos días\" is specifically a morning greeting. \"Buenas noches\" means good evening -- entirely the wrong time of day. The others ask about opening times or reservations, which are not greetings at all. One must welcome properly before anything else.",
+      "formality": "formal",
+      "wrong_answers_en": [
+        "Good evening, thanks for stopping by!",
+        "Good morning, the cafe opens at nine",
+        "Hello, do you have a reservation?"
+      ],
+      "wrong_answers_native": [
+        "Buenas noches, gracias por venir!",
+        "Buenos días, el café abre a las nueve",
+        "Hola, ¿tiene reservación?"
+      ]
+    },
+    {
+      "id": "es_greet_formal_2",
+      "language": "spanish",
+      "category": "greetings_formal",
+      "spanish": "¿En qué puedo ayudarle?",
+      "english": "How can I help you?",
+      "pronunciation": "ehn KEH PWAY-doh ah-yoo-DAHR-leh",
+      "context": "Offering help formally",
+      "correction": "\"Ayudarle\" means to help you -- a respectful, open offer using the formal \"le.\" \"Ordenar\" jumps to ordering, \"busca algo\" implies they're lost, and offering to take a coat is presumptuous. A gracious host offers help first, then follows the guest's lead.",
+      "formality": "formal",
+      "wrong_answers_en": [
+        "What would you like to order?",
+        "Are you looking for something specific?",
+        "May I take your coat?"
+      ],
+      "wrong_answers_native": [
+        "¿Qué desea ordenar?",
+        "¿Busca algo en particular?",
+        "¿Puedo tomar su abrigo?"
+      ]
+    },
+    {
+      "id": "es_greet_formal_3",
+      "language": "spanish",
+      "category": "greetings_formal",
+      "spanish": "¿Qué desea tomar?",
+      "english": "What would you like to have?",
+      "pronunciation": "KEH deh-SEH-ah toh-MAHR",
+      "context": "Taking order politely",
+      "correction": "\"Desea tomar\" elegantly asks what one wishes to have -- \"desea\" implies desire, a refined word choice. \"Ya eligió\" asks if they've chosen (rushing them), \"probar nuestro especial\" pushes the daily special, and \"recomendarle\" offers a recommendation. None simply ask what they would like.",
+      "formality": "formal",
+      "wrong_answers_en": [
+        "Have you chosen something yet?",
+        "Would you like to try our special?",
+        "Can I recommend something?"
+      ],
+      "wrong_answers_native": [
+        "¿Ya eligió algo?",
+        "¿Le gustaría probar nuestro especial?",
+        "¿Puedo recomendarle algo?"
+      ]
+    },
+    {
+      "id": "es_greet_formal_4",
+      "language": "spanish",
+      "category": "greetings_formal",
+      "spanish": "¿Algo más?",
+      "english": "Anything else?",
+      "pronunciation": "AHL-goh MAHS",
+      "context": "Checking for additional orders",
+      "correction": "\"Algo más\" means anything more -- a concise, polished check. \"Eso es todo\" asks if that's everything (close but reversed in direction), \"otra taza\" offers a refill, and \"la cuenta\" brings the check. We are inviting additions, not closing out the order.",
+      "formality": "formal",
+      "wrong_answers_en": [
+        "Is that everything?",
+        "Would you like a refill?",
+        "Can I bring the check?"
+      ],
+      "wrong_answers_native": [
+        "¿Eso es todo?",
+        "¿Desea otra taza?",
+        "¿Le traigo la cuenta?"
+      ]
+    },
+    {
+      "id": "es_greet_formal_5",
+      "language": "spanish",
+      "category": "greetings_formal",
+      "spanish": "Que tenga un buen día",
+      "english": "Have a good day",
+      "pronunciation": "keh TEHN-gah oon bwehn DEE-ah",
+      "context": "Polite farewell",
+      "correction": "\"Que tenga un buen día\" wishes someone well as they depart -- a proper formal farewell. \"Hasta mañana\" assumes they'll return tomorrow, \"vuelva pronto\" asks them to come back soon, and \"gracias por su visita\" thanks them for the visit. A refined farewell simply wishes them well.",
+      "formality": "formal",
+      "wrong_answers_en": [
+        "See you tomorrow!",
+        "Please come back soon!",
+        "Thank you for your visit!"
+      ],
+      "wrong_answers_native": [
+        "¡Hasta mañana!",
+        "¡Vuelva pronto!",
+        "¡Gracias por su visita!"
+      ]
+    },
+    {
+      "id": "es_greet_casual_1",
+      "language": "spanish",
+      "category": "greetings_casual",
+      "spanish": "¿Qué onda?",
+      "english": "What's up?",
+      "pronunciation": "keh OHN-dah",
+      "context": "Marcel throws this out like a challenge -- forget the textbook, this is Mexico City street talk",
+      "correction": "\"Qué onda\" literally means \"what wave\" -- pure Mexican slang for what's up. \"Cómo va todo\" is how's everything (too proper), \"qué pasa\" is what's happening (closer but still textbook), and \"cómo estás\" is how are you (your abuela says that). Level up, kid.",
+      "formality": "slang",
+      "wrong_answers_en": [
+        "How's everything?",
+        "What's going on today?",
+        "Hey, how are you?"
+      ],
+      "wrong_answers_native": [
+        "¿Cómo va todo?",
+        "¿Qué pasa hoy?",
+        "Oye, ¿cómo estás?"
+      ]
+    },
+    {
+      "id": "es_greet_casual_2",
+      "language": "spanish",
+      "category": "greetings_casual",
+      "spanish": "¿Qué te sirvo?",
+      "english": "What can I get you?",
+      "pronunciation": "keh teh SEER-voh",
+      "context": "Marcel taps the counter impatiently -- he doesn't need a menu, he doesn't need formalities, just tell him what you want and watch the magic happen",
+      "correction": "\"Sirvo\" means I serve you -- direct, no-nonsense. \"Se te antoja\" means what are you craving (too wishy-washy), \"ya decidiste\" means have you decided (too pushy), and \"que te sorprenda\" means want me to surprise you (too dramatic). Just tell me what you want, I'll make it.",
+      "formality": "casual",
+      "wrong_answers_en": [
+        "What are you in the mood for?",
+        "Have you decided yet?",
+        "Want me to surprise you?"
+      ],
+      "wrong_answers_native": [
+        "¿Qué se te antoja?",
+        "¿Ya decidiste?",
+        "¿Quieres que te sorprenda?"
+      ]
+    },
+    {
+      "id": "es_greet_casual_3",
+      "language": "spanish",
+      "category": "greetings_casual",
+      "spanish": "¿Lo de siempre?",
+      "english": "The usual?",
+      "pronunciation": "loh deh see-EHM-preh",
+      "context": "Marcel is already reaching for your cup before you sit down -- knowing a regular's order by heart is peak street cred in the barista world",
+      "correction": "\"Lo de siempre\" means \"the thing from always\" -- your usual order. \"Mañana a la misma hora\" is about tomorrow's schedule, \"mesa favorita\" is about your table, and \"algo nuevo\" asks about trying something new. We're talking about your ORDER, not your seat or your schedule.",
+      "formality": "casual",
+      "wrong_answers_en": [
+        "Same time tomorrow?",
+        "Your favorite table is ready!",
+        "Trying something new today?"
+      ],
+      "wrong_answers_native": [
+        "¿Mañana a la misma hora?",
+        "¡Tu mesa favorita está lista!",
+        "¿Algo nuevo hoy?"
+      ]
+    },
+    {
+      "id": "es_greet_casual_4",
+      "language": "spanish",
+      "category": "greetings_casual",
+      "spanish": "¿Qué tal, compa?",
+      "english": "How's it going, buddy?",
+      "pronunciation": "keh tahl, KOHM-pah",
+      "context": "Marcel does a little fist bump as he says this -- 'compa' is short for 'compadre' and using it means you're basically family now, no take-backs",
+      "correction": "\"Compa\" is short for \"compadre\" -- basically brother-from-another-mother energy. \"Amigo\" is just friend (basic), \"cuate\" is buddy in Mexico City slang (close but different flavor), and \"carnal\" means blood brother (too intense for a greeting). \"Compa\" hits that sweet spot of street-level family.",
+      "formality": "slang",
+      "wrong_answers_en": [
+        "Hey there, friend!",
+        "What's new, pal?",
+        "Good to see you, mate!"
+      ],
+      "wrong_answers_native": [
+        "¡Hola, amigo!",
+        "¿Qué hay de nuevo, cuate?",
+        "¡Qué gusto verte, carnal!"
+      ]
+    },
+    {
+      "id": "es_greet_casual_5",
+      "language": "spanish",
+      "category": "greetings_casual",
+      "spanish": "Ahí nos vemos",
+      "english": "See you around",
+      "pronunciation": "ah-EE nohs VEH-mohs",
+      "context": "Marcel throws up a peace sign without breaking stride -- this is how cool people say goodbye, not that stiff 'hasta luego' from your phrasebook",
+      "correction": "\"Ahí nos vemos\" literally means \"there we'll see each other\" -- super casual, no commitment, just vibes. \"Nos vemos luego\" is see you later (too specific), \"hasta la próxima\" is until next time (too formal), and \"cuídate mucho\" means take care (that's what your mom says).",
+      "formality": "casual",
+      "wrong_answers_en": [
+        "Catch you later!",
+        "Until next time!",
+        "Take it easy!"
+      ],
+      "wrong_answers_native": [
+        "¡Nos vemos luego!",
+        "¡Hasta la próxima!",
+        "¡Cuídate mucho!"
+      ]
+    },
+    {
+      "id": "es_order_formal_1",
+      "language": "spanish",
+      "category": "taking_orders",
+      "spanish": "¿Prefiere café o té?",
+      "english": "Do you prefer coffee or tea?",
+      "pronunciation": "preh-fee-EH-reh kah-FEH oh TEH",
+      "context": "Beverage choice",
+      "correction": "\"Prefiere\" asks for a preference between two specific options: coffee or tea. Asking about hot versus cold, offering juice, or inquiring about food are all entirely different questions. Present the choices clearly and let the customer decide.",
+      "formality": "formal",
+      "wrong_answers_en": [
+        "Would you like a hot or cold drink?",
+        "Can I offer you some juice?",
+        "Do you want something to eat?"
+      ],
+      "wrong_answers_native": [
+        "¿Quiere algo caliente o frío?",
+        "¿Le ofrezco un jugo?",
+        "¿Desea algo de comer?"
+      ]
+    },
+    {
+      "id": "es_order_formal_2",
+      "language": "spanish",
+      "category": "taking_orders",
+      "spanish": "¿Con leche o sin leche?",
+      "english": "With or without milk?",
+      "pronunciation": "kohn LEH-cheh oh seen LEH-cheh",
+      "context": "Coffee customization",
+      "correction": "\"Leche\" is milk -- \"con\" means with, \"sin\" means without. \"Azúcar\" is sugar, \"miel\" is honey, \"helado\" means iced, and \"descafeinado\" means decaf. Each is a different customization. One must not confuse milk with sugar -- they are separate conversations entirely.",
+      "formality": "formal",
+      "wrong_answers_en": [
+        "Do you want sugar or honey?",
+        "Would you like it iced?",
+        "Regular or decaf?"
+      ],
+      "wrong_answers_native": [
+        "¿Con azúcar o miel?",
+        "¿Lo quiere helado?",
+        "¿Regular o descafeinado?"
+      ]
+    },
+    {
+      "id": "es_order_formal_3",
+      "language": "spanish",
+      "category": "taking_orders",
+      "spanish": "¿Para aquí o para llevar?",
+      "english": "For here or to go?",
+      "pronunciation": "PAH-rah ah-KEE oh PAH-rah yeh-VAHR",
+      "context": "Dining preference",
+      "correction": "\"Para aquí\" means for here, \"para llevar\" means to carry away. Asking about inside versus outside seating, table size, or gift wrapping are all separate matters. This question is solely about whether the order stays or goes.",
+      "formality": "formal",
+      "wrong_answers_en": [
+        "Would you like to sit inside or outside?",
+        "Table for one or two?",
+        "Should I wrap it up for you?"
+      ],
+      "wrong_answers_native": [
+        "¿Quiere sentarse adentro o afuera?",
+        "¿Mesa para uno o dos?",
+        "¿Se lo envuelvo?"
+      ]
+    },
+    {
+      "id": "es_order_formal_4",
+      "language": "spanish",
+      "category": "taking_orders",
+      "spanish": "Son 4 dólares, por favor",
+      "english": "That's 4 dollars, please",
+      "pronunciation": "sohn KWAH-troh DOH-lah-rehs, pohr fah-VOHR",
+      "context": "Stating price",
+      "correction": "\"Son 4 dólares\" states the exact total -- clear and precise. Saying 6 dollars is the wrong amount, mentioning included tax adds information that was not stated, and asking about card payment is a different question entirely. State the price, nothing more.",
+      "formality": "formal",
+      "wrong_answers_en": [
+        "Your total is 6 dollars",
+        "That's 4 dollars with tax included",
+        "Would you like to pay by card?"
+      ],
+      "wrong_answers_native": [
+        "Su total es de 6 dólares",
+        "Son 4 dólares con impuesto incluido",
+        "¿Desea pagar con tarjeta?"
+      ]
+    },
+    {
+      "id": "es_order_formal_5",
+      "language": "spanish",
+      "category": "taking_orders",
+      "spanish": "Aquí tiene su cambio",
+      "english": "Here's your change",
+      "pronunciation": "ah-KEE tee-EH-neh soo KAHM-bee-oh",
+      "context": "Returning change",
+      "correction": "\"Cambio\" means change -- the coins returned from payment. \"Recibo\" is a receipt, \"orden sale enseguida\" means the order is coming right out, and \"tome asiento\" means please have a seat. One hands back money, not paper, and certainly not directions to a chair.",
+      "formality": "formal",
+      "wrong_answers_en": [
+        "Here's your receipt",
+        "Your order will be right out",
+        "Please take a seat"
+      ],
+      "wrong_answers_native": [
+        "Aquí tiene su recibo",
+        "Su orden sale enseguida",
+        "Por favor, tome asiento"
+      ]
+    },
+    {
+      "id": "es_slang_1",
+      "language": "spanish",
+      "category": "cafe_slang",
+      "spanish": "Un cafecito bien cargado",
+      "english": "A nice strong little coffee",
+      "pronunciation": "oon kah-feh-SEE-toh bee-ehn kahr-GAH-doh",
+      "context": "Marcel grins and flexes -- 'cafecito' sounds cute but 'bien cargado' means this thing could wake up a corpse, and that's exactly how the streets like it",
+      "correction": "\"Cargado\" means loaded, strong -- the opposite of weak. \"Con mucha leche\" means lots of milk (that's a latte, bro), \"ligero y suave\" means light and smooth (the exact opposite), and \"descafeinado\" is decaf (don't even get me started). A cafecito cargado punches you awake.",
+      "formality": "casual",
+      "wrong_answers_en": [
+        "A small coffee with lots of milk",
+        "A light and easy morning brew",
+        "A fresh pot of decaf"
+      ],
+      "wrong_answers_native": [
+        "Un cafecito con mucha leche",
+        "Un café ligero y suave",
+        "Una jarra de descafeinado"
+      ]
+    },
+    {
+      "id": "es_slang_2",
+      "language": "spanish",
+      "category": "cafe_slang",
+      "spanish": "¡Está buenísimo!",
+      "english": "It's really good!",
+      "pronunciation": "ehs-TAH bweh-NEE-see-moh",
+      "context": "Marcel throws both hands up like a soccer announcer after a goal -- that '-ísimo' ending is how you crank any compliment up to eleven on the streets",
+      "correction": "That \"-ísimo\" suffix takes \"bueno\" (good) and cranks it to REALLY good. \"Muy caliente\" means very hot (temperature, not quality), \"demasiado dulce\" means too sweet (that's a complaint!), and \"el mejor que he probado\" means the best I've ever had (close but way too wordy). Keep it short, keep it hype.",
+      "formality": "casual",
+      "wrong_answers_en": [
+        "It's extremely hot!",
+        "It's way too sweet!",
+        "It's the best I've ever had!"
+      ],
+      "wrong_answers_native": [
+        "¡Está muy caliente!",
+        "¡Está demasiado dulce!",
+        "¡Es el mejor que he probado!"
+      ]
+    },
+    {
+      "id": "es_slang_3",
+      "language": "spanish",
+      "category": "cafe_slang",
+      "spanish": "¿Tienes hambre?",
+      "english": "You hungry?",
+      "pronunciation": "tee-EH-nehs AHM-breh",
+      "context": "Marcel nudges the pastry case with his elbow -- notice the 'tú' form, not 'usted,' because Marcel doesn't do formal with anyone, ever",
+      "correction": "\"Hambre\" means hunger -- straight up, are you hungry. \"Sed\" means thirsty (wrong need), \"pastelito\" is offering a specific pastry (jumping ahead), and \"probado nuestro pastel\" asks if you've tried our cake (that's a sales pitch). We're just checking if your stomach's talking.",
+      "formality": "casual",
+      "wrong_answers_en": [
+        "Are you thirsty?",
+        "Do you want a pastry?",
+        "Have you tried our cake?"
+      ],
+      "wrong_answers_native": [
+        "¿Tienes sed?",
+        "¿Quieres un pastelito?",
+        "¿Has probado nuestro pastel?"
+      ]
+    },
+    {
+      "id": "es_slang_4",
+      "language": "spanish",
+      "category": "cafe_slang",
+      "spanish": "¡Órale, ahí va!",
+      "english": "Alright, here it goes!",
+      "pronunciation": "OH-rah-leh, ah-EE vah",
+      "context": "Marcel claps once and spins toward the machine -- 'órale' is the Swiss Army knife of Mexican slang, and Marcel uses it for everything from 'cool' to 'let's go' to 'watch this'",
+      "correction": "\"Órale\" is pure Mexican energy -- it means everything from \"let's go\" to \"wow\" to \"alright then.\" \"Okey\" is borrowed English (boring), \"claro\" means of course (too polite), and \"listo\" means ready (too calm). \"Órale\" comes with a clap and a spin, it's a MOOD.",
+      "formality": "slang",
+      "wrong_answers_en": [
+        "Okay, coming right up!",
+        "Sure thing, on its way!",
+        "Got it, give me a minute!"
+      ],
+      "wrong_answers_native": [
+        "¡Okey, ya sale!",
+        "¡Claro, en camino!",
+        "¡Listo, dame un minuto!"
+      ]
+    },
+    {
+      "id": "es_slang_5",
+      "language": "spanish",
+      "category": "cafe_slang",
+      "spanish": "¡Qué rico!",
+      "english": "How delicious!",
+      "pronunciation": "keh REE-koh",
+      "context": "Marcel kisses his fingertips like a chef -- this makes you sound like you grew up eating abuela's cooking instead of reading about it",
+      "correction": "\"Rico\" means delicious, tasty -- it's the go-to word for good food on the street. \"Maravilla\" means wonderful (too general), \"qué bien huele\" means it smells great (nose, not tongue), and \"buena receta\" means good recipe (you sound like a food critic, not a real person). Just say \"qué rico\" and kiss your fingers.",
+      "formality": "casual",
+      "wrong_answers_en": [
+        "How wonderful!",
+        "That smells amazing!",
+        "What a great recipe!"
+      ],
+      "wrong_answers_native": [
+        "¡Qué maravilla!",
+        "¡Qué bien huele!",
+        "¡Qué buena receta!"
+      ]
+    },
+    {
+      "id": "es_rush_1",
+      "language": "spanish",
+      "category": "handling_rush",
+      "spanish": "¡Un momentito!",
+      "english": "Just a moment!",
+      "pronunciation": "oon moh-mehn-TEE-toh",
+      "context": "Cafe hisses this through a forced smile while balancing two trays and a shattered sense of self-worth -- the diminutive '-ito' makes it sound cute but the desperation is real",
+      "correction": "\"Momentito\" -- the \"-ito\" makes it sound tiny, adorable, like it'll be quick. Lies. \"Espere su turno\" means wait your turn (too bossy), \"ya lo atiendo\" means I'll help you soon (too committal), and \"no se vaya\" means don't leave (too desperate). \"Momentito\" buys time while sounding cute.",
+      "formality": "casual",
+      "wrong_answers_en": [
+        "Please wait your turn!",
+        "I'll be right with you!",
+        "Hold on, don't go!"
+      ],
+      "wrong_answers_native": [
+        "¡Espere su turno!",
+        "¡Ya lo atiendo!",
+        "¡Espere, no se vaya!"
+      ]
+    },
+    {
+      "id": "es_rush_2",
+      "language": "spanish",
+      "category": "handling_rush",
+      "spanish": "¡Se descompuso la máquina!",
+      "english": "The machine broke down!",
+      "pronunciation": "seh dehs-kohm-poo-SOH lah MAH-kee-nah",
+      "context": "Cafe stares at the dead espresso machine like a surgeon who just lost a patient -- this is the third time this week and they're starting to take it personally",
+      "correction": "\"Se descompuso\" means it broke, it died, it's done. \"Sobrecalentando\" means overheating (still alive), \"se acabaron los granos\" means we ran out of beans (supply issue, not mechanical death), and \"se fue la luz\" means the power went out. The machine isn't tired or empty. It's DEAD.",
+      "formality": "casual",
+      "wrong_answers_en": [
+        "The machine is overheating!",
+        "We ran out of coffee beans!",
+        "The power went out!"
+      ],
+      "wrong_answers_native": [
+        "¡La máquina se está sobrecalentando!",
+        "¡Se nos acabaron los granos!",
+        "¡Se fue la luz!"
+      ]
+    },
+    {
+      "id": "es_rush_3",
+      "language": "spanish",
+      "category": "handling_rush",
+      "spanish": "¡Estamos hasta el tope!",
+      "english": "We're packed!",
+      "pronunciation": "ehs-TAH-mohs AHS-tah ehl TOH-peh",
+      "context": "Cafe gestures at the chaos around them with the hollow laugh of someone who stopped feeling things three hours ago -- 'hasta el tope' means filled to the absolute brim, just like their will to quit",
+      "correction": "\"Hasta el tope\" means filled to the very top, overflowing. \"Casi se acaba todo\" means almost sold out (supply problem), \"a tope de capacidad\" means at full capacity (too official), and \"ya no hay lugar\" means no more room (just about seating). We're not out of space, we're drowning in chaos.",
+      "formality": "casual",
+      "wrong_answers_en": [
+        "We're almost sold out!",
+        "We're at full capacity!",
+        "There's no more room!"
+      ],
+      "wrong_answers_native": [
+        "¡Ya casi se nos acaba todo!",
+        "¡Estamos a tope de capacidad!",
+        "¡Ya no hay lugar!"
+      ]
+    },
+    {
+      "id": "es_rush_4",
+      "language": "spanish",
+      "category": "handling_rush",
+      "spanish": "¡Es hora pico!",
+      "english": "It's rush hour!",
+      "pronunciation": "ehs OH-rah PEE-koh",
+      "context": "Cafe announces this to no one in particular, like a weather report for suffering -- 'hora pico' is when every human in the city decides they need caffeine at the exact same time",
+      "correction": "\"Hora pico\" -- peak hour, the specific term for rush hour. \"El momento más ocupado\" is just describing how busy it is (too many words), \"todos vienen a esta hora\" explains why (I don't need explanations, I need help), and \"prisa mañanera\" means morning rush (too poetic). Hora pico. Two words. Maximum suffering.",
+      "formality": "casual",
+      "wrong_answers_en": [
+        "It's our busiest time of day!",
+        "Everyone comes at this time!",
+        "The morning rush is insane!"
+      ],
+      "wrong_answers_native": [
+        "¡Es el momento más ocupado del día!",
+        "¡Todos vienen a esta hora!",
+        "¡La prisa mañanera es una locura!"
+      ]
+    },
+    {
+      "id": "es_rush_5",
+      "language": "spanish",
+      "category": "handling_rush",
+      "spanish": "¡No tengo ocho manos!",
+      "english": "I don't have eight hands!",
+      "pronunciation": "noh TEHN-goh OH-choh MAH-nohs",
+      "context": "Cafe snaps this while simultaneously steaming milk, taking payment, and questioning every life choice that led to this moment -- eight hands wouldn't even be enough at this point",
+      "correction": "EIGHT hands -- not two, EIGHT. That's how bad it is. \"Una cosa a la vez\" means one thing at a time (too reasonable), \"lo más rápido posible\" means as fast as I can (too professional), and \"solo hay uno de mí\" means there's only one of me (too philosophical). I need to be an octopus. That's the point.",
+      "formality": "casual",
+      "humor": true,
+      "wrong_answers_en": [
+        "I can only do one thing at a time!",
+        "I'm working as fast as I can!",
+        "There's only one of me!"
+      ],
+      "wrong_answers_native": [
+        "¡Solo puedo hacer una cosa a la vez!",
+        "¡Estoy trabajando lo más rápido posible!",
+        "¡Solo hay uno de mí!"
+      ]
+    },
+    {
+      "id": "es_sweet_1",
+      "language": "spanish",
+      "category": "sweet_talk",
+      "spanish": "Tu sonrisa alegra el café",
+      "english": "Your smile brightens the café",
+      "pronunciation": "too sohn-REE-sah ah-LEH-grah ehl kah-FEH",
+      "context": "Bisou clasps both hands together and sighs like a telenovela protagonist seeing their love interest walk through the door for the first time -- again, for the fifth time today",
+      "correction": "\"Sonrisa alegra\" -- your smile brings joy to the entire cafe! \"Haces que se vea bien\" means you make it look good (so shallow!), \"tu ropa combina\" compliments their outfit matching the decor (are we decorators now?), and \"mejor contigo\" means better with you here. Only \"sonrisa alegra\" captures that your smile IS the sunshine, mi amor!",
+      "formality": "casual",
+      "wrong_answers_en": [
+        "You make this place look good!",
+        "Your outfit matches our decor!",
+        "The café is better with you here!"
+      ],
+      "wrong_answers_native": [
+        "¡Haces que este lugar se vea bien!",
+        "¡Tu ropa combina con la decoración!",
+        "¡El café es mejor contigo aquí!"
+      ]
+    },
+    {
+      "id": "es_sweet_2",
+      "language": "spanish",
+      "category": "sweet_talk",
+      "spanish": "¿Un café tan dulce como tú?",
+      "english": "A coffee as sweet as you?",
+      "pronunciation": "oon kah-FEH tahn DOOL-seh KOH-moh too",
+      "context": "Bisou leans on the counter with their chin on their palm, batting their eyelashes -- they have used this line on every single customer today and it works every single time",
+      "correction": "\"Dulce como tú\" -- sweet like YOU, the most beautiful comparison! \"Caliente como tú\" means hot like you (too forward, even for me!), \"azúcar extra\" is just offering more sugar (how tragically literal), and \"algo dulce para comer\" asks about sweet food. We are comparing your sweetness to coffee, darling, not managing a sugar bowl!",
+      "formality": "casual",
+      "humor": true,
+      "wrong_answers_en": [
+        "A coffee as hot as you?",
+        "Extra sugar in your coffee?",
+        "Do you want something sweet to eat?"
+      ],
+      "wrong_answers_native": [
+        "¿Un café tan caliente como tú?",
+        "¿Azúcar extra en tu café?",
+        "¿Quieres algo dulce para comer?"
+      ]
+    },
+    {
+      "id": "es_sweet_3",
+      "language": "spanish",
+      "category": "sweet_talk",
+      "spanish": "¿Es para alguien especial?",
+      "english": "Is it for someone special?",
+      "pronunciation": "ehs PAH-rah AHL-gee-ehn ehs-peh-see-AHL",
+      "context": "Bisou wiggles their eyebrows knowingly -- someone ordered two pastries and Bisou is already mentally writing their love story and picking out wedding flowers",
+      "correction": "\"Alguien especial\" -- someone SPECIAL, with a capital S and a heart-shaped dot! \"Un regalo\" just asks if it's a gift (no romance implied!), \"esperas a alguien\" asks if they're waiting for someone (too practical), and \"celebración\" asks about an event. But \"someone special\"... that is where love stories begin, no?",
+      "formality": "casual",
+      "wrong_answers_en": [
+        "Is this a gift?",
+        "Are you expecting someone?",
+        "Is it for a celebration?"
+      ],
+      "wrong_answers_native": [
+        "¿Es un regalo?",
+        "¿Esperas a alguien?",
+        "¿Es para una celebración?"
+      ]
+    },
+    {
+      "id": "es_sweet_4",
+      "language": "spanish",
+      "category": "sweet_talk",
+      "spanish": "¡El amor está en el aire!",
+      "english": "Love is in the air!",
+      "pronunciation": "ehl ah-MOHR ehs-TAH ehn ehl AHY-reh",
+      "context": "Bisou throws their arms wide and spins like they're in a musical number -- a couple just shared a scone and Bisou is emotionally devastated by the beauty of it all",
+      "correction": "\"El amor en el aire\" -- love, floating all around us, invisible but oh so real! \"Linda pareja\" just comments on a cute couple (too specific!), \"romance florece\" means romance blooms (poetic but earthbound), and \"pasteles frescos\" is about pastry smells (have you no soul?!). Love is in the AIR, it belongs to everyone!",
+      "formality": "casual",
+      "wrong_answers_en": [
+        "What a lovely couple you are!",
+        "Romance is blooming today!",
+        "The air smells like fresh pastries!"
+      ],
+      "wrong_answers_native": [
+        "¡Qué linda pareja hacen!",
+        "¡El romance florece hoy!",
+        "¡El aire huele a pasteles frescos!"
+      ]
+    },
+    {
+      "id": "es_sweet_5",
+      "language": "spanish",
+      "category": "sweet_talk",
+      "spanish": "¡Hecho con cariño!",
+      "english": "Made with love!",
+      "pronunciation": "EH-choh kohn kah-REE-nyoh",
+      "context": "Bisou presents the coffee cup with both hands like an offering to the gods of romance, eyes glistening -- every drink they make is a tiny love poem poured into ceramic",
+      "correction": "\"Cariño\" means affection, tenderness, love -- the secret ingredient in everything beautiful! \"Desde cero\" means from scratch (technical, cold), \"receta especial del chef\" credits the chef (but the LOVE is from Bisou!), and \"recién salido del horno\" means fresh from the oven. Anyone can bake. Only Bisou bakes with cariño.",
+      "formality": "casual",
+      "wrong_answers_en": [
+        "Made from scratch!",
+        "Our chef's special recipe!",
+        "Fresh out of the oven!"
+      ],
+      "wrong_answers_native": [
+        "¡Hecho desde cero!",
+        "¡La receta especial del chef!",
+        "¡Recién salido del horno!"
+      ]
+    },
+    {
+      "id": "es_complaint_1",
+      "language": "spanish",
+      "category": "complaints_dept",
+      "spanish": "¡No es mi culpa!",
+      "english": "It's not my fault!",
+      "pronunciation": "noh ehs mee KOOL-pah",
+      "context": "Gaston shrugs with the theatrical indifference of a cat knocking a glass off a table -- your coffee is wrong because YOUR taste buds are wrong, obviously",
+      "correction": "\"No es mi culpa\" -- not my fault, end of discussion. \"Pido disculpas\" means I apologize (I'd sooner eat instant coffee), \"yo me encargo\" means I'll take care of it (why?), and \"déjeme prepararle otro\" means let me make another one. The original was perfect. The problem is you.",
+      "formality": "casual",
+      "wrong_answers_en": [
+        "I apologize for the mistake!",
+        "I'll take care of it!",
+        "Let me make a new one!"
+      ],
+      "wrong_answers_native": [
+        "¡Pido disculpas por el error!",
+        "¡Yo me encargo!",
+        "¡Déjeme prepararle otro!"
+      ]
+    },
+    {
+      "id": "es_complaint_2",
+      "language": "spanish",
+      "category": "complaints_dept",
+      "spanish": "¿Qué quiere exactamente?",
+      "english": "What exactly do you want?",
+      "pronunciation": "keh kee-EH-reh ehk-sahk-tah-MEHN-teh",
+      "context": "Gaston pinches the bridge of his nose like he's developing a migraine in real time -- this customer has been describing their ideal coffee for four minutes and counting",
+      "correction": "\"Exactamente\" -- the word that separates vague complaints from actionable requests. \"Cómo puedo arreglarlo\" means how can I fix it (fix what? you haven't told me), \"hablar con el gerente\" means talk to the manager (I AM the standard here), and \"ofrecerle un reemplazo\" means offering a replacement. Replace WHAT? Just tell me what you want.",
+      "formality": "casual",
+      "humor": true,
+      "wrong_answers_en": [
+        "How can I fix this for you?",
+        "Would you like to speak to the manager?",
+        "Can I offer you a replacement?"
+      ],
+      "wrong_answers_native": [
+        "¿Cómo puedo arreglarlo?",
+        "¿Quiere hablar con el gerente?",
+        "¿Puedo ofrecerle un reemplazo?"
+      ]
+    },
+    {
+      "id": "es_complaint_3",
+      "language": "spanish",
+      "category": "complaints_dept",
+      "spanish": "¡Así son las cosas aquí!",
+      "english": "That's how things are here!",
+      "pronunciation": "ah-SEE sohn lahs KOH-sahs ah-KEE",
+      "context": "Gaston slams a palm on the counter like a judge delivering a verdict -- this cafe has standards, and if you wanted it 'your way' you should have gone to a drive-through",
+      "correction": "\"Así son las cosas aquí\" -- this is how it IS, not how it could be, not how you want it. \"Hacemos las cosas diferente\" means we do things differently (too explanatory), \"nuestra tradición\" means our tradition (too sentimental), and \"siempre lo hemos hecho así\" means we've always done it this way. I don't need to justify it. It simply IS.",
+      "formality": "casual",
+      "wrong_answers_en": [
+        "We do things differently here!",
+        "That's our tradition!",
+        "This is how we've always done it!"
+      ],
+      "wrong_answers_native": [
+        "¡Aquí hacemos las cosas diferente!",
+        "¡Es nuestra tradición!",
+        "¡Siempre lo hemos hecho así!"
+      ]
+    },
+    {
+      "id": "es_complaint_4",
+      "language": "spanish",
+      "category": "complaints_dept",
+      "spanish": "¡Nadie lo obliga a quedarse!",
+      "english": "Nobody's forcing you to stay!",
+      "pronunciation": "NAH-dee-eh loh oh-BLEE-gah ah keh-DAHR-seh",
+      "context": "Gaston gestures toward the exit with the grace of a matador waving a cape -- delivered with a thin smile that says 'I will personally hold the door open for you'",
+      "correction": "\"Nadie lo obliga\" -- nobody is FORCING you. The emphasis on force makes it beautifully passive-aggressive. \"Puede irse\" means you can leave (too direct), \"la salida está por allá\" points to the exit (too helpful), and \"no se lo tomaremos a mal\" means we won't hold it against you. Oh, we will. But that's beside the point.",
+      "formality": "casual",
+      "humor": true,
+      "wrong_answers_en": [
+        "You're welcome to leave anytime!",
+        "The exit is right over there!",
+        "We won't hold it against you!"
+      ],
+      "wrong_answers_native": [
+        "¡Puede irse cuando quiera!",
+        "¡La salida está por allá!",
+        "¡No se lo tomaremos a mal!"
+      ]
+    },
+    {
+      "id": "es_complaint_5",
+      "language": "spanish",
+      "category": "complaints_dept",
+      "spanish": "¡La próxima vaya a Starbucks!",
+      "english": "Next time go to Starbucks!",
+      "pronunciation": "lah PROHK-see-mah VAH-yah ah star-BOOKS",
+      "context": "Gaston hisses 'Starbucks' the way a vampire hisses at garlic -- this is his final form, the ultimate dismissal, reserved for customers who commit crimes against coffee culture",
+      "correction": "The Starbucks banishment -- the nuclear option. \"El lugar de al lado\" means the place next door (too close for comfort, I don't want them nearby), \"esperamos que haya disfrutado\" means we hope you enjoyed it (we don't), and \"pida algo más sencillo\" means order something simpler next time. No. Go to Starbucks. You deserve each other.",
+      "formality": "casual",
+      "humor": true,
+      "wrong_answers_en": [
+        "Maybe try the place next door!",
+        "We hope you enjoyed your visit!",
+        "Next time, order something simpler!"
+      ],
+      "wrong_answers_native": [
+        "¡Pruebe el lugar de al lado!",
+        "¡Esperamos que haya disfrutado!",
+        "¡La próxima pida algo más sencillo!"
+      ]
+    },
+
+    { "id": "fr_farewell_1", "language": "french", "category": "farewells",
+      "french": "Au revoir et bonne continuation!",
+      "english": "Goodbye and all the best!",
+      "pronunciation": "oh ruh-VWAHR ay bun kohn-tee-noo-ah-see-OHN",
+      "context": "Amélie clasps her hands together and gives a small bow -- this is not merely goodbye, it is a benediction, a wish for good fortune on the road ahead",
+      "correction": "\"Bonne continuation\" wishes someone well on their ongoing journey -- it implies they have somewhere to be and things to accomplish. \"À demain\" assumes you'll see them tomorrow, \"bonne chance\" is just good luck, and \"passez une bonne soirée\" is have a good evening. Only \"bonne continuation\" honors the full arc of their day.",
+      "formality": "formal",
+      "wrong_answers_en": ["See you tomorrow!", "Good luck with everything!", "Have a lovely evening!"],
+      "wrong_answers_native": ["À demain!", "Bonne chance pour tout!", "Passez une bonne soirée!"]
+    },
+    { "id": "fr_farewell_2", "language": "french", "category": "farewells",
+      "french": "C'était un plaisir de vous servir",
+      "english": "It was a pleasure serving you",
+      "pronunciation": "seh-TEH uhn pleh-ZEER duh voo sair-VEER",
+      "context": "Amélie says this with genuine warmth while discreetly straightening the napkin holder -- a good hostess makes every guest feel like the only guest",
+      "correction": "\"Plaisir de vous servir\" -- the pleasure of service. \"Vous étiez très sympa\" says you were very nice (presumptuous), \"j'espère que ça vous a plu\" hopes you liked it (uncertain, weak), and \"merci pour le pourboire\" thanks them for a tip. One does not comment on tips. One expresses gratitude for the honor of serving.",
+      "formality": "formal",
+      "wrong_answers_en": ["You were very pleasant!", "I hope you enjoyed it!", "Thank you for the tip!"],
+      "wrong_answers_native": ["Vous étiez très sympa!", "J'espère que ça vous a plu!", "Merci pour le pourboire!"]
+    },
+    { "id": "fr_farewell_3", "language": "french", "category": "farewells",
+      "french": "N'hésitez pas à revenir",
+      "english": "Don't hesitate to come back",
+      "pronunciation": "nay-zee-tay PAH ah ruh-vuh-NEER",
+      "context": "Amélie says this like she means it -- because she does -- a proper invitation to return marks a cafe that wants you there, not just your money",
+      "correction": "\"N'hésitez pas\" means don't hesitate -- it removes the awkwardness of deciding to return. \"Revenez bientôt\" means come back soon (a demand, not an invitation), \"vous serez toujours le bienvenu\" means you're always welcome (too effusive), and \"on vous garde une place\" means we'll save you a spot (presumptuous). An invitation should feel effortless.",
+      "formality": "formal",
+      "wrong_answers_en": ["Come back soon!", "You're always welcome here!", "We'll save you a spot!"],
+      "wrong_answers_native": ["Revenez bientôt!", "Vous serez toujours le bienvenu!", "On vous garde une place!"]
+    },
+    { "id": "fr_farewell_4", "language": "french", "category": "farewells",
+      "french": "À la prochaine!",
+      "english": "Until next time!",
+      "pronunciation": "ah lah proh-SHEN",
+      "context": "Amélie waves from behind the counter with a smile that says she genuinely expects to see you again, and has already mentally noted your usual order for next visit",
+      "correction": "\"À la prochaine\" is short for \"à la prochaine fois\" -- until the next time. \"À bientôt\" means see you soon (non-committal), \"à plus tard\" means until later (same day), and \"au plaisir\" means my pleasure -- a response, not a farewell. \"À la prochaine\" promises a future that has yet to happen.",
+      "formality": "casual",
+      "wrong_answers_en": ["See you soon!", "See you later today!", "My pleasure!"],
+      "wrong_answers_native": ["À bientôt!", "À plus tard!", "Au plaisir!"]
+    },
+    { "id": "fr_farewell_5", "language": "french", "category": "farewells",
+      "french": "Prenez soin de vous",
+      "english": "Take care of yourself",
+      "pronunciation": "pruh-NAY swahn duh VOO",
+      "context": "Amélie says this quietly as they reach the door -- she means it literally, the way a grandmother means it, because good health is the foundation of all joy",
+      "correction": "\"Prenez soin de vous\" -- literally take care of yourself, an intimate farewell despite the formal \"vous.\" \"Faites attention à vous\" also means be careful (slightly more cautionary), \"restez en forme\" means stay in shape (too athletic), and \"portez-vous bien\" means keep well (more formal, less warm). \"Prenez soin\" has a tenderness the others lack.",
+      "formality": "formal",
+      "wrong_answers_en": ["Be careful out there!", "Stay in shape!", "Keep well!"],
+      "wrong_answers_native": ["Faites attention à vous!", "Restez en forme!", "Portez-vous bien!"]
+    },
+
+    { "id": "fr_smalltalk_1", "language": "french", "category": "small_talk",
+      "french": "Il fait un temps de chien!",
+      "english": "The weather is horrible!",
+      "pronunciation": "eel fay uhn tahn duh SHEEYAN",
+      "context": "Marcel glances out the window with genuine offense -- 'temps de chien' literally means dog weather, as in weather you wouldn't send a dog out in, and Marcel uses it for anything below 18 degrees",
+      "correction": "\"Temps de chien\" -- dog weather, the most French possible way to insult the sky. \"Il pleut beaucoup\" just says it's raining a lot (boring weather report), \"il fait froid\" says it's cold (stating the obvious), and \"quel mauvais temps\" says what bad weather (too polite). Marcel insults the weather with PERSONALITY.",
+      "formality": "casual",
+      "wrong_answers_en": ["It's raining a lot!", "It's really cold today!", "What bad weather!"],
+      "wrong_answers_native": ["Il pleut beaucoup!", "Il fait vraiment froid!", "Quel mauvais temps!"]
+    },
+    { "id": "fr_smalltalk_2", "language": "french", "category": "small_talk",
+      "french": "Les affaires marchent bien?",
+      "english": "How's business?",
+      "pronunciation": "ley zah-FAIR marsh BYAHN",
+      "context": "Marcel leans on the counter and asks this the way friends ask, not the way accountants ask -- he wants the story, not the quarterly report",
+      "correction": "\"Les affaires marchent\" -- are things moving, are the businesses walking along. \"Vous avez beaucoup de clients\" comments on having lots of customers (an observation, not a question), \"ça tourne\" means things are turning (similar flavor but no question mark), and \"c'est rentable\" asks if it's profitable (way too direct for small talk).",
+      "formality": "casual",
+      "wrong_answers_en": ["You have a lot of customers!", "Things are turning over!", "Is it profitable?"],
+      "wrong_answers_native": ["Vous avez beaucoup de clients!", "Ça tourne, non?", "C'est rentable?"]
+    },
+    { "id": "fr_smalltalk_3", "language": "french", "category": "small_talk",
+      "french": "Vous connaissez le coin?",
+      "english": "Are you from around here?",
+      "pronunciation": "voo koh-neh-SAY luh KWAHN",
+      "context": "Marcel sizes up a new face with a mix of curiosity and territorial pride -- 'connaître le coin' means to know the neighborhood, and around here, that means something",
+      "correction": "\"Vous connaissez le coin\" -- do you know the corner, the neighborhood? \"Vous êtes du quartier\" means are you from the neighborhood (too direct), \"c'est votre première visite\" asks if it's your first visit (tourist-energy), and \"vous venez souvent\" asks if you come often (a café line, not a geography question).",
+      "formality": "casual",
+      "wrong_answers_en": ["Are you from this neighborhood?", "Is this your first visit?", "Do you come here often?"],
+      "wrong_answers_native": ["Vous êtes du quartier?", "C'est votre première visite?", "Vous venez souvent?"]
+    },
+    { "id": "fr_smalltalk_4", "language": "french", "category": "small_talk",
+      "french": "Vous avez passé une bonne nuit?",
+      "english": "Did you sleep well?",
+      "pronunciation": "voo zah-VAY pah-SAY oon bun NWEE",
+      "context": "Marcel asks this while sliding over the morning espresso -- he genuinely wants to know, because the quality of someone's sleep is directly visible in how they order coffee",
+      "correction": "\"Passé une bonne nuit\" -- did you have a good night, in the sense of sleeping well. \"Bien dormi\" is did you sleep well (same meaning but more casual), \"vous avez bien mangé hier\" asks about eating yesterday (why are we in the past tense of dinner?), and \"comment vous sentez-vous\" means how do you feel (too clinical for morning small talk).",
+      "formality": "casual",
+      "wrong_answers_en": ["Did you sleep well?", "Did you eat well last night?", "How are you feeling?"],
+      "wrong_answers_native": ["Vous avez bien dormi?", "Vous avez bien mangé hier soir?", "Comment vous sentez-vous?"]
+    },
+    { "id": "fr_smalltalk_5", "language": "french", "category": "small_talk",
+      "french": "On fait aller!",
+      "english": "We manage!",
+      "pronunciation": "ohn fay tah-LAY",
+      "context": "Marcel shrugs with the magnificent philosophy of someone who has made peace with imperfection -- 'on fait aller' is the French art of functioning despite everything, and Marcel has perfected it",
+      "correction": "\"On fait aller\" means we make it go -- we get by, we manage, we survive. \"Ça va bien\" means things are going well (too positive, too easy), \"on s'en sort\" means we get through it (more dramatic survival), and \"on fait de notre mieux\" means we do our best (too motivational poster). \"On fait aller\" is specifically French stoicism.",
+      "formality": "casual",
+      "wrong_answers_en": ["Things are going well!", "We get through it!", "We do our best!"],
+      "wrong_answers_native": ["Ça va bien!", "On s'en sort!", "On fait de notre mieux!"]
+    },
+
+    { "id": "fr_apology_1", "language": "french", "category": "apologies_excuses",
+      "french": "Je suis vraiment désolé(e)",
+      "english": "I'm truly sorry",
+      "pronunciation": "zhuh swee vreh-MAHN day-zoh-LAY",
+      "context": "Amélie says this with the exact weight of apology it deserves -- not too much, which would seem theatrical, not too little, which would seem dismissive",
+      "correction": "\"Vraiment désolé\" -- truly sorry, the \"vraiment\" adding genuine weight. \"Excusez-moi\" means excuse me (lighter, for small things), \"pardon\" is a quick sorry (bumping into someone), and \"je m'en excuse\" is a more formal phrasing that sounds lawyerly. For a real apology, \"vraiment désolé\" is the only option.",
+      "formality": "formal",
+      "wrong_answers_en": ["Excuse me!", "Pardon me!", "I formally apologize!"],
+      "wrong_answers_native": ["Excusez-moi!", "Pardon!", "Je m'en excuse!"]
+    },
+    { "id": "fr_apology_2", "language": "french", "category": "apologies_excuses",
+      "french": "Ce n'est pas dans mes habitudes",
+      "english": "This isn't like me",
+      "pronunciation": "suh neh pah dahn mey zah-bee-TOOD",
+      "context": "Amélie says this with quiet dignity after spilling a single drop of coffee -- she needs you to know that this particular failure does not represent the complete body of her work",
+      "correction": "\"Ce n'est pas dans mes habitudes\" -- this is not in my habits, my character, my established patterns. \"Je suis distrait\" means I'm distracted (an excuse), \"ça m'arrive rarement\" means it rarely happens to me (defensive), and \"je ne fais jamais ça\" means I never do that (too emphatic, too much protest). The right phrase acknowledges without excusing.",
+      "formality": "formal",
+      "wrong_answers_en": ["I'm just distracted!", "It rarely happens to me!", "I never do that!"],
+      "wrong_answers_native": ["Je suis distrait!", "Ça m'arrive rarement!", "Je ne fais jamais ça!"]
+    },
+    { "id": "fr_apology_3", "language": "french", "category": "apologies_excuses",
+      "french": "Permettez-moi de rectifier ça",
+      "english": "Allow me to fix that",
+      "pronunciation": "pehr-meh-TAY mwah duh reck-tee-fee-YAY sah",
+      "context": "Amélie takes the imperfect order back with both hands and a look that says she is personally offended on behalf of all French pastry -- she will make this right",
+      "correction": "\"Rectifier\" means to correct, to make right -- it has a professional precision. \"Je vais tout refaire\" means I'll redo everything (too dramatic), \"laissez-moi corriger\" means let me correct (similar but less elegant), and \"excusez le problème\" means excuse the problem (passive, not active). Amélie does not excuse problems. She rectifies them.",
+      "formality": "formal",
+      "wrong_answers_en": ["I'll redo everything!", "Let me correct that!", "Excuse the problem!"],
+      "wrong_answers_native": ["Je vais tout refaire!", "Laissez-moi corriger ça!", "Excusez le problème!"]
+    },
+    { "id": "fr_apology_4", "language": "french", "category": "apologies_excuses",
+      "french": "Toutes mes excuses",
+      "english": "My sincerest apologies",
+      "pronunciation": "toot mey zehk-SKYOOZ",
+      "context": "Amélie offers this as others might offer a gift -- with both hands, with eye contact, with intention -- an apology worthy of whatever went wrong",
+      "correction": "\"Toutes mes excuses\" -- ALL my excuses, every single one, offered to you. It's fuller than \"pardon\" and warmer than \"je m'excuse.\" \"Désolé pour le désagrément\" means sorry for the inconvenience (corporate-speak), \"je regrette\" means I regret (too literary), and \"mea culpa\" is Latin for my fault (pretentious). \"Toutes mes excuses\" is the full French apology package.",
+      "formality": "formal",
+      "wrong_answers_en": ["Sorry for the inconvenience!", "I regret this!", "Mea culpa!"],
+      "wrong_answers_native": ["Désolé pour le désagrément!", "Je regrette cela!", "Mea culpa!"]
+    },
+    { "id": "fr_apology_5", "language": "french", "category": "apologies_excuses",
+      "french": "C'est de ma faute",
+      "english": "It's my fault",
+      "pronunciation": "seh duh mah FOHT",
+      "context": "Amélie says this looking you directly in the eye -- no wriggling, no blame-shifting, just clean accountability, which in the service industry is rarer than a perfect croissant",
+      "correction": "\"C'est de ma faute\" -- it IS my fault, with that definitive \"c'est.\" \"C'est la faute du fournisseur\" blames the supplier (pure cowardice), \"il y a eu un malentendu\" says there was a misunderstanding (evasion), and \"les circonstances\" blames circumstances (philosophy, not accountability). Own it. Two words. \"Ma faute.\"",
+      "formality": "casual",
+      "wrong_answers_en": ["It's the supplier's fault!", "There was a misunderstanding!", "Circumstances led to this!"],
+      "wrong_answers_native": ["C'est la faute du fournisseur!", "Il y a eu un malentendu!", "Ce sont les circonstances!"]
+    },
+
+    { "id": "fr_foodpraise_1", "language": "french", "category": "food_praise",
+      "french": "C'est divin!",
+      "english": "It's divine!",
+      "pronunciation": "seh dee-VAHN",
+      "context": "Bisou takes one bite and closes their eyes for a full three seconds -- 'divin' means touched by divinity, and Bisou genuinely believes the pastry chef has angels in their kitchen",
+      "correction": "\"Divin\" -- divine, as in the gods had a hand in this. \"Délicieux\" means delicious (mortal-level praise), \"très bon\" means very good (criminal understatement), and \"j'aime beaucoup\" means I really like it (adorably underpowered). A croissant this good does not get \"j'aime beaucoup.\" It gets divinity.",
+      "formality": "casual",
+      "wrong_answers_en": ["It's delicious!", "It's very good!", "I really like it!"],
+      "wrong_answers_native": ["C'est délicieux!", "C'est très bon!", "J'aime beaucoup!"]
+    },
+    { "id": "fr_foodpraise_2", "language": "french", "category": "food_praise",
+      "french": "Ça fond dans la bouche!",
+      "english": "It melts in your mouth!",
+      "pronunciation": "sah fohn dahn lah BOOSH",
+      "context": "Bisou waves a hand slowly like they're conducting an invisible orchestra of flavor -- 'fondre dans la bouche' is the ultimate texture compliment in French café culture",
+      "correction": "\"Fond dans la bouche\" -- literally melts in the mouth, the gold standard of pastry praise. \"C'est moelleux\" means it's soft (accurate but bland), \"bonne texture\" means good texture (a geologist would say this), and \"pas trop sec\" means not too dry (backhanded at best). When something melts in your mouth, you don't say 'good texture.' You say it MELTS.",
+      "formality": "casual",
+      "wrong_answers_en": ["It's really soft!", "Great texture!", "It's not too dry!"],
+      "wrong_answers_native": ["C'est vraiment moelleux!", "Bonne texture!", "C'est pas trop sec!"]
+    },
+    { "id": "fr_foodpraise_3", "language": "french", "category": "food_praise",
+      "french": "On se croirait à Paris!",
+      "english": "You'd think you were in Paris!",
+      "pronunciation": "ohn suh krwah-REH ah pah-REE",
+      "context": "Bisou presses both hands to their chest at the éclair -- for Bisou, Paris is the highest compliment a pastry can aspire to, a culinary heaven on earth",
+      "correction": "\"On se croirait à Paris\" -- one would believe oneself to be in Paris, the highest praise a French patisserie can receive. \"C'est comme en France\" means it's like France (too broad, France is large), \"ça rappelle les boulangeries parisiennes\" means it's reminiscent of Parisian bakeries (a pastry historian's comment), and \"vous êtes allé à Paris\" asks if you've been to Paris. We're saying this IS Paris, in a bite.",
+      "formality": "casual",
+      "wrong_answers_en": ["It tastes like France!", "It reminds me of Parisian bakeries!", "Have you been to Paris?"],
+      "wrong_answers_native": ["C'est comme en France!", "Ça rappelle les boulangeries parisiennes!", "Vous êtes allé à Paris?"]
+    },
+    { "id": "fr_foodpraise_4", "language": "french", "category": "food_praise",
+      "french": "Je pourrais en manger tous les jours",
+      "english": "I could eat this every day",
+      "pronunciation": "zhuh poo-REH ahn mahn-ZHAY too lay ZHOOR",
+      "context": "Bisou says this with the dangerous certainty of someone who would absolutely follow through -- they have already mentally rearranged their schedule to include this croissant permanently",
+      "correction": "\"Tous les jours\" -- every. single. day. The ultimate commitment. \"J'en veux encore\" means I want more (present hunger), \"je reviendrai\" means I'll come back (a promise to return), and \"c'est mon nouveau préféré\" means it's my new favorite (personal ranking). None capture the full daily devotion. We are talking about a lifestyle change.",
+      "formality": "casual",
+      "wrong_answers_en": ["I want more of this!", "I'll definitely come back!", "It's my new favorite!"],
+      "wrong_answers_native": ["J'en veux encore!", "Je reviendrai pour ça!", "C'est mon nouveau préféré!"]
+    },
+    { "id": "fr_foodpraise_5", "language": "french", "category": "food_praise",
+      "french": "Le chef est un génie!",
+      "english": "The chef is a genius!",
+      "pronunciation": "luh shef eh tahn zhay-NEE",
+      "context": "Bisou points toward the kitchen with the reverence of someone pointing at a cathedral -- whoever made this has a gift that borders on supernatural, and Bisou will not be silenced about it",
+      "correction": "\"Génie\" -- genius, as in Mozart-level gift. \"Le chef est doué\" means the chef is talented (too measured), \"il cuisine bien\" means they cook well (a crime against this croissant), and \"de bons ingrédients\" means good ingredients (the accountant's theory of excellence). No. The ingredients don't explain this. The genius does.",
+      "formality": "casual",
+      "wrong_answers_en": ["The chef is very talented!", "They cook really well!", "They use such good ingredients!"],
+      "wrong_answers_native": ["Le chef est très doué!", "Il cuisine vraiment bien!", "Ils utilisent de bons ingrédients!"]
+    },
+
+    { "id": "fr_passagg_1", "language": "french", "category": "passive_aggressive",
+      "french": "Intéressant comme choix",
+      "english": "Interesting choice",
+      "pronunciation": "ahn-teh-reh-SAHN kohm shwah",
+      "context": "Gaston looks at the order pad and says this with the tone of a professor marking a failing paper -- he has questions, but he has decided they are not worth asking",
+      "correction": "\"Intéressant comme choix\" -- interesting as a choice. Note: he does NOT say good, correct, wise, or admirable. Just interesting. \"Bon choix\" means good choice (Gaston would never), \"choix inhabituel\" means unusual choice (too neutral), and \"je n'aurais pas choisi ça\" means I wouldn't have chosen that (too honest, lacks the elegant dismissal).",
+      "formality": "casual",
+      "humor": true,
+      "wrong_answers_en": ["Great choice!", "That's an unusual choice!", "I wouldn't have chosen that!"],
+      "wrong_answers_native": ["Bon choix!", "C'est un choix inhabituel!", "Je n'aurais pas choisi ça!"]
+    },
+    { "id": "fr_passagg_2", "language": "french", "category": "passive_aggressive",
+      "french": "Si vous le dites",
+      "english": "If you say so",
+      "pronunciation": "see voo luh DEET",
+      "context": "Gaston says this while already turning away, which is the real message -- he has heard your opinion, he has catalogued it, and he has filed it under 'things that don't change reality'",
+      "correction": "\"Si vous le dites\" -- if you say so, which unmistakably implies 'but I don't agree.' \"Vous avez raison\" means you're right (Gaston is physically incapable of this), \"d'accord\" means agreed (lying), and \"comme vous voulez\" means as you wish (subservient, not passive-aggressive). The art is in saying nothing while saying everything.",
+      "formality": "casual",
+      "humor": true,
+      "wrong_answers_en": ["You're absolutely right!", "Agreed!", "As you wish!"],
+      "wrong_answers_native": ["Vous avez tout à fait raison!", "D'accord!", "Comme vous voulez!"]
+    },
+    { "id": "fr_passagg_3", "language": "french", "category": "passive_aggressive",
+      "french": "Chacun ses goûts",
+      "english": "To each their own",
+      "pronunciation": "shah-KUHN say GOO",
+      "context": "Gaston utters this while watching someone put sugar in their espresso -- it's his version of 'I respect your right to be wrong,' delivered with a look that says he very much does not",
+      "correction": "\"Chacun ses goûts\" -- each person their tastes. Not a compliment. An acceptance that some people are beyond help. \"Vous aimez ça vraiment?\" means you really like that (too direct, asking for confrontation), \"comme vous préférez\" means as you prefer (too accommodating), and \"goûts différents\" means different tastes (a neutral observation). \"Chacun ses goûts\" judges while pretending to include.",
+      "formality": "casual",
+      "humor": true,
+      "wrong_answers_en": ["You really like that?", "Whatever you prefer!", "People have different tastes!"],
+      "wrong_answers_native": ["Vous aimez vraiment ça?", "Comme vous préférez!", "Les goûts sont différents!"]
+    },
+    { "id": "fr_passagg_4", "language": "french", "category": "passive_aggressive",
+      "french": "Votre patience me touche",
+      "english": "Your patience is touching",
+      "pronunciation": "votr pah-see-AHNCE muh toosh",
+      "context": "Gaston says this to the customer who has asked where their order is for the third time -- the word 'touche' in French means to touch emotionally, and Gaston has weaponized sincerity",
+      "correction": "\"Votre patience me touche\" -- your patience MOVES me, touches my heart. It implies they have been remarkable patient. Whether they have is a separate question. \"Merci d'attendre\" means thanks for waiting (sincere and useless), \"désolé pour l'attente\" means sorry for the wait (an actual apology, which Gaston won't give), and \"c'est presque prêt\" means it's almost ready (a lie).",
+      "formality": "formal",
+      "humor": true,
+      "wrong_answers_en": ["Thanks for waiting!", "Sorry for the wait!", "It's almost ready!"],
+      "wrong_answers_native": ["Merci d'attendre!", "Désolé pour l'attente!", "C'est presque prêt!"]
+    },
+    { "id": "fr_passagg_5", "language": "french", "category": "passive_aggressive",
+      "french": "Vous avez tout à fait le droit de penser ça",
+      "english": "You're absolutely entitled to think that",
+      "pronunciation": "voo zah-VAY too tah-fay luh drwah duh pahn-SAY sah",
+      "context": "Gaston says this with a smile that hasn't reached his eyes in fifteen years -- he has given you your right to your opinion, the way a judge gives a defendant the right to be wrong",
+      "correction": "You have the RIGHT to think that. Not that you're correct. Not that your thinking is good. Just that you have, constitutionally, the right to it. \"Votre avis compte pour nous\" means your opinion matters to us (corporate lie), \"c'est une bonne perspective\" means that's a good perspective (encouragement Gaston can't give), and \"je comprends votre point de vue\" means I understand your viewpoint (too generous).",
+      "formality": "formal",
+      "humor": true,
+      "wrong_answers_en": ["Your opinion matters to us!", "That's a good perspective!", "I understand your viewpoint!"],
+      "wrong_answers_native": ["Votre avis compte pour nous!", "C'est une bonne perspective!", "Je comprends votre point de vue!"]
+    },
+
+    { "id": "es_farewell_1", "language": "spanish", "category": "farewells",
+      "spanish": "¡Hasta pronto!",
+      "english": "See you soon!",
+      "pronunciation": "AHS-tah PROHN-toh",
+      "context": "Amélie smiles and gestures toward the door like she is waving off royalty -- 'hasta pronto' is a goodbye with a promise built in, the best kind",
+      "correction": "\"Hasta pronto\" -- until soon, with the confidence that soon will come. \"Hasta luego\" means until later (no implied timeline), \"adiós\" is just goodbye (no promise of return), and \"nos vemos\" means see you (casual, no urgency). \"Pronto\" is key -- it means soon, and Amélie means it.",
+      "formality": "formal",
+      "wrong_answers_en": ["See you later!", "Goodbye!", "See you around!"],
+      "wrong_answers_native": ["¡Hasta luego!", "¡Adiós!", "¡Nos vemos!"]
+    },
+    { "id": "es_farewell_2", "language": "spanish", "category": "farewells",
+      "spanish": "Ha sido un placer atenderle",
+      "english": "It has been a pleasure serving you",
+      "pronunciation": "ah SEE-doh oon plah-SEHR ah-ten-DEHR-leh",
+      "context": "Amélie says this with a small graceful nod while folding the receipt -- true hospitality is remembering that the transaction is secondary to the relationship",
+      "correction": "\"Ha sido un placer atenderle\" -- it HAS been (past tense, completed, full stop) a pleasure. \"Gracias por su visita\" thanks them for the visit (gratitude is directed inward), \"espero que haya disfrutado\" means I hope you enjoyed (uncertain), and \"hasta la próxima vez\" means until next time (only a farewell, no warmth). \"Ha sido un placer\" closes the loop beautifully.",
+      "formality": "formal",
+      "wrong_answers_en": ["Thank you for your visit!", "I hope you enjoyed it!", "Until next time!"],
+      "wrong_answers_native": ["¡Gracias por su visita!", "Espero que haya disfrutado.", "¡Hasta la próxima vez!"]
+    },
+    { "id": "es_farewell_3", "language": "spanish", "category": "farewells",
+      "spanish": "¡Vuelva cuando quiera!",
+      "english": "Come back whenever you like!",
+      "pronunciation": "VWEHL-vah KWAHN-doh kee-EH-rah",
+      "context": "Amélie says this from the heart, because a good café is a place where regulars feel like family and newcomers feel like they could become one",
+      "correction": "\"Vuelva cuando quiera\" -- come back whenever you want, no conditions, no pressure. \"Vuelva mañana\" means come back tomorrow (too specific), \"le reservamos su mesa\" means we'll reserve your table (too presumptuous for a first visit), and \"le esperamos\" means we'll be waiting (mildly ominous). \"Cuando quiera\" leaves all the power with the guest.",
+      "formality": "formal",
+      "wrong_answers_en": ["Come back tomorrow!", "We'll reserve your table!", "We'll be waiting for you!"],
+      "wrong_answers_native": ["¡Vuelva mañana!", "¡Le reservamos su mesa!", "¡Le estaremos esperando!"]
+    },
+    { "id": "es_farewell_4", "language": "spanish", "category": "farewells",
+      "spanish": "¡Cuídese mucho!",
+      "english": "Take good care!",
+      "pronunciation": "KWEE-deh-seh MOO-choh",
+      "context": "Amélie says this with the warmth of someone who means it -- not filler, but a genuine wish, because a café is about the people who drink there",
+      "correction": "\"Cuídese mucho\" -- take care of yourself, with 'mucho' adding genuine warmth. \"Hasta mañana\" assumes they'll return tomorrow, \"que le vaya bien\" means may it go well for you (wishes success, not health), and \"no se olvide de nosotros\" means don't forget us (too needy for a farewell). \"Cuídese mucho\" wishes them safe passage through the rest of their day.",
+      "formality": "formal",
+      "wrong_answers_en": ["See you tomorrow!", "May everything go well!", "Don't forget about us!"],
+      "wrong_answers_native": ["¡Hasta mañana!", "¡Que le vaya bien!", "¡No se olvide de nosotros!"]
+    },
+    { "id": "es_farewell_5", "language": "spanish", "category": "farewells",
+      "spanish": "¡Que tenga un excelente resto de día!",
+      "english": "Have an excellent rest of the day!",
+      "pronunciation": "keh TEHN-gah oon ehk-seh-LEHN-teh REH-stoh deh DEE-ah",
+      "context": "Amélie says this with genuine investment in their afternoon -- 'excelente' instead of 'bueno' because Amélie does not wish people ordinary days",
+      "correction": "\"Excelente resto de día\" -- the EXCELLENT remainder of their day, not merely a good one. \"Buenas tardes\" is good afternoon (a greeting, not a farewell), \"disfrute su tarde\" means enjoy your afternoon (close but present tense), and \"que descanse\" means get some rest (implies they should go to sleep). Amélie wishes excellence, not naps.",
+      "formality": "formal",
+      "wrong_answers_en": ["Good afternoon!", "Enjoy your afternoon!", "Get some rest!"],
+      "wrong_answers_native": ["¡Buenas tardes!", "¡Disfrute su tarde!", "¡Que descanse!"]
+    },
+
+    { "id": "es_smalltalk_1", "language": "spanish", "category": "small_talk",
+      "spanish": "¡Qué calor tan bestial!",
+      "english": "What brutal heat!",
+      "pronunciation": "keh kah-LOHR tahn beh-stee-AHL",
+      "context": "Marcel fans himself with the order pad and says this to everyone who walks in -- 'bestial' literally means beastly/brutal, and Mexican summers are exactly that",
+      "correction": "\"Calor bestial\" -- beastly, savage, brutal heat. \"Hace mucho calor\" just says it's very hot (weather app language), \"qué día tan soleado\" means what a sunny day (a positive spin no one asked for), and \"es mejor que el frío\" means it's better than cold (unhelpful). \"Bestial\" is the only word that captures the true menace of this heat.",
+      "formality": "casual",
+      "wrong_answers_en": ["It's very hot today!", "What a sunny day!", "At least it's not cold!"],
+      "wrong_answers_native": ["¡Hace mucho calor!", "¡Qué día tan soleado!", "¡Es mejor que el frío!"]
+    },
+    { "id": "es_smalltalk_2", "language": "spanish", "category": "small_talk",
+      "spanish": "¿Cómo van las cosas?",
+      "english": "How are things going?",
+      "pronunciation": "KOH-moh vahn lahs KOH-sahs",
+      "context": "Marcel asks this between two orders because he wants to know -- he keeps mental tabs on everyone who walks through the door",
+      "correction": "\"Cómo van las cosas\" -- how are THINGS going, broader and more open than asking about a person. \"Cómo estás\" means how are you (personal, not about circumstances), \"qué hay de nuevo\" means what's new (fishing for gossip specifically), and \"todo bien\" is just saying everything's fine (an answer, not a question). We're asking about the state of their world.",
+      "formality": "casual",
+      "wrong_answers_en": ["How are you?", "What's new with you?", "Everything good?"],
+      "wrong_answers_native": ["¿Cómo estás?", "¿Qué hay de nuevo?", "¿Todo bien?"]
+    },
+    { "id": "es_smalltalk_3", "language": "spanish", "category": "small_talk",
+      "spanish": "¿Eres de por aquí?",
+      "english": "Are you from around here?",
+      "pronunciation": "EH-rehs deh pohr ah-KEE",
+      "context": "Marcel tries this with the casual tone of someone who already knows the answer -- 'de por aquí' means from around here, and Marcel can spot a regular versus a visitor in about four seconds",
+      "correction": "\"De por aquí\" -- from around these parts, local language for local curiosity. \"De este barrio\" means from this neighborhood (too specific), \"es tu primera vez aquí\" asks if it's your first time here (café-specific, not neighborhood-wide), and \"cuánto tiempo llevas aquí\" asks how long you've been here (immigration vibes, too intense for small talk).",
+      "formality": "casual",
+      "wrong_answers_en": ["Are you from this neighborhood?", "Is this your first time here?", "How long have you been here?"],
+      "wrong_answers_native": ["¿Eres de este barrio?", "¿Es tu primera vez aquí?", "¿Cuánto tiempo llevas aquí?"]
+    },
+    { "id": "es_smalltalk_4", "language": "spanish", "category": "small_talk",
+      "spanish": "¿Dormiste bien?",
+      "english": "Did you sleep well?",
+      "pronunciation": "dohr-MEES-teh bee-EHN",
+      "context": "Marcel slides over the morning coffee and asks this with genuine professional curiosity -- in his experience, how someone slept directly predicts how much espresso they'll need",
+      "correction": "\"Dormiste bien\" -- you slept, you the individual, did it go well. \"Pasaste una buena noche\" means did you have a good night (about the night broadly, not sleep), \"descansaste bien\" means did you rest well (broader than sleep), and \"cómo amaneciste\" means how did you wake up (Mexican expression for how are you this morning -- close but different flavor).",
+      "formality": "casual",
+      "wrong_answers_en": ["Did you have a good night?", "Did you rest well?", "How did you wake up?"],
+      "wrong_answers_native": ["¿Pasaste una buena noche?", "¿Descansaste bien?", "¿Cómo amaneciste?"]
+    },
+    { "id": "es_smalltalk_5", "language": "spanish", "category": "small_talk",
+      "spanish": "Aquí andamos",
+      "english": "We're getting by",
+      "pronunciation": "ah-KEE ahn-DAH-mohs",
+      "context": "Marcel says this with a shrug that contains the complete philosophy of survival -- 'aquí andamos' means here we walk, here we go, here we are, doing the thing, continuing to exist",
+      "correction": "\"Aquí andamos\" -- here we are walking, moving, continuing. The Mexican version of \"on fait aller.\" \"Bien gracias\" means fine thank you (too tidy), \"sobreviviendo\" means surviving (dramatic), and \"como siempre\" means same as always (weary but different flavor). \"Aquí andamos\" is specifically optimistic resignation -- we're here, we're moving, that counts for something.",
+      "formality": "casual",
+      "wrong_answers_en": ["Fine, thank you!", "Just surviving!", "Same as always!"],
+      "wrong_answers_native": ["¡Bien, gracias!", "¡Sobreviviendo!", "¡Como siempre!"]
+    },
+
+    { "id": "es_apology_1", "language": "spanish", "category": "apologies_excuses",
+      "spanish": "Le pido una disculpa",
+      "english": "I beg your pardon",
+      "pronunciation": "leh PEE-doh OO-nah dees-KOOL-pah",
+      "context": "Amélie delivers this with the full weight of her dignity -- to 'pedir disculpa' is to request forgiveness, a more formal and considered act than tossing a casual 'perdón'",
+      "correction": "\"Le pido una disculpa\" -- I ask you for a pardon, with the formal \"le.\" \"Perdón\" is a quick sorry (too brief for a real error), \"lo siento\" means I'm sorry (sincere but informal), and \"qué pena\" means what a shame (a reaction, not an apology). Amélie does not offer quick sorries. She offers full, considered apologies.",
+      "formality": "formal",
+      "wrong_answers_en": ["Pardon!", "I'm sorry!", "What a shame!"],
+      "wrong_answers_native": ["¡Perdón!", "¡Lo siento!", "¡Qué pena!"]
+    },
+    { "id": "es_apology_2", "language": "spanish", "category": "apologies_excuses",
+      "spanish": "No volverá a ocurrir",
+      "english": "It won't happen again",
+      "pronunciation": "noh bohl-veh-RAH ah oh-koo-REER",
+      "context": "Amélie says this with the calm certainty of someone who has already identified the systemic flaw and corrected it internally -- this is a promise, not a hope",
+      "correction": "\"No volverá a ocurrir\" -- it will NOT (future tense, definitive) occur again. \"Lo intentaré\" means I'll try (try? TRY?), \"haré lo que pueda\" means I'll do what I can (ambiguous, non-committal), and \"espero que no\" means I hope not (Amélie does not HOPE, she ENSURES). A real commitment has no conditionals.",
+      "formality": "formal",
+      "wrong_answers_en": ["I'll try harder!", "I'll do what I can!", "I hope not!"],
+      "wrong_answers_native": ["¡Lo intentaré más!", "¡Haré lo que pueda!", "¡Espero que no!"]
+    },
+    { "id": "es_apology_3", "language": "spanish", "category": "apologies_excuses",
+      "spanish": "Permítame compensarle",
+      "english": "Allow me to make it up to you",
+      "pronunciation": "pehr-MEE-tah-meh kohm-pehn-SAHR-leh",
+      "context": "Amélie gestures toward the pastry case with an open hand -- in her café, an apology without compensation is merely an observation, and she intends to be genuinely sorry",
+      "correction": "\"Compensarle\" -- to compensate you, to make it right in a tangible way. \"Prepararé otro\" means I'll make another (replacement without acknowledgment), \"le doy algo gratis\" means I'll give you something free (too transactional), and \"no se preocupe\" means don't worry (dismissing their concern, which was valid). The offer to compensate honors the wrong.",
+      "formality": "formal",
+      "wrong_answers_en": ["I'll make another one!", "I'll give you something free!", "Don't worry about it!"],
+      "wrong_answers_native": ["¡Le prepararé otro!", "¡Le doy algo gratis!", "¡No se preocupe!"]
+    },
+    { "id": "es_apology_4", "language": "spanish", "category": "apologies_excuses",
+      "spanish": "Tiene usted razón",
+      "english": "You are correct",
+      "pronunciation": "tee-EH-neh oos-TEHD rah-SOHN",
+      "context": "Amélie says this clearly and without hesitation -- she disagrees with the cowardly impulse to deflect when proven wrong, and she will not indulge it",
+      "correction": "\"Tiene usted razón\" -- you have reason, you are right, and I say so to your face. \"Entiendo su punto\" means I understand your point (acknowledges without conceding), \"quizás tiene razón\" means perhaps you're right (a maybe is not an admission), and \"lo investigaré\" means I'll look into it (deferral). Correctness should be confirmed, not investigated.",
+      "formality": "formal",
+      "wrong_answers_en": ["I understand your point!", "Perhaps you're right!", "I'll look into it!"],
+      "wrong_answers_native": ["Entiendo su punto.", "Quizás tiene razón.", "Lo investigaré."]
+    },
+    { "id": "es_apology_5", "language": "spanish", "category": "apologies_excuses",
+      "spanish": "Fue un error de mi parte",
+      "english": "It was my mistake",
+      "pronunciation": "fweh oon eh-ROHR deh mee PAHR-teh",
+      "context": "Amélie says this without flinching or blaming the universe -- 'de mi parte' places the error firmly in her territory, owned, acknowledged, and being corrected",
+      "correction": "\"De mi parte\" -- on MY part, my territory, my responsibility. \"Hubo un malentendido\" says there was a misunderstanding (passive construction, nobody at fault), \"fue un accidente\" means it was an accident (accidents happen, but this is an error), and \"lo hice sin querer\" means I did it without meaning to (intention is irrelevant to the correction). The error was yours. Say so.",
+      "formality": "formal",
+      "wrong_answers_en": ["There was a misunderstanding!", "It was an accident!", "I didn't mean to!"],
+      "wrong_answers_native": ["Hubo un malentendido.", "Fue un accidente.", "Lo hice sin querer."]
+    },
+
+    { "id": "es_foodpraise_1", "language": "spanish", "category": "food_praise",
+      "spanish": "¡Está para chuparse los dedos!",
+      "english": "It's finger-licking good!",
+      "pronunciation": "ehs-TAH PAH-rah choo-PAHR-seh lohs DEH-dohs",
+      "context": "Bisou licks their finger theatrically after tasting the tres leches -- this phrase exists in both English and Spanish for a reason: some food transcends dignity and you just have to admit it",
+      "correction": "\"Chuparse los dedos\" -- to lick the fingers, the international sign of a dish so good social norms become optional. \"Está buenísimo\" means it's really good (true but mundane), \"me encantó\" means I loved it (past tense, already moving on), and \"qué sabor\" means what flavor (a question, not a compliment). Finger-licking is a full-body endorsement.",
+      "formality": "casual",
+      "wrong_answers_en": ["It's really good!", "I loved it!", "What a flavor!"],
+      "wrong_answers_native": ["¡Está buenísimo!", "¡Me encantó!", "¡Qué sabor!"]
+    },
+    { "id": "es_foodpraise_2", "language": "spanish", "category": "food_praise",
+      "spanish": "Se derrite en la boca",
+      "english": "It melts in your mouth",
+      "pronunciation": "seh deh-REE-teh ehn lah BOH-kah",
+      "context": "Bisou closes their eyes and sways slightly -- 'se derrite' means it melts, and the way they say it you'd think the tres leches was performing a miracle",
+      "correction": "\"Se derrite en la boca\" -- IT melts, active, it is doing the melting, in the mouth, right now. \"Es muy suave\" means it's very soft (a tactile observation), \"fácil de comer\" means easy to eat (functional, soulless), and \"no está duro\" means it's not hard (the lowered bar award). When something MELTS, you say it melts. Everything else is a downgrade.",
+      "formality": "casual",
+      "wrong_answers_en": ["It's very soft!", "It's easy to eat!", "It's not tough!"],
+      "wrong_answers_native": ["¡Es muy suave!", "¡Es fácil de comer!", "¡No está duro!"]
+    },
+    { "id": "es_foodpraise_3", "language": "spanish", "category": "food_praise",
+      "spanish": "¡Me sabe a gloria!",
+      "english": "It tastes like heaven!",
+      "pronunciation": "meh SAH-beh ah GLOH-ree-ah",
+      "context": "Bisou throws their head back and says this to the ceiling because glory is up, obviously, and this cake has sent them up there briefly",
+      "correction": "\"Saber a gloria\" -- to taste like glory, like heaven, like the best possible thing. \"Me gusta mucho\" means I like it a lot (correct but earthbound), \"qué rico\" means how delicious (correct but municipal), and \"muy sabroso\" means very tasty (an agricultural inspector's report). This cake did not taste \"sabroso.\" It tasted like GLORY.",
+      "formality": "casual",
+      "wrong_answers_en": ["I like it a lot!", "How delicious!", "Very tasty!"],
+      "wrong_answers_native": ["¡Me gusta mucho!", "¡Qué rico!", "¡Muy sabroso!"]
+    },
+    { "id": "es_foodpraise_4", "language": "spanish", "category": "food_praise",
+      "spanish": "¡Me recuerda a la cocina de mi abuela!",
+      "english": "It reminds me of my grandmother's cooking!",
+      "pronunciation": "meh reh-KWEHR-dah ah lah koh-SEE-nah deh mee ah-BWEH-lah",
+      "context": "Bisou says this with misty eyes because 'abuela's cooking' is the highest possible standard in Latin food culture -- no Michelin star can compete with someone's grandmother",
+      "correction": "\"Cocina de mi abuela\" -- grandmother's kitchen, the sacred benchmark. \"Es casero\" means it's homemade (a category, not a comparison), \"sabe a México\" means it tastes like Mexico (a country, not a person), and \"como en restaurante\" means like a restaurant (an insult, not a compliment -- grandmothers don't cook like restaurants, they cook BETTER). The abuela comparison is the highest honor.",
+      "formality": "casual",
+      "wrong_answers_en": ["It's homemade quality!", "It tastes like Mexico!", "It's like a restaurant!"],
+      "wrong_answers_native": ["¡Es muy casero!", "¡Sabe a México!", "¡Es como en restaurante!"]
+    },
+    { "id": "es_foodpraise_5", "language": "spanish", "category": "food_praise",
+      "spanish": "¡El cocinero merece un aplauso!",
+      "english": "The cook deserves a round of applause!",
+      "pronunciation": "ehl koh-see-NEH-roh meh-REH-seh oon ah-PLOW-soh",
+      "context": "Bisou starts applauding, which startles the entire café -- they want everyone to acknowledge what just happened to their taste buds",
+      "correction": "\"Merece un aplauso\" -- deserves applause, actual clapping hands, a standing ovation if manageable. \"Es un buen cocinero\" means they're a good cook (accurate but polite), \"felicite al chef\" means compliment the chef (an instruction, not a reaction), and \"fue muy rico\" means it was very good (past tense, already over). Bisou is not giving a review. Bisou is giving an OVATION.",
+      "formality": "casual",
+      "wrong_answers_en": ["They're a good cook!", "Pass my compliments to the chef!", "It was very good!"],
+      "wrong_answers_native": ["¡Es un buen cocinero!", "¡Felicite al chef!", "¡Fue muy rico!"]
+    },
+
+    { "id": "es_passagg_1", "language": "spanish", "category": "passive_aggressive",
+      "spanish": "Qué curioso",
+      "english": "How curious",
+      "pronunciation": "keh koo-ree-OH-soh",
+      "context": "Gaston uses this when he witnesses an ordering decision he cannot explain or forgive -- two syllables that somehow contain an entire editorial",
+      "correction": "\"Qué curioso\" -- how curious, how odd, how impossible to understand. Not how interesting, not how adventurous -- curious, as in requiring investigation and possibly intervention. \"Qué interesante\" means how interesting (too positive, implies value), \"no lo había visto\" means I hadn't seen that (surprised but open), and \"es diferente\" means it's different (shrug). Gaston doesn't shrug. He observes.",
+      "formality": "casual",
+      "humor": true,
+      "wrong_answers_en": ["How interesting!", "I've never seen that before!", "That's different!"],
+      "wrong_answers_native": ["¡Qué interesante!", "¡No lo había visto!", "¡Es diferente!"]
+    },
+    { "id": "es_passagg_2", "language": "spanish", "category": "passive_aggressive",
+      "spanish": "Si usted lo dice",
+      "english": "If you say so",
+      "pronunciation": "see oos-TEHD loh DEE-seh",
+      "context": "Gaston says this with perfect stillness, which is more frightening than any reaction -- he has received the information and placed it in a drawer labeled 'opinions that won't change anything'",
+      "correction": "\"Si usted lo dice\" -- IF you say so, with the formal \"usted\" making the dismissal even more elegant. \"Tiene razón\" means you're right (impossible for Gaston), \"lo que usted diga\" means whatever you say (too servile), and \"de acuerdo\" means agreed (a betrayal of character). The key is the IF -- it casts doubt on everything that follows it.",
+      "formality": "formal",
+      "humor": true,
+      "wrong_answers_en": ["You're right!", "Whatever you say!", "Agreed!"],
+      "wrong_answers_native": ["¡Tiene razón!", "¡Lo que usted diga!", "¡De acuerdo!"]
+    },
+    { "id": "es_passagg_3", "language": "spanish", "category": "passive_aggressive",
+      "spanish": "Para gustos, los colores",
+      "english": "There's no accounting for taste",
+      "pronunciation": "PAH-rah GOOS-tohs, lohs koh-LOH-rehs",
+      "context": "Gaston says this while watching someone put ketchup on something -- 'para gustos los colores' is a Spanish proverb meaning tastes are as varied as colors, and some colors are simply wrong",
+      "correction": "\"Para gustos, los colores\" -- the Spanish proverb for there's no accounting for taste. \"Cada quien tiene su gusto\" means everyone has their taste (too accepting), \"no me gusta pero respeto\" means I don't like it but I respect it (too generous), and \"es una preferencia personal\" means it's a personal preference (HR speak). The proverb works because it says nothing while judging everything.",
+      "formality": "casual",
+      "humor": true,
+      "wrong_answers_en": ["Everyone has their own taste!", "I don't like it but I respect it!", "It's a personal preference!"],
+      "wrong_answers_native": ["¡Cada quien tiene su gusto!", "No me gusta pero lo respeto.", "Es una preferencia personal."]
+    },
+    { "id": "es_passagg_4", "language": "spanish", "category": "passive_aggressive",
+      "spanish": "Su paciencia es admirable",
+      "english": "Your patience is admirable",
+      "pronunciation": "soo pah-see-EHN-see-ah ehs ahd-mee-RAH-bleh",
+      "context": "Gaston delivers this to the customer whose order is twenty minutes late -- the word 'admirable' implies they have done something remarkable, which apparently includes waiting an extraordinary amount of time",
+      "correction": "\"Su paciencia es admirable\" -- your patience IS admirable, said with total sincerity about patience that is in fact a veiled accusation about service. \"Gracias por esperar\" means thanks for waiting (a genuine acknowledgment), \"ya casi está\" means it's almost ready (an optimistic lie), and \"disculpe la demora\" means sorry for the delay (an actual apology, which Gaston cannot give).",
+      "formality": "formal",
+      "humor": true,
+      "wrong_answers_en": ["Thanks for waiting!", "It's almost ready!", "Sorry for the delay!"],
+      "wrong_answers_native": ["¡Gracias por esperar!", "¡Ya casi está!", "¡Disculpe la demora!"]
+    },
+    { "id": "es_passagg_5", "language": "spanish", "category": "passive_aggressive",
+      "spanish": "Tiene todo el derecho de opinar",
+      "english": "You're absolutely entitled to your opinion",
+      "pronunciation": "tee-EH-neh TOH-doh ehl deh-REH-choh deh oh-pee-NAHR",
+      "context": "Gaston says this while already turning to make the next order, the conversation clearly concluded from his end -- he has acknowledged their constitutional right and that is as far as his engagement goes",
+      "correction": "\"Tiene todo el derecho de opinar\" -- you have the complete right to opine. \"Todo\" (all/complete) and \"derecho\" (right/law) together make it sound legally binding and deeply uninterested. \"Su opinión importa\" means your opinion matters (Gaston lies with difficulty), \"agradezco su comentario\" means I appreciate your comment (customer service performance), and \"tomaré eso en cuenta\" means I'll take that into account (yes, into the account labeled 'no').",
+      "formality": "formal",
+      "humor": true,
+      "wrong_answers_en": ["Your opinion matters!", "I appreciate your comment!", "I'll take that into account!"],
+      "wrong_answers_native": ["¡Su opinión importa!", "Agradezco su comentario.", "Tomaré eso en cuenta."]
+    }
+  ]
+}

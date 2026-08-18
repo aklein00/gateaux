@@ -1,0 +1,31 @@
+{
+  "name": "gateaux",
+  "version": "1.0.0",
+  "description": "Learn languages by running a cozy French café. Stock your display case by completing language lessons!",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test:mobile": "vite --host --port 8080",
+    "venus:init": "venus init --name Gateaux --description 'Learn languages by running a cozy café' --build-path ./dist",
+    "venus:build": "npm run build && venus publish",
+    "venus:build:public": "npm run build && venus publish --public",
+    "deploy": "npm run build && venus publish"
+  },
+  "keywords": [
+    "language-learning",
+    "educational-game",
+    "mobile-game",
+    "french",
+    "spanish"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@series-inc/venus-sdk": "*"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
+  }
+}

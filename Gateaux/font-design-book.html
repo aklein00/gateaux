@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gateaux Color + Font Options</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&family=Comfortaa:wght@400;500;600;700&family=Josefin+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #2a1810; padding: 12px; max-width: 420px; margin: 0 auto; }
+
+        .section-title {
+            text-align: center;
+            color: #d4a574;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1rem;
+            margin: 16px 0 10px;
+            letter-spacing: 1px;
+        }
+
+        .option {
+            border-radius: 16px;
+            margin-bottom: 16px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .option-bg {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url('/assets/images/wallpaper.png');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.3;
+        }
+
+        .option-inner {
+            position: relative;
+            z-index: 1;
+            padding: 16px;
+        }
+
+        .option-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .option-number {
+            width: 24px; height: 24px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.7rem; font-weight: bold;
+            font-family: sans-serif;
+        }
+
+        .option-name {
+            font-size: 0.7rem;
+            font-family: sans-serif;
+            opacity: 0.7;
+        }
+
+        .logo-row {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .logo-row img {
+            width: 100px;
+            height: auto;
+        }
+
+        .mock-stat-bar {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .mock-pill {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .mock-welcome {
+            text-align: center;
+            font-size: 0.8rem;
+            margin-bottom: 12px;
+            opacity: 0.85;
+        }
+
+        .mock-cards {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .mock-card {
+            flex: 1;
+            border-radius: 12px;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .mock-card h4 {
+            font-size: 0.95rem;
+            margin-bottom: 2px;
+        }
+
+        .mock-card .sub {
+            font-size: 0.7rem;
+            font-style: italic;
+            margin-bottom: 6px;
+        }
+
+        .mock-btn {
+            border: none;
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            width: 100%;
+            cursor: default;
+        }
+
+        .mock-quiz {
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 8px;
+        }
+
+        .mock-quiz .phrase {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .mock-quiz .pron {
+            font-size: 0.75rem;
+            font-style: italic;
+            opacity: 0.7;
+        }
+
+        .mock-answers {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+        }
+
+        .mock-answer {
+            border-radius: 10px;
+            padding: 8px;
+            text-align: center;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .swatches {
+            display: flex;
+            gap: 4px;
+            justify-content: center;
+            margin-top: 8px;
+        }
+
+        .swatch {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 1px solid rgba(0,0,0,0.15);
+        }
+
+        .color-names {
+            text-align: center;
+            font-size: 0.6rem;
+            opacity: 0.5;
+            margin-top: 4px;
+            font-family: sans-serif;
+        }
+    </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- FONT A: Fredoka + Quicksand            -->
+<!-- ═══════════════════════════════════════ -->
+<div class="section-title">FREDOKA + QUICKSAND</div>
+
+<!-- A1: Warm Espresso -->
+<div class="option" style="background: #F5EDE3;">
+    <div class="option-bg"></div>
+    <div class="option-inner">
+        <div class="option-label">
+            <div class="option-number" style="background:#6B3A2A;color:white;">A1</div>
+            <div class="option-name" style="color:#6B3A2A;">Warm Espresso</div>
+        </div>
+        <div class="logo-row"><img src="/assets/images/ui/logo_transparent.png" alt="Gateaux"></div>
+        <div class="mock-stat-bar">
+            <div class="mock-pill" style="background:#6B3A2A;color:#F5EDE3;font-family:'Quicksand';">92 tips</div>
+            <div class="mock-pill" style="background:#D4A574;color:#3C2415;font-family:'Quicksand';">Lvl 3</div>
+            <div class="mock-pill" style="background:rgba(107,58,42,0.15);color:#6B3A2A;font-family:'Quicksand';">Recipe Book</div>
+        </div>
+        <div class="mock-welcome" style="color:#6B3A2A;font-family:'Quicksand';">Choose a language to start baking!</div>
+        <div class="mock-cards">
+            <div class="mock-card" style="background:rgba(107,58,42,0.08);border:2px solid #D4A574;">
+                <h4 style="font-family:'Fredoka';color:#6B3A2A;">Spanish</h4>
+                <div class="sub" style="font-family:'Quicksand';color:#8B6F5A;">Tres Leches</div>
+                <div class="mock-btn" style="background:#6B3A2A;color:#F5EDE3;font-family:'Fredoka';">Bake Cakes</div>
+            </div>
+            <div class="mock-card" style="background:rgba(107,58,42,0.08);border:2px solid #D4A574;">
+                <h4 style="font-family:'Fredoka';color:#6B3A2A;">French</h4>
+                <div class="sub" style="font-family:'Quicksand';color:#8B6F5A;">Eclair</div>
+                <div class="mock-btn" style="background:#6B3A2A;color:#F5EDE3;font-family:'Fredoka';">Bake Cakes</div>
+            </div>
+        </div>
+        <div class="mock-quiz" style="background:rgba(107,58,42,0.06);">
+            <div class="phrase" style="font-family:'Fredoka';color:#6B3A2A;">Bonjour, bienvenue!</div>
+            <div class="pron" style="font-family:'Quicksand';color:#8B6F5A;">[bon-ZHOOR]</div>
+        </div>
+        <div class="mock-answers">
+            <div class="mock-answer" style="background:#FFF8F0;border:2px solid #D4A574;color:#6B3A2A;font-family:'Quicksand';">Hello, welcome!</div>
+            <div class="mock-answer" style="background:#FFF8F0;border:2px solid #D4A574;color:#6B3A2A;font-family:'Quicksand';">Goodbye!</div>
+            <div class="mock-answer" style="background:#FFF8F0;border:2px solid #D4A574;color:#6B3A2A;font-family:'Quicksand';">How much?</div>
+            <div class="mock-answer" style="background:#FFF8F0;border:2px solid #D4A574;color:#6B3A2A;font-family:'Quicksand';">Please wait</div>
+        </div>
+        <div class="swatches">
+            <div class="swatch" style="background:#6B3A2A;"></div>
+            <div class="swatch" style="background:#D4A574;"></div>
+            <div class="swatch" style="background:#F5EDE3;"></div>
+            <div class="swatch" style="background:#8B6F5A;"></div>
+            <div class="swatch" style="background:#FFF8F0;"></div>
+        </div>
+        <div class="color-names">Dark Roast / Caramel / Linen / Walnut / Cream</div>
+    </div>
+</div>
+
+<!-- A2: Pink Macaron -->
+<div class="option" style="background: #FFF0EC;">
+    <div class="option-bg"></div>
+    <div class="option-inner">
+        <div class="option-label">
+            <div class="option-number" style="background:#C4726C;color:white;">A2</div>
+            <div class="option-name" style="color:#8B4513;">Pink Macaron</div>
+        </div>
+        <div class="logo-row"><img src="/assets/images/ui/logo_transparent.png" alt="Gateaux"></div>
+        <div class="mock-stat-bar">
+            <div class="mock-pill" style="background:#C4726C;color:white;font-family:'Quicksand';">92 tips</div>
+            <div class="mock-pill" style="background:#E8B89D;color:#5C2E1A;font-family:'Quicksand';">Lvl 3</div>
+            <div class="mock-pill" style="background:rgba(196,114,108,0.15);color:#C4726C;font-family:'Quicksand';">Recipe Book</div>
+        </div>
+        <div class="mock-welcome" style="color:#8B4513;font-family:'Quicksand';">Choose a language to start baking!</div>
+        <div class="mock-cards">
+            <div class="mock-card" style="background:white;border:2px solid #E8B89D;">
+                <h4 style="font-family:'Fredoka';color:#8B4513;">Spanish</h4>
+                <div class="sub" style="font-family:'Quicksand';color:#C4726C;">Tres Leches</div>
+                <div class="mock-btn" style="background:#C4726C;color:white;font-family:'Fredoka';">Bake Cakes</div>
+            </div>
+            <div class="mock-card" style="background:white;border:2px solid #E8B89D;">
+                <h4 style="font-family:'Fredoka';color:#8B4513;">French</h4>
+                <div class="sub" style="font-family:'Quicksand';color:#C4726C;">Eclair</div>
+                <div class="mock-btn" style="background:#C4726C;color:white;font-family:'Fredoka';">Bake Cakes</div>
+            </div>
+        </div>
+        <div class="mock-quiz" style="background:white;">
+            <div class="phrase" style="font-family:'Fredoka';color:#8B4513;">Bonjour, bienvenue!</div>
+            <div class="pron" style="font-family:'Quicksand';color:#C4726C;">[bon-ZHOOR]</div>
+        </div>
+        <div class="mock-answers">
+            <div class="mock-answer" style="background:#FFF7F5;border:2px solid #E8B89D;color:#5C2E1A;font-family:'Quicksand';">Hello, welcome!</div>
+            <div class="mock-answer" style="background:#FFF7F5;border:2px solid #E8B89D;color:#5C2E1A;font-family:'Quicksand';">Goodbye!</div>
+            <div class="mock-answer" style="background:#FFF7F5;border:2px solid #E8B89D;color:#5C2E1A;font-family:'Quicksand';">How much?</div>
+            <div class="mock-answer" style="background:#FFF7F5;border:2px solid #E8B89D;color:#5C2E1A;font-family:'Quicksand';">Please wait</div>
+        </div>
+        <div class="swatches">
+            <div class="swatch" style="background:#8B4513;"></div>
+            <div class="swatch" style="background:#C4726C;"></div>
+            <div class="swatch" style="background:#E8B89D;"></div>
+            <div class="swatch" style="background:#FFF0EC;"></div>
+            <div class="swatch" style="background:#5C2E1A;"></div>
+        </div>
+        <div class="color-names">Cafe Brown / Rose / Peach / Blush / Espresso</div>
+    </div>
+</div>
+
+<!-- A3: Golden Croissant -->
+<div class="option" style="background: #FBF5E8;">
+    <div class="option-bg"></div>
+    <div class="option-inner">
+        <div class="option-label">
+            <div class="option-number" style="background:#B8860B;color:white;">A3</div>
+            <div class="option-name" style="color:#6B4C1E;">Golden Croissant</div>
+        </div>
+        <div class="logo-row"><img src="/assets/images/ui/logo_transparent.png" alt="Gateaux"></div>
+        <div class="mock-stat-bar">
+            <div class="mock-pill" style="background:#6B4C1E;color:#FBF5E8;font-family:'Quicksand';">92 tips</div>
+            <div class="mock-pill" style="background:#DAA520;color:#3C2415;font-family:'Quicksand';">Lvl 3</div>
+            <div class="mock-pill" style="background:rgba(218,165,32,0.2);color:#6B4C1E;font-family:'Quicksand';">Recipe Book</div>
+        </div>
+        <div class="mock-welcome" style="color:#6B4C1E;font-family:'Quicksand';">Choose a language to start baking!</div>
+        <div class="mock-cards">
+            <div class="mock-card" style="background:rgba(218,165,32,0.08);border:2px solid #DAA520;">
+                <h4 style="font-family:'Fredoka';color:#6B4C1E;">Spanish</h4>
+                <div class="sub" style="font-family:'Quicksand';color:#9B7B3A;">Tres Leches</div>
+                <div class="mock-btn" style="background:#6B4C1E;color:#FBF5E8;font-family:'Fredoka';">Bake Cakes</div>
+            </div>
+            <div class="mock-card" style="background:rgba(218,165,32,0.08);border:2px solid #DAA520;">
+                <h4 style="font-family:'Fredoka';color:#6B4C1E;">French</h4>
+                <div class="sub" style="font-family:'Quicksand';color:#9B7B3A;">Eclair</div>
+                <div class="mock-btn" style="background:#6B4C1E;color:#FBF5E8;font-family:'Fredoka';">Bake Cakes</div>
+            </div>
+        </div>
+        <div class="mock-quiz" style="background:rgba(218,165,32,0.06);">
+            <div class="phrase" style="font-family:'Fredoka';color:#6B4C1E;">Bonjour, bienvenue!</div>
+            <div class="pron" style="font-family:'Quicksand';color:#9B7B3A;">[bon-ZHOOR]</div>
+        </div>
+        <div class="mock-answers">
+            <div class="mock-answer" style="background:#FFFDF5;border:2px solid #DAA520;color:#6B4C1E;font-family:'Quicksand';">Hello, welcome!</div>
+            <div class="mock-answer" style="background:#FFFDF5;border:2px solid #DAA520;color:#6B4C1E;font-family:'Quicksand';">Goodbye!</div>
+            <div class="mock-answer" style="background:#FFFDF5;border:2px solid #DAA520;color:#6B4C1E;font-family:'Quicksand';">How much?</div>
+            <div class="mock-answer" style="background:#FFFDF5;border:2px solid #DAA520;color:#6B4C1E;font-family:'Quicksand';">Please wait</div>
+        </div>
+        <div class="swatches">
+            <div class="swatch" style="background:#6B4C1E;"></div>
+            <div class="swatch" style="background:#DAA520;"></div>
+            <div class="swatch" style="background:#9B7B3A;"></div>
+            <div class="swatch" style="background:#FBF5E8;"></div>
+            <div class="swatch" style="background:#FFFDF5;"></div>
+        </div>
+        <div class="color-names">Toffee / Gold / Amber / Butter / Ivory</div>
+    </div>
+</div>
+
+<!-- A4: Mint & Mocha -->
+<div class="option" style="background: #F0F5F0;">
+    <div class="option-bg"></div>
+    <div class="option-inner">
+        <div class="option-label">
+            <div class="option-number" style="background:#5D7B64;color:white;">A4</div>
+            <div class="option-name" style="color:#3C2415;">Mint & Mocha</div>
+        </div>
+        <div class="logo-row"><img src="/assets/images/ui/logo_transparent.png" alt="Gateaux"></div>
+        <div class="mock-stat-bar">
+            <div class="mock-pill" style="background:#3C2415;color:#E8F0E8;font-family:'Quicksand';">92 tips</div>
+            <div class="mock-pill" style="background:#5D7B64;color:white;font-family:'Quicksand';">Lvl 3</div>
+            <div class="mock-pill" style="background:rgba(93,123,100,0.15);color:#5D7B64;font-family:'Quicksand';">Recipe Book</div>
+        </div>
+        <div class="mock-welcome" style="color:#3C2415;font-family:'Quicksand';">Choose a language to start baking!</div>
+        <div class="mock-cards">
+            <div class="mock-card" style="background:white;border:2px solid #A8C5AE;">
+                <h4 style="font-family:'Fredoka';color:#3C2415;">Spanish</h4>
+                <div class="sub" style="font-family:'Quicksand';color:#5D7B64;">Tres Leches</div>
+                <div class="mock-btn" style="background:#3C2415;color:#E8F0E8;font-family:'Fredoka';">Bake Cakes</div>
+            </div>
+            <div class="mock-card" style="background:white;border:2px solid #A8C5AE;">
+                <h4 style="font-family:'Fredoka';color:#3C2415;">French</h4>
+                <div class="sub" style="font-family:'Quicksand';color:#5D7B64;">Eclair</div>
+                <div class="mock-btn" style="background:#3C2415;color:#E8F0E8;font-family:'Fredoka';">Bake Cakes</div>
+            </div>
+        </div>
+        <div class="mock-quiz" style="background:white;">
+            <div class="phrase" style="font-family:'Fredoka';color:#3C2415;">Bonjour, bienvenue!</div>
+            <div class="pron" style="font-family:'Quicksand';color:#5D7B64;">[bon-ZHOOR]</div>
+        </div>
+        <div class="mock-answers">
+            <div class="mock-answer" style="background:#F5FAF5;border:2px solid #A8C5AE;color:#3C2415;font-family:'Quicksand';">Hello, welcome!</div>
+            <div class="mock-answer" style="background:#F5FAF5;border:2px solid #A8C5AE;color:#3C2415;font-family:'Quicksand';">Goodbye!</div>
+            <div class="mock-answer" style="background:#F5FAF5;border:2px solid #A8C5AE;color:#3C2415;font-family:'Quicksand';">How much?</div>
+            <div class="mock-answer" style="background:#F5FAF5;border:2px solid #A8C5AE;color:#3C2415;font-family:'Quicksand';">Please wait</div>
+        </div>
+        <div class="swatches">
+            <div class="swatch" style="background:#3C2415;"></div>
+            <div class="swatch" style="background:#5D7B64;"></div>
+            <div class="swatch" style="background:#A8C5AE;"></div>
+            <div class="swatch" style="background:#F0F5F0;"></div>
+            <div class="swatch" style="background:#D4A574;"></div>
+        </div>
+        <div class="color-names">Mocha / Sage / Mint / Frost / Caramel</div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- FONT B: Comfortaa + Josefin Sans       -->
+<!-- ═══════════════════════════════════════ -->
+<div class="section-title">COMFORTAA + JOSEFIN SANS</div>
+
+<!-- B1: Warm Espresso -->
+<div class="option" style="background: #F5EDE3;">
+    <div class="option-bg"></div>
+    <div class="option-inner">
+        <div class="option-label">
+            <div class="option-number" style="background:#6B3A2A;color:white;">B1</div>
+            <div class="option-name" style="color:#6B3A2A;">Warm Espresso</div>
+        </div>
+        <div class="logo-row"><img src="/assets/images/ui/logo_transparent.png" alt="Gateaux"></div>
+        <div class="mock-stat-bar">
+            <div class="mock-pill" style="background:#6B3A2A;color:#F5EDE3;font-family:'Josefin Sans';">92 tips</div>
+            <div class="mock-pill" style="background:#D4A574;color:#3C2415;font-family:'Josefin Sans';">Lvl 3</div>
+            <div class="mock-pill" style="background:rgba(107,58,42,0.15);color:#6B3A2A;font-family:'Josefin Sans';">Recipe Book</div>
+        </div>
+        <div class="mock-welcome" style="color:#6B3A2A;font-family:'Josefin Sans';">Choose a language to start baking!</div>
+        <div class="mock-cards">
+            <div class="mock-card" style="background:rgba(107,58,42,0.08);border:2px solid #D4A574;">
+                <h4 style="font-family:'Comfortaa';color:#6B3A2A;">Spanish</h4>
+                <div class="sub" style="font-family:'Josefin Sans';color:#8B6F5A;">Tres Leches</div>
+                <div class="mock-btn" style="background:#6B3A2A;color:#F5EDE3;font-family:'Comfortaa';">Bake Cakes</div>
+            </div>
+            <div class="mock-card" style="background:rgba(107,58,42,0.08);border:2px solid #D4A574;">
+                <h4 style="font-family:'Comfortaa';color:#6B3A2A;">French</h4>
+                <div class="sub" style="font-family:'Josefin Sans';color:#8B6F5A;">Eclair</div>
+                <div class="mock-btn" style="background:#6B3A2A;color:#F5EDE3;font-family:'Comfortaa';">Bake Cakes</div>
+            </div>
+        </div>
+        <div class="mock-quiz" style="background:rgba(107,58,42,0.06);">
+            <div class="phrase" style="font-family:'Comfortaa';color:#6B3A2A;">Bonjour, bienvenue!</div>
+            <div class="pron" style="font-family:'Josefin Sans';color:#8B6F5A;">[bon-ZHOOR]</div>
+        </div>
+        <div class="mock-answers">
+            <div class="mock-answer" style="background:#FFF8F0;border:2px solid #D4A574;color:#6B3A2A;font-family:'Josefin Sans';">Hello, welcome!</div>
+            <div class="mock-answer" style="background:#FFF8F0;border:2px solid #D4A574;color:#6B3A2A;font-family:'Josefin Sans';">Goodbye!</div>
+            <div class="mock-answer" style="background:#FFF8F0;border:2px solid #D4A574;color:#6B3A2A;font-family:'Josefin Sans';">How much?</div>
+            <div class="mock-answer" style="background:#FFF8F0;border:2px solid #D4A574;color:#6B3A2A;font-family:'Josefin Sans';">Please wait</div>
+        </div>
+        <div class="swatches">
+            <div class="swatch" style="background:#6B3A2A;"></div>
+            <div class="swatch" style="background:#D4A574;"></div>
+            <div class="swatch" style="background:#F5EDE3;"></div>
+            <div class="swatch" style="background:#8B6F5A;"></div>
+            <div class="swatch" style="background:#FFF8F0;"></div>
+        </div>
+        <div class="color-names">Dark Roast / Caramel / Linen / Walnut / Cream</div>
+    </div>
+</div>
+
+<!-- B2: Pink Macaron -->
+<div class="option" style="background: #FFF0EC;">
+    <div class="option-bg"></div>
+    <div class="option-inner">
+        <div class="option-label">
+            <div class="option-number" style="background:#C4726C;color:white;">B2</div>
+            <div class="option-name" style="color:#8B4513;">Pink Macaron</div>
+        </div>
+        <div class="logo-row"><img src="/assets/images/ui/logo_transparent.png" alt="Gateaux"></div>
+        <div class="mock-stat-bar">
+            <div class="mock-pill" style="background:#C4726C;color:white;font-family:'Josefin Sans';">92 tips</div>
+            <div class="mock-pill" style="background:#E8B89D;color:#5C2E1A;font-family:'Josefin Sans';">Lvl 3</div>
+            <div class="mock-pill" style="background:rgba(196,114,108,0.15);color:#C4726C;font-family:'Josefin Sans';">Recipe Book</div>
+        </div>
+        <div class="mock-welcome" style="color:#8B4513;font-family:'Josefin Sans';">Choose a language to start baking!</div>
+        <div class="mock-cards">
+            <div class="mock-card" style="background:white;border:2px solid #E8B89D;">
+                <h4 style="font-family:'Comfortaa';color:#8B4513;">Spanish</h4>
+                <div class="sub" style="font-family:'Josefin Sans';color:#C4726C;">Tres Leches</div>
+                <div class="mock-btn" style="background:#C4726C;color:white;font-family:'Comfortaa';">Bake Cakes</div>
+            </div>
+            <div class="mock-card" style="background:white;border:2px solid #E8B89D;">
+                <h4 style="font-family:'Comfortaa';color:#8B4513;">French</h4>
+                <div class="sub" style="font-family:'Josefin Sans';color:#C4726C;">Eclair</div>
+                <div class="mock-btn" style="background:#C4726C;color:white;font-family:'Comfortaa';">Bake Cakes</div>
+            </div>
+        </div>
+        <div class="mock-quiz" style="background:white;">
+            <div class="phrase" style="font-family:'Comfortaa';color:#8B4513;">Bonjour, bienvenue!</div>
+            <div class="pron" style="font-family:'Josefin Sans';color:#C4726C;">[bon-ZHOOR]</div>
+        </div>
+        <div class="mock-answers">
+            <div class="mock-answer" style="background:#FFF7F5;border:2px solid #E8B89D;color:#5C2E1A;font-family:'Josefin Sans';">Hello, welcome!</div>
+            <div class="mock-answer" style="background:#FFF7F5;border:2px solid #E8B89D;color:#5C2E1A;font-family:'Josefin Sans';">Goodbye!</div>
+            <div class="mock-answer" style="background:#FFF7F5;border:2px solid #E8B89D;color:#5C2E1A;font-family:'Josefin Sans';">How much?</div>
+            <div class="mock-answer" style="background:#FFF7F5;border:2px solid #E8B89D;color:#5C2E1A;font-family:'Josefin Sans';">Please wait</div>
+        </div>
+        <div class="swatches">
+            <div class="swatch" style="background:#8B4513;"></div>
+            <div class="swatch" style="background:#C4726C;"></div>
+            <div class="swatch" style="background:#E8B89D;"></div>
+            <div class="swatch" style="background:#FFF0EC;"></div>
+            <div class="swatch" style="background:#5C2E1A;"></div>
+        </div>
+        <div class="color-names">Cafe Brown / Rose / Peach / Blush / Espresso</div>
+    </div>
+</div>
+
+<!-- B3: Golden Croissant -->
+<div class="option" style="background: #FBF5E8;">
+    <div class="option-bg"></div>
+    <div class="option-inner">
+        <div class="option-label">
+            <div class="option-number" style="background:#B8860B;color:white;">B3</div>
+            <div class="option-name" style="color:#6B4C1E;">Golden Croissant</div>
+        </div>
+        <div class="logo-row"><img src="/assets/images/ui/logo_transparent.png" alt="Gateaux"></div>
+        <div class="mock-stat-bar">
+            <div class="mock-pill" style="background:#6B4C1E;color:#FBF5E8;font-family:'Josefin Sans';">92 tips</div>
+            <div class="mock-pill" style="background:#DAA520;color:#3C2415;font-family:'Josefin Sans';">Lvl 3</div>
+            <div class="mock-pill" style="background:rgba(218,165,32,0.2);color:#6B4C1E;font-family:'Josefin Sans';">Recipe Book</div>
+        </div>
+        <div class="mock-welcome" style="color:#6B4C1E;font-family:'Josefin Sans';">Choose a language to start baking!</div>
+        <div class="mock-cards">
+            <div class="mock-card" style="background:rgba(218,165,32,0.08);border:2px solid #DAA520;">
+                <h4 style="font-family:'Comfortaa';color:#6B4C1E;">Spanish</h4>
+                <div class="sub" style="font-family:'Josefin Sans';color:#9B7B3A;">Tres Leches</div>
+                <div class="mock-btn" style="background:#6B4C1E;color:#FBF5E8;font-family:'Comfortaa';">Bake Cakes</div>
+            </div>
+            <div class="mock-card" style="background:rgba(218,165,32,0.08);border:2px solid #DAA520;">
+                <h4 style="font-family:'Comfortaa';color:#6B4C1E;">French</h4>
+                <div class="sub" style="font-family:'Josefin Sans';color:#9B7B3A;">Eclair</div>
+                <div class="mock-btn" style="background:#6B4C1E;color:#FBF5E8;font-family:'Comfortaa';">Bake Cakes</div>
+            </div>
+        </div>
+        <div class="mock-quiz" style="background:rgba(218,165,32,0.06);">
+            <div class="phrase" style="font-family:'Comfortaa';color:#6B4C1E;">Bonjour, bienvenue!</div>
+            <div class="pron" style="font-family:'Josefin Sans';color:#9B7B3A;">[bon-ZHOOR]</div>
+        </div>
+        <div class="mock-answers">
+            <div class="mock-answer" style="background:#FFFDF5;border:2px solid #DAA520;color:#6B4C1E;font-family:'Josefin Sans';">Hello, welcome!</div>
+            <div class="mock-answer" style="background:#FFFDF5;border:2px solid #DAA520;color:#6B4C1E;font-family:'Josefin Sans';">Goodbye!</div>
+            <div class="mock-answer" style="background:#FFFDF5;border:2px solid #DAA520;color:#6B4C1E;font-family:'Josefin Sans';">How much?</div>
+            <div class="mock-answer" style="background:#FFFDF5;border:2px solid #DAA520;color:#6B4C1E;font-family:'Josefin Sans';">Please wait</div>
+        </div>
+        <div class="swatches">
+            <div class="swatch" style="background:#6B4C1E;"></div>
+            <div class="swatch" style="background:#DAA520;"></div>
+            <div class="swatch" style="background:#9B7B3A;"></div>
+            <div class="swatch" style="background:#FBF5E8;"></div>
+            <div class="swatch" style="background:#FFFDF5;"></div>
+        </div>
+        <div class="color-names">Toffee / Gold / Amber / Butter / Ivory</div>
+    </div>
+</div>
+
+<!-- B4: Mint & Mocha -->
+<div class="option" style="background: #F0F5F0;">
+    <div class="option-bg"></div>
+    <div class="option-inner">
+        <div class="option-label">
+            <div class="option-number" style="background:#5D7B64;color:white;">B4</div>
+            <div class="option-name" style="color:#3C2415;">Mint & Mocha</div>
+        </div>
+        <div class="logo-row"><img src="/assets/images/ui/logo_transparent.png" alt="Gateaux"></div>
+        <div class="mock-stat-bar">
+            <div class="mock-pill" style="background:#3C2415;color:#E8F0E8;font-family:'Josefin Sans';">92 tips</div>
+            <div class="mock-pill" style="background:#5D7B64;color:white;font-family:'Josefin Sans';">Lvl 3</div>
+            <div class="mock-pill" style="background:rgba(93,123,100,0.15);color:#5D7B64;font-family:'Josefin Sans';">Recipe Book</div>
+        </div>
+        <div class="mock-welcome" style="color:#3C2415;font-family:'Josefin Sans';">Choose a language to start baking!</div>
+        <div class="mock-cards">
+            <div class="mock-card" style="background:white;border:2px solid #A8C5AE;">
+                <h4 style="font-family:'Comfortaa';color:#3C2415;">Spanish</h4>
+                <div class="sub" style="font-family:'Josefin Sans';color:#5D7B64;">Tres Leches</div>
+                <div class="mock-btn" style="background:#3C2415;color:#E8F0E8;font-family:'Comfortaa';">Bake Cakes</div>
+            </div>
+            <div class="mock-card" style="background:white;border:2px solid #A8C5AE;">
+                <h4 style="font-family:'Comfortaa';color:#3C2415;">French</h4>
+                <div class="sub" style="font-family:'Josefin Sans';color:#5D7B64;">Eclair</div>
+                <div class="mock-btn" style="background:#3C2415;color:#E8F0E8;font-family:'Comfortaa';">Bake Cakes</div>
+            </div>
+        </div>
+        <div class="mock-quiz" style="background:white;">
+            <div class="phrase" style="font-family:'Comfortaa';color:#3C2415;">Bonjour, bienvenue!</div>
+            <div class="pron" style="font-family:'Josefin Sans';color:#5D7B64;">[bon-ZHOOR]</div>
+        </div>
+        <div class="mock-answers">
+            <div class="mock-answer" style="background:#F5FAF5;border:2px solid #A8C5AE;color:#3C2415;font-family:'Josefin Sans';">Hello, welcome!</div>
+            <div class="mock-answer" style="background:#F5FAF5;border:2px solid #A8C5AE;color:#3C2415;font-family:'Josefin Sans';">Goodbye!</div>
+            <div class="mock-answer" style="background:#F5FAF5;border:2px solid #A8C5AE;color:#3C2415;font-family:'Josefin Sans';">How much?</div>
+            <div class="mock-answer" style="background:#F5FAF5;border:2px solid #A8C5AE;color:#3C2415;font-family:'Josefin Sans';">Please wait</div>
+        </div>
+        <div class="swatches">
+            <div class="swatch" style="background:#3C2415;"></div>
+            <div class="swatch" style="background:#5D7B64;"></div>
+            <div class="swatch" style="background:#A8C5AE;"></div>
+            <div class="swatch" style="background:#F0F5F0;"></div>
+            <div class="swatch" style="background:#D4A574;"></div>
+        </div>
+        <div class="color-names">Mocha / Sage / Mint / Frost / Caramel</div>
+    </div>
+</div>
+
+</body>
+</html>

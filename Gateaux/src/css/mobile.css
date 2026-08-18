@@ -1,0 +1,410 @@
+/* Mobile-First Responsive Design for Gateaux */
+
+/* ========================================
+   SAFE AREA INSETS & MOBILE FUNDAMENTALS
+   ======================================== */
+
+:root {
+  --safe-area-top: env(safe-area-inset-top);
+  --safe-area-right: env(safe-area-inset-right);
+  --safe-area-bottom: env(safe-area-inset-bottom);
+  --safe-area-left: env(safe-area-inset-left);
+  --mobile-max-width: 480px;
+}
+
+/* Prevent text selection and tap highlighting on mobile */
+body {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  overflow-x: hidden;
+}
+
+/* Apply safe area padding to game container */
+#game-container {
+  padding-top: max(20px, var(--safe-area-top));
+  padding-right: max(20px, var(--safe-area-right));
+  padding-bottom: max(20px, var(--safe-area-bottom));
+  padding-left: max(20px, var(--safe-area-left));
+  max-width: var(--mobile-max-width);
+  margin: 0 auto;
+}
+
+/* ========================================
+   DESKTOP: CONSTRAIN TO MOBILE WIDTH
+   ======================================== */
+
+@media screen and (min-width: 768px) {
+  body {
+    background: #2a1810;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 20px 0;
+  }
+
+  #game-container {
+    width: 430px;
+    max-width: 430px;
+    height: min(932px, calc(100vh - 40px));
+    min-height: 0;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  /* Constrain all fixed overlays to match the game container width */
+  .lesson-overlay,
+  .recipe-book-overlay,
+  .tutorial-overlay {
+    width: 430px;
+    height: min(932px, calc(100vh - 40px));
+    top: 20px;
+    bottom: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  /* Level-up uses flex centering internally, so avoid transform conflict */
+  .level-up-overlay {
+    width: 430px;
+    height: min(932px, calc(100vh - 40px));
+    top: 20px;
+    bottom: auto;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+  }
+
+  .debug-menu-btn {
+    top: 28px;
+    right: calc((100vw - 430px) / 2 + 8px);
+  }
+
+  .debug-menu-panel {
+    top: 70px;
+    right: calc((100vw - 430px) / 2 + 8px);
+  }
+}
+
+/* ========================================
+   TOUCH TARGETS (44px minimum)
+   ======================================== */
+
+button,
+.btn-primary,
+.btn-secondary,
+.btn-bake,
+.btn-serve,
+.lesson-item,
+.character-choice,
+.match-option,
+.context-option,
+.tone-option,
+.comeback-option,
+.language-card {
+  min-height: 44px;
+  min-width: 44px;
+  touch-action: manipulation; /* Prevent zoom on double-tap */
+  cursor: pointer;
+}
+
+/* Make interactive elements easier to tap */
+.stat-item,
+.cake-slot {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ========================================
+   MOBILE LAYOUT ADJUSTMENTS
+   ======================================== */
+
+@media screen and (max-width: 767px) {
+  /* Reduce overall padding on small screens */
+  #game-container {
+    padding: max(12px, var(--safe-area-top)) max(12px, var(--safe-area-right)) max(12px, var(--safe-area-bottom)) max(12px, var(--safe-area-left));
+  }
+
+  /* Header adjustments */
+  .game-header {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+    padding: 12px;
+  }
+
+  .header-stats {
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .stat-item {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
+
+  /* Language cards - stack vertically on mobile */
+  .language-cards {
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .language-card {
+    width: 100%;
+    padding: var(--sp-2) var(--sp-3);
+  }
+
+  .btn-bake {
+    width: auto;
+    flex-shrink: 0;
+  }
+
+  /* Display case scrolling handled by base displayCase.css */
+
+  /* Customer area */
+  .customer-area {
+    padding: 12px;
+  }
+
+  .customer-portrait {
+    width: 80px;
+    height: 80px;
+  }
+
+  .response-options {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .response-btn {
+    width: 100%;
+    padding: 12px;
+  }
+
+  /* Lesson overlay is already full-screen via lessons.css */
+
+  /* Lesson scroll area touch */
+  .lesson-scroll-area {
+    -webkit-overflow-scrolling: touch;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Character choices - 2 columns on mobile */
+  .character-choices {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .character-choice {
+    padding: 12px 8px;
+  }
+
+  .character-choice img {
+    width: 80px;
+    height: 80px;
+  }
+
+  /* Minigame adjustments */
+  .match-options,
+  .context-options,
+  .tone-options,
+  .comeback-options {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .match-option,
+  .context-option,
+  .tone-option,
+  .comeback-option {
+    width: 100%;
+    padding: 12px;
+  }
+
+  /* Font size adjustments */
+  body {
+    font-size: 14px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+  }
+
+  h3 {
+    font-size: 1.1rem;
+  }
+
+  .tagline {
+    font-size: 0.9rem;
+  }
+}
+
+/* ========================================
+   SMALL MOBILE (iPhone SE - 375px)
+   ======================================== */
+
+@media screen and (max-width: 375px) {
+  #game-container {
+    padding: 8px;
+  }
+
+  .character-choices {
+    grid-template-columns: 1fr;
+  }
+
+  .character-choice img {
+    width: 70px;
+    height: 70px;
+  }
+
+  .stat-item {
+    padding: 6px 10px;
+    font-size: 0.85rem;
+  }
+
+  h1 {
+    font-size: 1.3rem;
+  }
+
+  h2 {
+    font-size: 1.1rem;
+  }
+
+  h3 {
+    font-size: 1rem;
+  }
+}
+
+/* ========================================
+   LANDSCAPE MODE ON MOBILE
+   ======================================== */
+
+@media screen and (max-width: 768px) and (orientation: landscape) {
+
+  .display-case-section {
+    padding: 8px;
+  }
+
+  .customer-section {
+    padding: 8px;
+  }
+
+  .game-header {
+    padding: 8px;
+  }
+}
+
+/* ========================================
+   PREVENT ZOOM ON INPUT FOCUS (iOS)
+   ======================================== */
+
+input,
+select,
+textarea {
+  font-size: 16px; /* iOS won't zoom if 16px or larger */
+}
+
+/* ========================================
+   LOADING STATES FOR SLOW CONNECTIONS
+   ======================================== */
+
+.image-placeholder {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s ease-in-out infinite;
+  border-radius: 8px;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* ========================================
+   PWA SUPPORT (STANDALONE MODE)
+   ======================================== */
+
+@media screen and (display-mode: standalone) {
+  body {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  #game-container {
+    padding-top: max(40px, var(--safe-area-top));
+  }
+}
+
+/* ========================================
+   ACCESSIBILITY & TOUCH IMPROVEMENTS
+   ======================================== */
+
+/* Increase tap target size for small UI elements */
+.close-lesson-panel,
+.debug-btn {
+  padding: 12px;
+  min-width: 44px;
+  min-height: 44px;
+}
+
+/* Smooth scrolling for better mobile experience */
+.lesson-content,
+.display-case,
+.customer-list {
+  scroll-behavior: smooth;
+}
+
+/* Better focus states for keyboard navigation */
+button:focus,
+.btn-primary:focus,
+.btn-secondary:focus {
+  outline: 3px solid var(--warm-white);
+  outline-offset: 2px;
+}
+
+/* Hide scrollbars on mobile for cleaner look */
+@media screen and (max-width: 767px) {
+  .display-case::-webkit-scrollbar,
+  .lesson-content::-webkit-scrollbar {
+    display: none;
+  }
+
+  .display-case,
+  .lesson-content {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* ========================================
+   PERFORMANCE: DISABLE ANIMATIONS ON LOW-END DEVICES
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

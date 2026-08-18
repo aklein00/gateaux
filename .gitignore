@@ -1,0 +1,19 @@
+.DS_Store
+.env
+.env.local
+.env*.local
+*.log
+.vercel/
+node_modules/
+dist/
+
+# Local-only / bulky, not the game or the product office
+Art/
+generated_art/
+_bmad/
+_bmad-output/
+.agentvibes/
+.claude/
+.cursor/
+.gemini/
+.mcp.json
