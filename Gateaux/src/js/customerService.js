@@ -26,10 +26,13 @@ export class CustomerService {
 
     // Generate a new customer
     generateNewCustomer() {
-        // Check if display case has any cakes
         const displayStatus = this.getDisplayStatus();
         if (!displayStatus.hasAnyCakes) {
             this.showNoCakesMessage();
+            return;
+        }
+        if (!displayStatus.hasReadyCakes) {
+            this.showSettingMessage();
             return;
         }
 
@@ -57,6 +60,7 @@ export class CustomerService {
         if (!this.displayCase) {
             return {
                 hasAnyCakes: false,
+                hasReadyCakes: false,
                 hasSpanishCakes: false,
                 hasFrenchCakes: false,
                 status: {}
@@ -67,11 +71,14 @@ export class CustomerService {
 
         const hasSpanishCakes = status.spanish?.count > 0;
         const hasFrenchCakes = status.french?.count > 0;
+        const hasSpanishReady = status.spanish?.hasReady;
+        const hasFrenchReady = status.french?.hasReady;
 
         return {
             hasAnyCakes: hasSpanishCakes || hasFrenchCakes,
-            hasSpanishCakes,
-            hasFrenchCakes,
+            hasReadyCakes: hasSpanishReady || hasFrenchReady,
+            hasSpanishCakes: hasSpanishReady,
+            hasFrenchCakes: hasFrenchReady,
             status
         };
     }
@@ -261,6 +268,7 @@ export class CustomerService {
         // Hide customer after delay
         setTimeout(() => {
             this.hideCustomer();
+            this.syncCounterControls();
         }, 2000);
     }
 
@@ -278,9 +286,9 @@ export class CustomerService {
 
         // Remove a cake and apply its tip multiplier
         if (this.displayCase) {
-            const inventory = this.displayCase.inventory[this.currentCustomer.language];
-            if (inventory && inventory.length > 0) {
-                const cake = inventory[0];
+            const ready = this.displayCase.getReadyCakes(this.currentCustomer.language);
+            if (ready.length > 0) {
+                const cake = ready[0];
                 const recipe = getRecipeById(cake.recipeId);
                 if (recipe) {
                     tipAmount = Math.round(10 * recipe.tipMultiplier);
@@ -343,12 +351,46 @@ export class CustomerService {
 
     // Show no cakes message
     showNoCakesMessage() {
+        this.setIdleCopy('Case is empty. Bake a cake first, then come back.');
+        this.syncCounterControls();
+    }
+
+    showSettingMessage() {
+        this.setIdleCopy("They're still setting. Bake another or come back.");
+        this.syncCounterControls();
+    }
+
+    setIdleCopy(text) {
         const idleEl = document.getElementById('customer-idle');
         const responseAreaEl = document.getElementById('response-area');
         if (responseAreaEl) responseAreaEl.style.display = 'none';
         if (idleEl) {
             idleEl.style.display = 'block';
-            idleEl.innerHTML = '<p>Case is empty. Bake a cake first, then come back.</p>';
+            idleEl.innerHTML = `<p>${text}</p>`;
+        }
+    }
+
+    syncCounterControls() {
+        const btn = document.getElementById('new-customer-btn');
+        const idleEl = document.getElementById('customer-idle');
+        if (!this.displayCase) return;
+
+        const total = this.displayCase.getTotalCount();
+        const hasReady = this.displayCase.hasReadyCakes();
+        const setting = this.displayCase.hasSettingCakes();
+
+        if (btn) {
+            btn.disabled = total === 0 || !hasReady;
+        }
+
+        if (idleEl && idleEl.style.display !== 'none') {
+            if (total === 0) {
+                idleEl.innerHTML = '<p>Case is empty. Bake a cake first, then come back.</p>';
+            } else if (!hasReady && setting) {
+                idleEl.innerHTML = "<p>They're still setting. Bake another or come back.</p>";
+            } else if (hasReady) {
+                idleEl.innerHTML = "<p>Someone's about to walk in. Think fast when they order.</p>";
+            }
         }
     }
 

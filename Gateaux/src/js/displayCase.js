@@ -1,9 +1,11 @@
 // Display Case Management for Gateaux
-// Per-cake decay timers: each cake ages individually based on its recipe's decay rate
+// Cakes set (not sellable) then decay from readyAt. Overnight rush sells ready stock slowly.
 
-import { getRecipeById } from './recipeData.js';
+import { getRecipeById, getSetMinutes } from './recipeData.js';
 
 const DEFAULT_DECAY_HOURS = 6;
+const FIRST_CAKE_SET_MS = 45 * 1000;
+const AWAY_SALE_INTERVAL_MS = 4 * 60 * 60 * 1000;
 
 export class DisplayCase {
     constructor() {
@@ -12,44 +14,91 @@ export class DisplayCase {
             french: []
         };
         this.maxCakesPerShelf = 8;
+        this.lastSeenAt = null;
+        this.lastAwaySales = 0;
 
         this.loadFromStorage();
+        this.migrateReadyAt();
 
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', () => {
-                this.checkDecay();
-                this.updateDisplay();
+                this.onSessionResume();
             });
         } else {
-            this.checkDecay();
-            this.updateDisplay();
+            this.onSessionResume();
         }
     }
 
-    // Get total decay time for a cake based on its recipe
+    onSessionResume() {
+        this.checkDecay();
+        this.lastAwaySales = this.checkAwaySales();
+        this.touchLastSeen();
+        this.updateDisplay();
+    }
+
     getDecayMs(cake) {
         const recipe = getRecipeById(cake.recipeId);
         const hours = recipe?.decayHours || DEFAULT_DECAY_HOURS;
         return hours * 60 * 60 * 1000;
     }
 
-    // Add a cake to the display
-    addCake(language, lessonId, recipeId) {
+    getSetMs(cake, { firstEver = false } = {}) {
+        if (firstEver) return FIRST_CAKE_SET_MS;
+        const recipe = getRecipeById(cake.recipeId);
+        return getSetMinutes(recipe) * 60 * 1000;
+    }
+
+    isReady(cake, now = Date.now()) {
+        if (cake.readyAt == null) return true;
+        return now >= cake.readyAt;
+    }
+
+    isSetting(cake, now = Date.now()) {
+        return !this.isReady(cake, now);
+    }
+
+    getReadyCakes(language, now = Date.now()) {
+        return (this.inventory[language] || []).filter(cake => this.isReady(cake, now));
+    }
+
+    getAllReadyCakes(now = Date.now()) {
+        return Object.keys(this.inventory).flatMap(language =>
+            this.getReadyCakes(language, now).map(cake => ({ language, cake }))
+        );
+    }
+
+    hasReadyCakes(now = Date.now()) {
+        return this.getAllReadyCakes(now).length > 0;
+    }
+
+    hasSettingCakes(now = Date.now()) {
+        return Object.values(this.inventory).some(cakes =>
+            cakes.some(cake => this.isSetting(cake, now))
+        );
+    }
+
+    getTotalCount() {
+        return Object.values(this.inventory).reduce((sum, cakes) => sum + cakes.length, 0);
+    }
+
+    addCake(language, lessonId, recipeId, { firstEver = false } = {}) {
         if (!this.inventory[language]) {
             this.inventory[language] = [];
         }
 
-        // Auto-remove expired cakes first to make room
         this.checkDecay();
 
+        const now = Date.now();
         const cake = {
-            id: `cake_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+            id: `cake_${now}_${Math.random().toString(36).substr(2, 9)}`,
             language: language,
             lessonId: lessonId,
             recipeId: recipeId || null,
-            createdAt: Date.now(),
+            createdAt: now,
+            readyAt: now,
             freshness: 'fresh'
         };
+        cake.readyAt = now + this.getSetMs(cake, { firstEver });
 
         if (this.inventory[language].length < this.maxCakesPerShelf) {
             this.inventory[language].push(cake);
@@ -61,7 +110,6 @@ export class DisplayCase {
         return false;
     }
 
-    // Remove a cake (when sold)
     removeCake(language, cakeId) {
         if (!this.inventory[language]) return false;
 
@@ -76,34 +124,39 @@ export class DisplayCase {
         return false;
     }
 
-    // Per-cake decay: update freshness and remove expired cakes
+    // Decay starts when the cake is ready, not while it is still setting.
     checkDecay() {
         const now = Date.now();
         let changed = false;
 
         Object.keys(this.inventory).forEach(language => {
-            // Remove cakes past their total decay time
             const before = this.inventory[language].length;
             this.inventory[language] = this.inventory[language].filter(cake => {
+                if (this.isSetting(cake, now)) return true;
                 const totalDecayMs = this.getDecayMs(cake);
-                return (now - cake.createdAt) < totalDecayMs;
+                const readyAt = cake.readyAt ?? cake.createdAt;
+                return (now - readyAt) < totalDecayMs;
             });
             if (this.inventory[language].length !== before) changed = true;
 
-            // Update freshness for remaining cakes
             this.inventory[language].forEach(cake => {
-                const age = now - cake.createdAt;
-                const totalDecayMs = this.getDecayMs(cake);
-                const freshLimit = totalDecayMs * 0.50;
-                const dayOldLimit = totalDecayMs * 0.75;
                 const oldFreshness = cake.freshness;
-
-                if (age < freshLimit) {
+                if (this.isSetting(cake, now)) {
                     cake.freshness = 'fresh';
-                } else if (age < dayOldLimit) {
-                    cake.freshness = 'day_old';
                 } else {
-                    cake.freshness = 'stale';
+                    const readyAt = cake.readyAt ?? cake.createdAt;
+                    const age = now - readyAt;
+                    const totalDecayMs = this.getDecayMs(cake);
+                    const freshLimit = totalDecayMs * 0.50;
+                    const dayOldLimit = totalDecayMs * 0.75;
+
+                    if (age < freshLimit) {
+                        cake.freshness = 'fresh';
+                    } else if (age < dayOldLimit) {
+                        cake.freshness = 'day_old';
+                    } else {
+                        cake.freshness = 'stale';
+                    }
                 }
 
                 if (cake.freshness !== oldFreshness) changed = true;
@@ -115,43 +168,78 @@ export class DisplayCase {
         }
     }
 
-    // Get time remaining for a specific cake (in ms)
-    getCakeTimeRemaining(cake) {
-        const totalDecayMs = this.getDecayMs(cake);
-        const age = Date.now() - cake.createdAt;
-        return Math.max(0, totalDecayMs - age);
+    // 1 ready cake per 4 hours away, at most half the ready stock.
+    checkAwaySales() {
+        const now = Date.now();
+        if (!this.lastSeenAt) return 0;
+
+        const elapsed = now - this.lastSeenAt;
+        const maxByTime = Math.floor(elapsed / AWAY_SALE_INTERVAL_MS);
+        if (maxByTime < 1) return 0;
+
+        const ready = this.getAllReadyCakes(now);
+        const cap = Math.floor(ready.length / 2);
+        const toSell = Math.min(maxByTime, cap);
+        if (toSell < 1) return 0;
+
+        let sold = 0;
+        for (let i = 0; i < toSell; i++) {
+            const entry = ready[i];
+            if (!entry) break;
+            this.removeCake(entry.language, entry.cake.id);
+            sold++;
+        }
+
+        return sold;
     }
 
-    // Format time remaining as short string
-    formatTimeRemaining(ms) {
+    touchLastSeen() {
+        this.lastSeenAt = Date.now();
+        this.saveToStorage();
+    }
+
+    getSetTimeRemaining(cake, now = Date.now()) {
+        if (this.isReady(cake, now)) return 0;
+        return Math.max(0, cake.readyAt - now);
+    }
+
+    formatSetRemaining(ms) {
         const hours = Math.floor(ms / (1000 * 60 * 60));
         const minutes = Math.floor((ms % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((ms % (1000 * 60)) / 1000);
         if (hours > 0) return `${hours}h ${minutes}m`;
-        return `${minutes}m`;
+        if (minutes > 0) {
+            const sec = String(seconds).padStart(2, '0');
+            return `${minutes}:${sec}`;
+        }
+        return `${seconds}s`;
     }
 
-    // Get current inventory status
     getInventoryStatus() {
         const status = {};
+        const now = Date.now();
 
         Object.keys(this.inventory).forEach(language => {
             const cakes = this.inventory[language];
+            const readyCount = cakes.filter(c => this.isReady(c, now)).length;
             status[language] = {
                 count: cakes.length,
+                readyCount,
+                settingCount: cakes.length - readyCount,
                 maxCount: this.maxCakesPerShelf,
                 percentage: (cakes.length / this.maxCakesPerShelf) * 100,
                 freshCount: cakes.filter(c => c.freshness === 'fresh').length,
                 dayOldCount: cakes.filter(c => c.freshness === 'day_old').length,
                 staleCount: cakes.filter(c => c.freshness === 'stale').length,
                 isLow: cakes.length < 3,
-                isEmpty: cakes.length === 0
+                isEmpty: cakes.length === 0,
+                hasReady: readyCount > 0
             };
         });
 
         return status;
     }
 
-    // Update the visual display
     updateDisplay() {
         const displayElement = document.getElementById('display-case');
         if (!displayElement) return;
@@ -164,7 +252,6 @@ export class DisplayCase {
         });
     }
 
-    // Create a shelf element
     createShelfElement(language, cakes) {
         const shelf = document.createElement('div');
         shelf.className = 'display-shelf';
@@ -203,6 +290,7 @@ export class DisplayCase {
             if (i < cakes.length) {
                 const cake = cakes[i];
                 slot.classList.add('filled', cake.freshness);
+                if (this.isSetting(cake)) slot.classList.add('setting');
                 slot.innerHTML = this.getCakeVisual(language, cake);
             } else {
                 slot.classList.add('empty');
@@ -215,20 +303,21 @@ export class DisplayCase {
         return shelf;
     }
 
-    // Get cake visual with per-cake timer
     getCakeVisual(language, cake) {
         const recipe = getRecipeById(cake.recipeId);
 
-        // Use recipe data if available, fallback to hardcoded defaults
         const filename = recipe?.imageFile || (language === 'french' ? 'eclair_fresh.png' : 'tres_leches_fresh.png');
         const name = recipe?.name || (language === 'french' ? 'Eclair' : 'Tres Leches');
         const rarity = recipe?.rarity || 'common';
 
-        const freshnessClass = cake.freshness === 'fresh' ? 'fresh' :
+        const setting = this.isSetting(cake);
+        const freshnessClass = setting ? 'setting' :
+                              cake.freshness === 'fresh' ? 'fresh' :
                               cake.freshness === 'day_old' ? 'day-old' : 'stale';
 
-        const timeLeft = this.getCakeTimeRemaining(cake);
-        const timeStr = this.formatTimeRemaining(timeLeft);
+        const timerHtml = setting
+            ? `<span class="cake-timer">${this.formatSetRemaining(this.getSetTimeRemaining(cake))}</span>`
+            : '';
 
         return `
             <div class="cake-visual ${freshnessClass} rarity-${rarity}">
@@ -236,20 +325,29 @@ export class DisplayCase {
                      data-image-name="${name}"
                      src="assets/images/cakes/${filename}"
                      alt="${name}">
-                <span class="cake-timer">${timeStr}</span>
+                ${timerHtml}
             </div>
         `;
     }
 
-    // Stock status lives once, in the shelf header (see createShelfElement's
-    // "Low stock" / "Empty" badge). The bake cards intentionally stay silent
-    // on inventory count — they only say what they bake — so this fact never
-    // appears twice on screen.
+    migrateReadyAt() {
+        let changed = false;
+        Object.values(this.inventory).forEach(cakes => {
+            cakes.forEach(cake => {
+                if (cake.readyAt == null) {
+                    cake.readyAt = cake.createdAt;
+                    changed = true;
+                }
+            });
+        });
+        if (changed) this.saveToStorage();
+    }
 
     saveToStorage() {
         try {
             localStorage.setItem('gateaux_display_case', JSON.stringify({
-                inventory: this.inventory
+                inventory: this.inventory,
+                lastSeenAt: this.lastSeenAt
             }));
         } catch (error) {
             console.error('Failed to save display case:', error);
@@ -262,6 +360,7 @@ export class DisplayCase {
             if (saved) {
                 const data = JSON.parse(saved);
                 this.inventory = data.inventory || this.inventory;
+                this.lastSeenAt = data.lastSeenAt || null;
             }
         } catch (error) {
             console.error('Failed to load display case:', error);
@@ -270,6 +369,8 @@ export class DisplayCase {
 
     reset() {
         this.inventory = { spanish: [], french: [] };
+        this.lastSeenAt = Date.now();
+        this.lastAwaySales = 0;
         this.saveToStorage();
         this.updateDisplay();
     }

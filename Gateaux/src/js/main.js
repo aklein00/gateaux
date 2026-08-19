@@ -95,6 +95,7 @@ class GateauxGame {
         this.setupLevelUpListener();
         this.startDecayTimer();
         this.updateStats();
+        this.showAwaySalesLine();
 
         // Recipe Book
         setupRecipeBookListeners();
@@ -239,14 +240,17 @@ class GateauxGame {
         document.addEventListener('visibilitychange', () => {
             if (document.hidden) {
                 audioManager.pauseMusic();
+                displayCase.touchLastSeen();
                 if (this.decayCheckInterval) {
                     clearInterval(this.decayCheckInterval);
                     this.decayCheckInterval = null;
                 }
             } else {
                 audioManager.resumeMusic();
-                displayCase.checkDecay();
+                displayCase.onSessionResume();
                 this.startDecayTimer();
+                this.updateStats();
+                this.showAwaySalesLine();
             }
         });
     }
@@ -543,7 +547,10 @@ class GateauxGame {
     // Lesson completed (completeLesson already called by lessonManager)
     onLessonComplete(lesson) {
         const recipeId = this.currentRecipe?.id || null;
-        displayCase.addCake(this.currentLanguage, lesson.id, recipeId);
+        const firstEver = Object.keys(gameState.bakedCakes).length === 0
+            && displayCase.getTotalCount() === 0;
+        displayCase.addCake(this.currentLanguage, lesson.id, recipeId, { firstEver });
+        this.startDecayTimer();
 
         gameState.addTips(25);
         this.showTipFeedback('+25');
@@ -634,15 +641,32 @@ class GateauxGame {
         }, 3000);
     }
 
-    // Periodic decay check (per-cake timers)
+    // 1s while cakes are setting so the countdown is believable; 60s otherwise.
     startDecayTimer() {
         if (this.decayCheckInterval) clearInterval(this.decayCheckInterval);
+        const tickMs = displayCase.hasSettingCakes() ? 1000 : 60000;
         this.decayCheckInterval = setInterval(() => {
             displayCase.checkDecay();
             displayCase.updateDisplay();
             this.updateCakeCount();
-        }, 60000);
+            this.customerService.syncCounterControls();
+            const nextMs = displayCase.hasSettingCakes() ? 1000 : 60000;
+            if (nextMs !== tickMs) this.startDecayTimer();
+        }, tickMs);
         this.updateCakeCount();
+    }
+
+    showAwaySalesLine() {
+        const sold = displayCase.lastAwaySales;
+        if (!sold) return;
+        displayCase.lastAwaySales = 0;
+        const banner = document.getElementById('welcome-banner');
+        const textEl = document.getElementById('welcome-text');
+        if (!banner || !textEl) return;
+        banner.classList.remove('hidden');
+        textEl.textContent = sold === 1
+            ? 'Sold one while you were out.'
+            : 'Sold a couple while you were out.';
     }
 
     updateCakeCount() {
@@ -659,14 +683,18 @@ class GateauxGame {
 
         const status = displayCase.getInventoryStatus();
         const totalCakes = Object.values(status).reduce((sum, s) => sum + s.count, 0);
+        const readyCakes = Object.values(status).reduce((sum, s) => sum + (s.readyCount || 0), 0);
         const banner = document.getElementById('welcome-banner');
         const textEl = document.getElementById('welcome-text');
         const customerSection = document.getElementById('customer-section');
 
-        if (banner && textEl) {
+        if (banner && textEl && !displayCase.lastAwaySales) {
             if (totalCakes === 0) {
                 banner.classList.remove('hidden');
                 textEl.textContent = 'Pick a language. We start with how locals say hi.';
+            } else if (readyCakes === 0) {
+                banner.classList.remove('hidden');
+                textEl.textContent = "They're setting. Bake another, or hang around.";
             } else if (totalCakes < 3) {
                 banner.classList.remove('hidden');
                 textEl.textContent = 'Keep a couple cakes in the case — then serve someone.';
@@ -678,6 +706,8 @@ class GateauxGame {
         if (customerSection) {
             customerSection.style.display = totalCakes > 0 ? '' : 'none';
         }
+
+        this.customerService.syncCounterControls();
     }
 }
 

@@ -19,7 +19,7 @@ Impact = player feel. Effort = one-person-days, rough.
 | P1-4 | Tap-to-commit (no CHECK) or auto-advance on correct | One less tap | Med | S | Next |
 | P1-5 | Lesson length 4–5 phrases | Duo snack size | Med | S | Done |
 | P1-6 | Replace fake “Loading...” / missing welcome banner | Trust | Low | S | Done |
-| P1-7 | Milestone nodes do something tiny, or come out | Hollow UI trains distrust | Med | S | Done |
+| P1-8 | Cakes set before they sell | Instant Next up emptied the case; nothing to come back for | High | S | Done |
 | P2-1 | Rush Hour timed mode (Café) | Timer becomes a character | Med | M | Later |
 | P2-2 | Local slang **Option B**: ~8 FR/ES city packs, static JSON, no flags | Travel slang without becoming a world atlas. Parked 17 Aug 2026 — pull after playtest + Next | High | M | Later |
 | P2-3 | Recorded cat VO, 20 lines each | Biggest charm unlock left | High | L | Later |

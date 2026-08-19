@@ -20,6 +20,7 @@ export const RECIPES = [
         rarity: 'common',
         difficulty: 1,
         decayHours: 4,
+        setMinutes: 2,
         tipMultiplier: 1.0,
         unlockLevel: 1,
         imageFile: 'eclair_fresh.png',
@@ -34,6 +35,7 @@ export const RECIPES = [
         rarity: 'common',
         difficulty: 1,
         decayHours: 3,
+        setMinutes: 2,
         tipMultiplier: 1.0,
         unlockLevel: 1,
         imageFile: 'crepe_de_rue_fresh.png',
@@ -48,6 +50,7 @@ export const RECIPES = [
         rarity: 'uncommon',
         difficulty: 2,
         decayHours: 5,
+        setMinutes: 20,
         tipMultiplier: 1.5,
         unlockLevel: 2,
         imageFile: 'moka_express_fresh.png',
@@ -62,6 +65,7 @@ export const RECIPES = [
         rarity: 'rare',
         difficulty: 3,
         decayHours: 7,
+        setMinutes: 240,
         tipMultiplier: 2.0,
         unlockLevel: 3,
         imageFile: 'mille_feuille_amour_fresh.png',
@@ -76,6 +80,7 @@ export const RECIPES = [
         rarity: 'rare',
         difficulty: 3,
         decayHours: 7,
+        setMinutes: 240,
         tipMultiplier: 2.0,
         unlockLevel: 4,
         imageFile: 'croquembouche_critique_fresh.png',
@@ -90,6 +95,7 @@ export const RECIPES = [
         rarity: 'legendary',
         difficulty: 3,
         decayHours: 10,
+        setMinutes: 240,
         tipMultiplier: 3.0,
         unlockLevel: 6,
         imageFile: 'gateau_parfait_fresh.png',
@@ -106,6 +112,7 @@ export const RECIPES = [
         rarity: 'common',
         difficulty: 1,
         decayHours: 4,
+        setMinutes: 2,
         tipMultiplier: 1.0,
         unlockLevel: 1,
         imageFile: 'tres_leches_fresh.png',
@@ -120,6 +127,7 @@ export const RECIPES = [
         rarity: 'common',
         difficulty: 1,
         decayHours: 3,
+        setMinutes: 2,
         tipMultiplier: 1.0,
         unlockLevel: 1,
         imageFile: 'churros_callejeros_fresh.png',
@@ -134,6 +142,7 @@ export const RECIPES = [
         rarity: 'uncommon',
         difficulty: 2,
         decayHours: 5,
+        setMinutes: 20,
         tipMultiplier: 1.5,
         unlockLevel: 2,
         imageFile: 'cafe_con_leche_rapido_fresh.png',
@@ -148,6 +157,7 @@ export const RECIPES = [
         rarity: 'rare',
         difficulty: 3,
         decayHours: 7,
+        setMinutes: 240,
         tipMultiplier: 2.0,
         unlockLevel: 3,
         imageFile: 'flan_de_amor_fresh.png',
@@ -162,6 +172,7 @@ export const RECIPES = [
         rarity: 'rare',
         difficulty: 3,
         decayHours: 7,
+        setMinutes: 240,
         tipMultiplier: 2.0,
         unlockLevel: 4,
         imageFile: 'tarta_del_critico_fresh.png',
@@ -176,6 +187,7 @@ export const RECIPES = [
         rarity: 'legendary',
         difficulty: 3,
         decayHours: 10,
+        setMinutes: 240,
         tipMultiplier: 3.0,
         unlockLevel: 6,
         imageFile: 'pastel_maestro_fresh.png',
@@ -242,6 +254,18 @@ export function getLevelProgress(totalTipsEarned) {
 }
 
 // Rarity display helpers
+const SET_MINUTES_BY_RARITY = {
+    common: 2,
+    uncommon: 20,
+    rare: 240,
+    legendary: 240
+};
+
+export function getSetMinutes(recipe) {
+    if (recipe?.setMinutes != null) return recipe.setMinutes;
+    return SET_MINUTES_BY_RARITY[recipe?.rarity] || SET_MINUTES_BY_RARITY.common;
+}
+
 export const RARITY_COLORS = {
     common: '#4CAF50',
     uncommon: '#DAA520',

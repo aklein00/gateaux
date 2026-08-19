@@ -6,7 +6,18 @@ Format: **Decision → Context → Choice → Consequence → Revisit when.**
 
 ---
 
-## D-008 — Local slang is Option B, later (2026-08-17)
+## D-009 — Cakes set before they sell (2026-08-19)
+
+**Context.** A lesson put a cake in the case and Next up could sell it immediately, so the shelf never filled. The number on each cake was a decay clock, which looked like a wait and wasn't.
+
+**Choice.** Cakes *set* before they are sellable. Common: 2 minutes (first-ever: 45 seconds). Uncommon: 20 minutes. Rare/legendary: 4 hours. Decay starts at ready. Next up only sells ready cakes. While away, ready cakes sell at about one per 4 hours, capped at half the ready stock. No skip, no energy.
+
+**Consequence.** Session one can still serve after a short wait. Filling the case is the reason to come back. Overnight emptiness is explained, not random rot.
+
+**Revisit when.** First playtest: can you dump a fresh bake at the counter? If yes, the ready gate failed.
+
+---
+
 
 **Context.** Wish: auto-pick ~50 places Americans travel, generate a slang database, use a fast model for conversation. Duolingo stays fast by generating offline and serving static quizzes. Gateaux already has unused region metadata and eight slang lines.
 

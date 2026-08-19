@@ -37,7 +37,7 @@ Bugs and product holes. Feel problems live in `status.md`; this is the working l
 | K-19 | `totalLessons = 5` hardcoded on cards | Progress math is fake |
 | K-20 | Image paths split between `assets/` and `../../public/assets/` | Easy to break in build |
 | K-21 | AI correction is fire-and-forget; static text is the real product | Keep it that way until feel is done |
-| K-22 | Decay check is every 60s in-session, GDD said 4–8 hours | Idle-game fantasy vs actual timer |
+| K-22 | Decay check is every 60s in-session, GDD said 4–8 hours | Fixed — cakes set before sell; overnight rush is 1 ready cake / 4h (half-stock cap); decay starts at readyAt; 1s tick while setting |
 
 ## Won’t-fix for now
 
