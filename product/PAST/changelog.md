@@ -37,7 +37,7 @@ Internal log. Player-facing notes can be copied from here later. Newest first.
 
 - Spanish + French language cards (Tres Leches / Éclair).
 - Five teachers in data and copy: Amélie, Marcel, Café, Bisou, Gaston.
-- Start screen, mute, tutorial modal, Venus lifecycle hooks.
+- Start screen, mute, tutorial modal, browser tab pause/resume.
 
 ## 2025-09 — Paper game
 

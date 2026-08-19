@@ -7,11 +7,7 @@
     "dev": "vite --host",
     "build": "vite build",
     "preview": "vite preview",
-    "test:mobile": "vite --host --port 8080",
-    "venus:init": "venus init --name Gateaux --description 'Learn languages by running a cozy café' --build-path ./dist",
-    "venus:build": "npm run build && venus publish",
-    "venus:build:public": "npm run build && venus publish --public",
-    "deploy": "npm run build && venus publish"
+    "test:mobile": "vite --host --port 8080"
   },
   "keywords": [
     "language-learning",
@@ -22,9 +18,6 @@
   ],
   "author": "",
   "license": "MIT",
-  "dependencies": {
-    "@series-inc/venus-sdk": "*"
-  },
   "devDependencies": {
     "vite": "^5.0.0"
   }

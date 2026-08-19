@@ -40,7 +40,8 @@
                 </div>
             </div>
             <div class="stat-bar-right">
-                <button class="stat-pill recipe-book-btn" id="recipe-book-btn" title="Recipe Book">
+                <button class="stat-pill recipe-book-btn" id="recipe-book-btn" type="button"
+                        disabled aria-disabled="true" title="Recipe Book — not in this build">
                     Recipe Book
                 </button>
                 <button class="stat-pill mute-btn" id="mute-btn" title="Toggle Sound" aria-label="Toggle Sound">
@@ -340,7 +341,7 @@
         </div>
     </div>
 
-    <!-- Audio elements (kept for Venus SDK compatibility) -->
+    <!-- Audio elements -->
     <audio id="customer-audio" preload="auto"></audio>
 
     <!-- Scripts -->

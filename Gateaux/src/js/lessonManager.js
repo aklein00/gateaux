@@ -2,7 +2,6 @@
 import { gameState } from './gameState.js';
 import { teachers, MAX_LESSON_PROMPTS, trimLessonPhrases } from './languageData.js';
 import { audioManager } from './audioManager.js';
-import { generateCorrectionText } from './aiChat.js';
 
 // Timer is off for standard lessons. Kept for a future Café "Rush Hour" mode.
 const TIMER_ENABLED_DEFAULT = false;
@@ -577,23 +576,6 @@ export class LessonManager {
         if (explainEl) explainEl.textContent = explanation;
         if (feedback) feedback.style.display = 'flex';
         audioManager.playWrong();
-
-        // AI enrichment: teacher-voiced correction replaces static text if Venus AI responds.
-        // Fires after modal is already visible — static text is the immediate fallback.
-        if (this.selectedAnswer && teacher) {
-            generateCorrectionText({
-                phrase,
-                wrongAnswer: this.selectedAnswer,
-                language: this.currentLanguage,
-                teacherName: teacher.name,
-                teacherPersonality: teacher.personality || teacher.style || 'helpful'
-            }).then(aiText => {
-                const modalVisible = document.getElementById('wrong-feedback')?.style.display !== 'none';
-                if (aiText && explainEl && modalVisible) {
-                    explainEl.textContent = aiText;
-                }
-            }).catch(() => {});
-        }
 
         const continueBtn = document.getElementById('wrong-continue-btn');
         if (continueBtn) {

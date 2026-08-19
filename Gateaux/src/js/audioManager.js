@@ -134,11 +134,22 @@ export const audioManager = {
         musicStarted = true;
     },
 
+    pauseMusic() {
+        if (musicEl && !musicEl.paused) musicEl.pause();
+    },
+
+    resumeMusic() {
+        if (!musicStarted || !musicEl || muted) return;
+        musicEl.volume = MUSIC_VOLUME;
+        musicEl.play().catch(() => {});
+    },
+
     playCorrect() {
         playFile('correct', () => playTone({
             notes: [{ freq: 880, time: 0, dur: 0.12 }, { freq: 1175, time: 0.1, dur: 0.18 }],
             type: 'sine', volume: 0.3
         }));
+        try { navigator.vibrate?.(20); } catch { /* desktop / denied */ }
     },
 
     playWrong() {
@@ -146,6 +157,7 @@ export const audioManager = {
             notes: [{ freq: 280, time: 0, dur: 0.08 }, { freq: 220, time: 0.07, dur: 0.14 }],
             type: 'sawtooth', volume: 0.18
         }));
+        try { navigator.vibrate?.(40); } catch { /* desktop / denied */ }
     },
 
     playLessonComplete() {

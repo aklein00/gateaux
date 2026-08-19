@@ -4,7 +4,6 @@ import { displayCase } from './displayCase.js';
 import { gameState } from './gameState.js';
 import { LessonManager } from './lessonManager.js';
 import { CustomerService } from './customerService.js';
-import { venusIntegration } from './venusIntegration.js';
 import { getRecipesForLanguage, getRecipesForLevel, getLevelData, getRarityLabel, getRecipeForTeacher } from './recipeData.js';
 import { setOnBakeCallback, setupRecipeBookListeners } from './recipeBook.js';
 import { audioManager } from './audioManager.js';
@@ -78,7 +77,6 @@ function getFlagEmoji(code) {
 
 class GateauxGame {
     constructor() {
-        this.venus = venusIntegration;
         this.lessonManager = new LessonManager();
         this.customerService = new CustomerService(displayCase);
         this.currentLanguage = null;
@@ -86,7 +84,6 @@ class GateauxGame {
         this.currentRecipe = null;
         this.decayCheckInterval = null;
 
-        window.venusIntegration = this.venus;
         this.init();
     }
 
@@ -94,7 +91,7 @@ class GateauxGame {
         displayCase.updateDisplay();
         this.setupEventListeners();
         this.setupAudioUnlock();
-        this.setupVenusLifecycle();
+        this.setupPageLifecycle();
         this.setupLevelUpListener();
         this.startDecayTimer();
         this.updateStats();
@@ -118,10 +115,7 @@ class GateauxGame {
     }
 
     setupAudioUnlock() {
-        const unlockAudio = () => {
-            this.venus.unlockAudio();
-            audioManager.unlock();
-        };
+        const unlockAudio = () => audioManager.unlock();
         document.addEventListener('touchstart', unlockAudio, { once: true });
         document.addEventListener('click', unlockAudio, { once: true });
     }
@@ -241,12 +235,19 @@ class GateauxGame {
         this.startLesson(lesson);
     }
 
-    setupVenusLifecycle() {
-        window.addEventListener('venus:pause-timers', () => {
-            if (this.decayCheckInterval) clearInterval(this.decayCheckInterval);
-        });
-        window.addEventListener('venus:resume-timers', () => {
-            this.startDecayTimer();
+    setupPageLifecycle() {
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                audioManager.pauseMusic();
+                if (this.decayCheckInterval) {
+                    clearInterval(this.decayCheckInterval);
+                    this.decayCheckInterval = null;
+                }
+            } else {
+                audioManager.resumeMusic();
+                displayCase.checkDecay();
+                this.startDecayTimer();
+            }
         });
     }
 
@@ -635,6 +636,7 @@ class GateauxGame {
 
     // Periodic decay check (per-cake timers)
     startDecayTimer() {
+        if (this.decayCheckInterval) clearInterval(this.decayCheckInterval);
         this.decayCheckInterval = setInterval(() => {
             displayCase.checkDecay();
             displayCase.updateDisplay();
@@ -687,9 +689,7 @@ function setupStartScreen() {
 
     if (startBtn && startScreen && gameContainer) {
         startBtn.addEventListener('click', () => {
-            if (window.gateauxGame && window.gateauxGame.venus) {
-                window.gateauxGame.venus.unlockAudio();
-            }
+            audioManager.unlock();
             startScreen.classList.add('hidden');
             setTimeout(() => {
                 startScreen.style.display = 'none';
@@ -753,10 +753,6 @@ async function initGame() {
         await loadPhrases();
         gameState.init();
         window.gateauxGame = new GateauxGame();
-
-        // Expose singletons so VenusIntegration.saveToVenusStorage / loadVenusStorage work
-        window.gameState = gameState;
-        window.displayCase = displayCase;
 
         window.debugGame = {
             game: window.gateauxGame,

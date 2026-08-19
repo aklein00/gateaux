@@ -170,5 +170,5 @@ export function closeCakeDetail() {
 export function setupRecipeBookListeners() {
     document.getElementById('close-recipe-book')?.addEventListener('click', closeRecipeBook);
     document.getElementById('close-cake-detail')?.addEventListener('click', closeCakeDetail);
-    document.getElementById('recipe-book-btn')?.addEventListener('click', openRecipeBook);
+    // Recipe Book is parked for now — button stays in the chrome, disabled.
 }

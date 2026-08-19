@@ -8,7 +8,7 @@ A short history of how Gateaux got here. Dates are from file stamps and conversa
 | Feb 2026 | Art planning + cake design docs | Visual identity locked: warm patisserie, Foster’s-home energy, cakes as language |
 | 2026 (build) | Vanilla Vite game stands up | Start screen, display case, recipe picker, full-screen quiz, recipe book, tips/levels |
 | 2026 (build) | Phrase database ships | 120 phrases, 12 categories, FR + ES, teacher-tagged, with distractors and corrections |
-| 2026 (build) | Venus SDK wired | Publish path, pause/resume, optional AI correction on wrong answers |
+| 2026 (build) | Browser lifecycle | Tab hide pauses music and cake decay; localStorage keeps progress |
 | 2026 (build) | UX polish pass | Token system, press states, display case as hub hero, overlay motion |
 | Aug 2026 | Product office created | First honest health check: the game works, the *feel* does not |
 
@@ -18,4 +18,4 @@ A short history of how Gateaux got here. Dates are from file stamps and conversa
 - A content pass that leads with slang instead of “Formal Greetings”
 - More than one question type (matching, listen, tap-the-word)
 - A first session that starts on a question, not a menu
-- Shipping to a public store / Venus listing as a finished product
+- Shipping to a public web URL as a finished product

@@ -182,6 +182,13 @@ body {
     box-shadow: none;
 }
 
+.stat-pill.recipe-book-btn:disabled {
+    opacity: 0.38;
+    filter: grayscale(1);
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
 .stat-pill.mute-btn {
     background: rgba(107, 58, 42, 0.15);
     color: var(--cafe-brown);
@@ -780,10 +787,4 @@ h1, h2, h3, h4, h5, h6 {
 
 @keyframes spin {
     to { transform: rotate(360deg); }
-}
-
-/* Hide Venus SDK mock overlay menu button (dev-only browser chrome injected by the wrapper) */
-#venus-mock-close-button,
-#venus-mock-overlay {
-    display: none !important;
 }

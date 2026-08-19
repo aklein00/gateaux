@@ -44,13 +44,20 @@
                 background var(--t-base) var(--ease-out);
 }
 
-.recipe-book-btn:hover {
+.recipe-book-btn:hover:not(:disabled) {
     background: rgba(107,58,42,.20);
 }
 
-.recipe-book-btn:active {
+.recipe-book-btn:active:not(:disabled) {
     transform: scale(0.94);
     transition-duration: var(--t-fast);
+}
+
+.recipe-book-btn:disabled {
+    opacity: 0.38;
+    filter: grayscale(1);
+    cursor: not-allowed;
+    pointer-events: none;
 }
 
 .recipe-book-icon {

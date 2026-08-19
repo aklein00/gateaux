@@ -2,7 +2,7 @@
 
 **Project Status:** Alpha (Playable Vertical Slice)
 **Last Updated:** 2026-02-08
-**Target Platform:** Web (HTML5) via Venus/run.game
+**Target Platform:** Web (HTML5)
 **Languages:** Spanish & French (MVP)
 **Dev Server:** localhost:8081
 
@@ -14,12 +14,11 @@
 - Foundation & Architecture -- 90% complete
 - Visual Assets -- 40% complete
 - Core Gameplay (Quiz System) -- 70% complete
-- Content & Language Data -- 15% complete (70 phrases hardcoded, AI planned)
+- Content & Language Data -- 15% complete (70 phrases hardcoded)
 - Game Mechanics (Difficulty) -- 30% complete (leveling + recipe system implemented)
 - Leveling & Recipe System -- 80% complete (code done, needs art + testing)
 - UI/UX Polish -- 50% complete
 - Audio -- 0% complete
-- AI Integration -- 10% complete (module exists, not wired in)
 - Deployment -- 0% complete
 
 ---
@@ -27,12 +26,12 @@
 ## Milestone 1: Foundation -- COMPLETE
 
 - [x] Project structure, GDD, character docs, art planning
-- [x] Core modules: gameState, displayCase, lessonManager, customerService, venusIntegration
+- [x] Core modules: gameState, displayCase, lessonManager, customerService
 - [x] localStorage persistence
 - [x] Per-cake decay timers (individual countdown per cake)
 - [x] Vite build system on port 8081
-- [x] Venus SDK integration (lifecycle hooks, audio unlock, haptics ready)
-- [x] AI chat module wrapper (aiChat.js using Venus SDK)
+- [x] First-gesture audio unlock
+- [x] Static phrase corrections (no live AI teacher)
 
 ---
 
@@ -163,14 +162,8 @@
 
 ---
 
-## Milestone 8: AI Integration -- 10% COMPLETE
-- [x] aiChat.js module (Venus SDK wrapper)
-- [x] requestChat(), getPhraseHint(), getCustomerDialogue() functions
-- [ ] generateLesson() for difficulty 3+ categories
-- [ ] Wire into lessonManager for intermediate/advanced lessons
-- [ ] Loading spinner during AI generation
-- [ ] Cache AI results in localStorage
-- [ ] Fallback to hardcoded phrases when AI unavailable
+## Milestone 8: AI Integration -- deferred
+- [ ] Not in the web product. Lessons use authored phrases and static corrections.
 
 ---
 
@@ -179,16 +172,13 @@
 - [ ] Mobile device testing (iPhone SE, iPhone 12, Android)
 - [ ] Performance profiling (60fps target)
 - [ ] Asset compression
-- [ ] Venus storage sync (replace localStorage)
 
 ---
 
 ## Milestone 10: Deployment -- NOT STARTED
-- [ ] Venus publish (unlisted)
-- [ ] QA testing on Venus app
-- [ ] Ad integration (rewarded ads for hints?)
-- [ ] Analytics setup
-- [ ] Venus publish (public)
+- [ ] Static host (Vercel) at gateaux.utilityinfielder.com
+- [ ] QA on desktop and phone browsers
+- [ ] Analytics setup (optional)
 
 ---
 

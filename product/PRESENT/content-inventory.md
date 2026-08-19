@@ -66,7 +66,7 @@ That ladder **used to lock slang behind level 2.** Marcel’s crêpe and churros
 - Direction: native→EN, EN→native, listen-first, cycling.
 - Distractors: per-phrase `wrong_answers_*`, else other lesson phrases, else a café fallback pool.
 - Audio: TTS for listen questions and customers.
-- Corrections: static `correction` field + optional Venus AI rewrite.
+- Corrections: static `correction` field on each phrase.
 - Cap: 5 prompts per lesson.
 
 ## Hollow content (exists as UI, empty as product)

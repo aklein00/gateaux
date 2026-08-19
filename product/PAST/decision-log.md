@@ -78,15 +78,15 @@ Format: **Decision → Context → Choice → Consequence → Revisit when.**
 
 ---
 
-## D-002 — Venus as publish / AI host
+## D-002 — Static web app, local save, no live AI teacher
 
-**Context.** HTML5 game needs a store path. Venus SDK is already in the repo.
+**Context.** HTML5 game needs a public URL. Progress and lessons must work offline in the browser.
 
-**Choice.** Build with Vite, publish with Venus. Optional AI only for wrong-answer color.
+**Choice.** Vite static build. Save in localStorage. Wrong-answer copy is authored on the phrase, not generated at play time.
 
-**Consequence.** Offline static copy still has to work. AI is garnish, not the lesson.
+**Consequence.** No network required for a lesson. No third-party store SDK.
 
-**Revisit when.** Core loop is fun without network.
+**Revisit when.** Core loop is fun; then attach `gateaux.utilityinfielder.com`.
 
 ---
 

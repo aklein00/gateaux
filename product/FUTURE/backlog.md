@@ -24,7 +24,7 @@ Impact = player feel. Effort = one-person-days, rough.
 | P2-2 | Local slang **Option B**: ~8 FR/ES city packs, static JSON, no flags | Travel slang without becoming a world atlas. Parked 17 Aug 2026 — pull after playtest + Next | High | M | Later |
 | P2-3 | Recorded cat VO, 20 lines each | Biggest charm unlock left | High | L | Later |
 | P2-4 | Café dress-up from streaks | Reward, not a sim | Med | L | Later |
-| P2-5 | Public Venus / share link | Real players | High | M | Later |
+| P2-5 | Shareable web link (`gateaux.utilityinfielder.com`) | Real players | High | M | Later |
 | P2-6 | Rewrite README to match the game | Honesty | Low | S | Later |
 
 ## Icebox (do not pull)

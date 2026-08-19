@@ -34,7 +34,7 @@ Only after Next.
 - Bisou and Gaston as optional “mood” lessons, still short.
 - Recorded VO for the five cats (even 20 lines each would change everything).
 - Café dress-up as a *reward* for streaks, not a sim.
-- Venus public listing / shareable link.
+- Shareable web link (`gateaux.utilityinfielder.com`).
 - A third language, if two feel great.
 
 ## Not on the roadmap

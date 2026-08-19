@@ -2,11 +2,11 @@ import { defineConfig } from 'vite';
 import { resolve } from 'path';
 
 export default defineConfig({
-  base: './', // CRITICAL: Relative paths for Venus deployment
+  base: './', // Relative asset paths for static hosting
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
-    target: 'es2022', // Support top-level await for Venus SDK
+    target: 'es2022',
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html')
