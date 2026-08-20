@@ -91,9 +91,18 @@ body {
     background-color: var(--coffee-dark);
     color: var(--text-dark);
     min-height: 100vh;
+    min-height: 100dvh;
     line-height: 1.5;
     /* Ambient drift: slow pan so the scene feels alive */
     animation: ambientDrift 22s ease-in-out infinite alternate;
+}
+
+/* Keep vertical scrolling available. Setting only overflow-x can
+   compute overflow-y to a non-scrolling value and clip the page. */
+html {
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 @keyframes ambientDrift {
@@ -106,10 +115,11 @@ body {
     margin: 0 auto;
     padding: 0 12px 12px;
     min-height: 100vh;
+    min-height: 100dvh;
     background: var(--cream);
     position: relative;
     overflow-x: hidden;
-    overflow-y: auto;
+    overflow-y: visible;
     -webkit-overflow-scrolling: touch;
 }
 
