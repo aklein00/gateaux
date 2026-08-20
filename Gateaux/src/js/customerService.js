@@ -309,7 +309,7 @@ export class CustomerService {
             }
         }
 
-        gameState.awardEarnings(tipAmount);
+        gameState.awardCoins(tipAmount);
         this.showTipFeedback(tipAmount);
     }
 

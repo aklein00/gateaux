@@ -5,9 +5,9 @@ Internal log. Player-facing notes can be copied from here later. Newest first.
 ## 2026-08-20 — Economy sheet + pastry↔replay alignment
 
 - Documented living economy in `product/PRESENT/economy.md`.
-- Unit of account = lesson replay (**12 coins**). Counter base payout locked to that unit so a common pastry refunds exactly one replay; `tipMultiplier` = replays funded.
-- Constants centralized in `Gateaux/src/js/economy.js` (starter wallets, quiz/complete bonuses, diamond speed-up bands, counter payout helper).
-- Coins / diamonds / XP split (D-010). Display-case doober speed-up. Debug currency grants.
+- Unit of account = lesson replay (**12 coins**). Counter base payout locked to that unit.
+- **Coins from pastry sales only.** Quiz hits, phrase first-learn, and lesson complete grant **XP only** (no wallet). Counter quiz does not double-pay on top of the sale.
+- Constants in `Gateaux/src/js/economy.js`. Display-case doober speed-up. Debug currency grants.
 
 ## 2026-08-14 — Colloquial feel slice
 

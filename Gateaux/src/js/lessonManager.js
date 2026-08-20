@@ -3,7 +3,7 @@ import { gameState } from './gameState.js';
 import { teachers, MAX_LESSON_PROMPTS, trimLessonPhrases } from './languageData.js';
 import { audioManager } from './audioManager.js';
 import { FIRST_RUN_CLOSER_IDS, FIRST_RUN_STORY } from './firstRun.js';
-import { QUIZ_BASE_PAYOUT } from './economy.js';
+import { QUIZ_BASE_XP } from './economy.js';
 
 // Timer is off for standard lessons. Kept for a future Café "Rush Hour" mode.
 const TIMER_ENABLED_DEFAULT = false;
@@ -692,10 +692,10 @@ export class LessonManager {
 
         audioManager.playCorrect();
 
-        // Award coins + XP with streak multiplier
+        // Quiz awards XP only — coins come from selling cakes at the counter
         const multiplier = this.getStreakMultiplier();
-        const coins = QUIZ_BASE_PAYOUT * multiplier;
-        gameState.awardEarnings(coins);
+        const xp = QUIZ_BASE_XP * multiplier;
+        gameState.awardXp(xp);
 
         const phrase = this.currentLesson.phrases[this.currentPhraseIndex];
         if (phrase.id) gameState.learnPhrase(this.currentLanguage, phrase.id);

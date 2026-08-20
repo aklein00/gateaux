@@ -2,7 +2,7 @@
 // Wallet (coins / diamonds) is separate from XP (levels the player).
 
 import { calculateLevel, getLevelProgress } from './recipeData.js';
-import { STARTER_COINS, STARTER_DIAMONDS, PHRASE_FIRST_LEARN_BONUS } from './economy.js';
+import { STARTER_COINS, STARTER_DIAMONDS, PHRASE_FIRST_LEARN_XP } from './economy.js';
 
 export const gameState = {
     progress: {
@@ -208,17 +208,37 @@ export const gameState = {
 
         if (!this.progress[language].learnedPhrases.includes(phraseId)) {
             this.progress[language].learnedPhrases.push(phraseId);
-            this.awardEarnings(PHRASE_FIRST_LEARN_BONUS);
+            this.awardXp(PHRASE_FIRST_LEARN_XP);
+            this.saveToStorage();
+            this.updateUI();
         }
     },
 
-    // Earn coins (wallet) + XP (level). Spending never reduces XP.
-    awardEarnings(amount) {
+    /**
+     * Cake sale (and future coin faucets): wallet only.
+     * Lessons use awardXp — coins must come from selling pastries.
+     */
+    awardCoins(amount) {
         if (!amount) return;
         this.player.coins = (this.player.coins || 0) + amount;
+        this.saveToStorage();
+        this.updateUI();
+    },
+
+    /** Lesson / quiz progression. Never grants coins. */
+    awardXp(amount) {
+        if (!amount) return;
         this.addXp(amount);
         this.saveToStorage();
         this.updateUI();
+    },
+
+    /**
+     * @deprecated Prefer awardCoins (sales) or awardXp (lessons).
+     * Kept for safety; grants coins only so old call sites don't dual-dip XP+wallet.
+     */
+    awardEarnings(amount) {
+        this.awardCoins(amount);
     },
 
     addXp(amount) {
@@ -234,9 +254,9 @@ export const gameState = {
         }
     },
 
-    /** @deprecated Use awardEarnings — kept so call sites can migrate gradually */
+    /** @deprecated Use awardCoins / awardXp */
     addTips(amount) {
-        this.awardEarnings(amount);
+        this.awardCoins(amount);
     },
 
     getCoins() {

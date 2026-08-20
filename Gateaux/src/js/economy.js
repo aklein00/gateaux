@@ -5,7 +5,8 @@
 // XP levels the player and is never spent.
 //
 // Unit of account: LESSON_REPLAY_COST (one extra bake of a cleared lesson).
-// Counter pastry payouts are expressed as multiples of that unit via tipMultiplier.
+// Coins come primarily from Cafe Counter pastry sales — not from quiz/lesson clears.
+// Lessons award XP only. tipMultiplier = how many replays one pastry sale refunds.
 
 /** Soft wallet seed for new / migrated saves (playtest-friendly). */
 export const STARTER_COINS = 150;
@@ -15,26 +16,25 @@ export const STARTER_DIAMONDS = 30;
 
 /**
  * Soft cost to start a lesson you have already cleared (extra bake / replay).
- * This is the economy’s unit of account — pastry sells and later sinks
- * should read clearly against this number.
+ * Economy yardstick — pastry sells scale against this.
  */
 export const LESSON_REPLAY_COST = 12;
 
 /**
- * Base Cafe Counter payout for a correct sale before rarity multiplier.
- * Intentionally equal to LESSON_REPLAY_COST so a common pastry refunds
- * exactly one replay; rarity tipMultiplier scales above that.
+ * Base Cafe Counter coin payout before rarity multiplier.
+ * Locked to LESSON_REPLAY_COST so a common pastry refunds exactly one replay.
+ * This is the main coin faucet.
  */
 export const COUNTER_BASE_PAYOUT = LESSON_REPLAY_COST; // 12
 
-/** Coins + XP granted when a lesson finishes (after the quiz). */
-export const LESSON_COMPLETE_BONUS = 25;
+/** XP granted when a lesson finishes (no coins). */
+export const LESSON_COMPLETE_XP = 25;
 
-/** Base coins + XP per correct quiz answer (before streak multiplier). */
-export const QUIZ_BASE_PAYOUT = 2;
+/** XP per correct quiz answer before streak multiplier (no coins). */
+export const QUIZ_BASE_XP = 2;
 
-/** Extra coins + XP the first time a phrase is learned (once per phrase id). */
-export const PHRASE_FIRST_LEARN_BONUS = 5;
+/** XP the first time a phrase is learned (no coins). */
+export const PHRASE_FIRST_LEARN_XP = 5;
 
 /**
  * Diamond cost to skip remaining set-time on a cake in the case.
@@ -54,16 +54,13 @@ export function replayLessonCoinCost(alreadyCompleted) {
     return alreadyCompleted ? LESSON_REPLAY_COST : 0;
 }
 
-/** Cafe Counter coins + XP for selling one cake of this recipe. */
+/** Cafe Counter coins for selling one cake of this recipe (main coin earn). */
 export function getCounterPayout(recipe) {
     const mult = recipe?.tipMultiplier ?? 1;
     return Math.round(COUNTER_BASE_PAYOUT * mult);
 }
 
-/**
- * How many lesson replays one sold pastry funds (for docs / UI).
- * Common 1.0 → 1.0, uncommon 1.5 → 1.5, etc.
- */
+/** How many lesson replays one sold pastry funds. */
 export function replaysFundedByPastry(recipe) {
     return (recipe?.tipMultiplier ?? 1);
 }
