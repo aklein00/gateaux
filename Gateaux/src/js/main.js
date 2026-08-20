@@ -4,9 +4,10 @@ import { displayCase } from './displayCase.js';
 import { gameState } from './gameState.js';
 import { LessonManager } from './lessonManager.js';
 import { CustomerService } from './customerService.js';
-import { getRecipesForLevel, getLevelData, getRarityLabel, getRecipeForTeacher } from './recipeData.js';
+import { getRecipesForLevel, getLevelData, getRarityLabel, getRecipeForTeacher, getRecipeById } from './recipeData.js';
 import { setOnBakeCallback, setupRecipeBookListeners } from './recipeBook.js';
 import { audioManager } from './audioManager.js';
+import { getSpeedUpDiamondCost, replayLessonCoinCost, LESSON_COMPLETE_XP } from './economy.js';
 
 const PATH_ORDER = ['marcel', 'amelie', 'cafe', 'bisou', 'gaston', 'all'];
 const PATH_LABELS = {
@@ -119,6 +120,7 @@ class GateauxGame {
         // First-run: skip the tutorial wall and go straight to a Marcel lesson
         this.setupFirstRun();
         this.setupDebugControls();
+        this.setupCakeDoober();
         const gameContainer = document.getElementById('game-container');
         const autostart = new URLSearchParams(window.location.search).has('autostart');
         if (!autostart && gameContainer?.style.display === 'block') {
@@ -211,6 +213,166 @@ class GateauxGame {
                 .forEach(key => localStorage.removeItem(key));
             window.location.reload();
         });
+
+        document.getElementById('debug-add-coins')?.addEventListener('click', () => {
+            gameState.addCoins(50);
+            if (status) status.textContent = `Coins: ${gameState.getCoins()}`;
+        });
+        document.getElementById('debug-sub-coins')?.addEventListener('click', () => {
+            gameState.spendCoins(Math.min(50, gameState.getCoins()));
+            if (status) status.textContent = `Coins: ${gameState.getCoins()}`;
+        });
+        document.getElementById('debug-add-diamonds')?.addEventListener('click', () => {
+            gameState.addDiamonds(10);
+            if (status) status.textContent = `Diamonds: ${gameState.getDiamonds()} (debug grant)`;
+        });
+        document.getElementById('debug-sub-diamonds')?.addEventListener('click', () => {
+            gameState.spendDiamonds(Math.min(10, gameState.getDiamonds()));
+            if (status) status.textContent = `Diamonds: ${gameState.getDiamonds()}`;
+        });
+    }
+
+    setupCakeDoober() {
+        this._doober = { language: null, cakeId: null };
+
+        document.getElementById('display-case')?.addEventListener('click', (e) => {
+            const slot = e.target.closest('.cake-slot.filled');
+            if (!slot) return;
+            this.openCakeDoober(slot);
+        });
+
+        document.getElementById('display-case')?.addEventListener('keydown', (e) => {
+            if (e.key !== 'Enter' && e.key !== ' ') return;
+            const slot = e.target.closest?.('.cake-slot.filled');
+            if (!slot) return;
+            e.preventDefault();
+            this.openCakeDoober(slot);
+        });
+
+        document.getElementById('cake-doober-close')?.addEventListener('click', () => {
+            this.hideCakeDoober();
+        });
+
+        document.getElementById('cake-doober-speedup')?.addEventListener('click', () => {
+            this.handleCakeSpeedUp();
+        });
+
+        document.getElementById('cake-doober-serve')?.addEventListener('click', () => {
+            this.hideCakeDoober();
+            const section = document.getElementById('customer-section');
+            section?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            document.getElementById('new-customer-btn')?.focus();
+        });
+
+        document.addEventListener('click', (e) => {
+            const doober = document.getElementById('cake-doober');
+            if (!doober || doober.hidden) return;
+            if (e.target.closest('#cake-doober') || e.target.closest('.cake-slot.filled')) return;
+            this.hideCakeDoober();
+        });
+    }
+
+    openCakeDoober(slot) {
+        const language = slot.dataset.language;
+        const cakeId = slot.dataset.cakeId;
+        const cake = displayCase.findCake(language, cakeId);
+        if (!cake) return;
+
+        this._doober = { language, cakeId };
+        document.querySelectorAll('.cake-slot.filled.selected').forEach(el => {
+            el.classList.remove('selected');
+        });
+        slot.classList.add('selected');
+
+        const recipe = getRecipeById(cake.recipeId);
+        const name = recipe?.name || 'Cake';
+        const doober = document.getElementById('cake-doober');
+        const nameEl = document.getElementById('cake-doober-name');
+        const statusEl = document.getElementById('cake-doober-status');
+        const speedBtn = document.getElementById('cake-doober-speedup');
+        const serveBtn = document.getElementById('cake-doober-serve');
+
+        if (nameEl) nameEl.textContent = name;
+
+        const setting = displayCase.isSetting(cake);
+        if (setting) {
+            const remaining = displayCase.getSetTimeRemaining(cake);
+            const cost = getSpeedUpDiamondCost(remaining);
+            if (statusEl) {
+                statusEl.textContent = `Still setting · ${displayCase.formatSetRemaining(remaining)}`;
+            }
+            if (speedBtn) {
+                speedBtn.hidden = false;
+                speedBtn.disabled = !gameState.canAffordDiamonds(cost);
+                speedBtn.textContent = `Speed up · ${cost}◆`;
+            }
+            if (serveBtn) serveBtn.hidden = true;
+        } else {
+            if (statusEl) {
+                statusEl.textContent = 'Ready — sell it at the Cafe Counter quiz.';
+            }
+            if (speedBtn) speedBtn.hidden = true;
+            if (serveBtn) serveBtn.hidden = false;
+        }
+
+        if (doober) {
+            doober.hidden = false;
+            const section = document.querySelector('.display-case-section');
+            const sectionRect = section.getBoundingClientRect();
+            const slotRect = slot.getBoundingClientRect();
+            const top = slotRect.bottom - sectionRect.top + 8;
+            let left = slotRect.left - sectionRect.left;
+            const maxLeft = sectionRect.width - 200;
+            if (left > maxLeft) left = Math.max(0, maxLeft);
+            doober.style.top = `${top}px`;
+            doober.style.left = `${left}px`;
+        }
+    }
+
+    hideCakeDoober() {
+        const doober = document.getElementById('cake-doober');
+        if (doober) doober.hidden = true;
+        document.querySelectorAll('.cake-slot.filled.selected').forEach(el => {
+            el.classList.remove('selected');
+        });
+        this._doober = { language: null, cakeId: null };
+    }
+
+    handleCakeSpeedUp() {
+        const { language, cakeId } = this._doober || {};
+        if (!language || !cakeId) return;
+        const cake = displayCase.findCake(language, cakeId);
+        if (!cake || !displayCase.isSetting(cake)) return;
+
+        const cost = getSpeedUpDiamondCost(displayCase.getSetTimeRemaining(cake));
+        if (!gameState.spendDiamonds(cost)) {
+            const statusEl = document.getElementById('cake-doober-status');
+            if (statusEl) statusEl.textContent = 'Not enough diamonds. Use Debug to grant some.';
+            return;
+        }
+
+        displayCase.speedUpCake(language, cakeId);
+        this.customerService.syncCounterControls();
+        this.updateStats();
+
+        // Re-open on the same cake (now ready)
+        const slot = document.querySelector(
+            `.cake-slot.filled[data-cake-id="${cakeId}"][data-language="${language}"]`
+        );
+        if (slot) this.openCakeDoober(slot);
+        else this.hideCakeDoober();
+    }
+
+    refreshOpenCakeDoober() {
+        const { language, cakeId } = this._doober || {};
+        if (!language || !cakeId) return;
+        const doober = document.getElementById('cake-doober');
+        if (!doober || doober.hidden) return;
+        const slot = document.querySelector(
+            `.cake-slot.filled[data-cake-id="${cakeId}"][data-language="${language}"]`
+        );
+        if (slot) this.openCakeDoober(slot);
+        else this.hideCakeDoober();
     }
 
     maybeShowFirstRun() {
@@ -466,8 +628,13 @@ class GateauxGame {
 
     createLessonItem(lesson, recipe, seqLocked) {
         const completed = gameState.isLessonCompleted(this.currentLanguage, lesson.id);
+        const cost = replayLessonCoinCost(completed);
         const item = document.createElement('div');
         item.className = `lesson-item${completed ? ' completed' : ''}${seqLocked ? ' locked' : ''}`;
+
+        const costHtml = cost > 0
+            ? `<span class="lesson-coin-cost">${cost} coins</span>`
+            : `<span class="lesson-coin-cost free">Free</span>`;
 
         item.innerHTML = `
             <div class="lesson-portrait-wrap">
@@ -480,6 +647,7 @@ class GateauxGame {
                 <h4>${lesson.title}</h4>
                 <p>${seqLocked ? 'Do the one above first.' : lesson.description}</p>
                 <span class="phrase-count">${Math.min(lesson.phrases.length, 5)} phrases</span>
+                ${seqLocked ? '' : costHtml}
             </div>
         `;
 
@@ -503,11 +671,25 @@ class GateauxGame {
 
     // Start a lesson — switch to quiz screen
     startLesson(lesson, options = {}) {
-        this.showScreen('lesson-quiz-screen');
-
         const firstTimeHello = lesson.id === FIRST_RUN_LESSON_ID
             && !gameState.isLessonCompleted(this.currentLanguage, lesson.id);
-        const lessonOptions = { ...options, firstRun: options.firstRun === true || firstTimeHello };
+        const firstRun = options.firstRun === true || firstTimeHello;
+        const alreadyDone = gameState.isLessonCompleted(this.currentLanguage, lesson.id);
+        const cost = firstRun ? 0 : replayLessonCoinCost(alreadyDone);
+
+        if (cost > 0 && !gameState.canAffordCoins(cost)) {
+            this.showTipFeedback(`Need ${cost} coins`);
+            return;
+        }
+
+        if (cost > 0) {
+            gameState.spendCoins(cost);
+            this.showTipFeedback(`−${cost} coins`);
+        }
+
+        this.showScreen('lesson-quiz-screen');
+
+        const lessonOptions = { ...options, firstRun };
 
         this.lessonManager.startLesson(this.currentLanguage, this.currentRegion, lesson, (completed) => {
             if (completed) this.onLessonComplete(lesson);
@@ -522,8 +704,8 @@ class GateauxGame {
         displayCase.addCake(this.currentLanguage, lesson.id, recipeId, { firstEver });
         this.startDecayTimer();
 
-        gameState.addTips(25);
-        this.showTipFeedback('+25');
+        gameState.awardXp(LESSON_COMPLETE_XP);
+        this.showTipFeedback(`+${LESSON_COMPLETE_XP} XP`);
 
         if (recipeId) {
             gameState.recordBakedCake(recipeId);
@@ -620,6 +802,7 @@ class GateauxGame {
             displayCase.updateDisplay();
             this.updateCakeCount();
             this.customerService.syncCounterControls();
+            this.refreshOpenCakeDoober();
             const nextMs = displayCase.hasSettingCakes() ? 1000 : 60000;
             if (nextMs !== tickMs) this.startDecayTimer();
         }, tickMs);
@@ -645,8 +828,12 @@ class GateauxGame {
 
     // Update game stats and contextual UI
     updateStats() {
-        const tipsEl = document.getElementById('total-tips');
-        if (tipsEl) tipsEl.textContent = gameState.getTotalTips();
+        const coinsEl = document.getElementById('total-coins')
+            || document.getElementById('total-tips');
+        if (coinsEl) coinsEl.textContent = gameState.getCoins();
+
+        const diamondsEl = document.getElementById('total-diamonds');
+        if (diamondsEl) diamondsEl.textContent = gameState.getDiamonds();
 
         gameState.updateUI();
         displayCase.updateDisplay();

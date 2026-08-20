@@ -4,6 +4,7 @@
 import { gameState } from './gameState.js';
 import { getRecipeById } from './recipeData.js';
 import { audioManager } from './audioManager.js';
+import { getCounterPayout } from './economy.js';
 
 export class CustomerService {
     constructor(displayCase = null) {
@@ -295,7 +296,7 @@ export class CustomerService {
 
         audioManager.playCorrect();
 
-        let tipAmount = 10; // Base tip
+        let tipAmount = getCounterPayout(null); // common base
 
         // Remove a cake and apply its tip multiplier
         if (this.displayCase) {
@@ -303,18 +304,16 @@ export class CustomerService {
             if (ready.length > 0) {
                 const cake = ready[0];
                 const recipe = getRecipeById(cake.recipeId);
-                if (recipe) {
-                    tipAmount = Math.round(10 * recipe.tipMultiplier);
-                }
+                tipAmount = getCounterPayout(recipe);
                 this.displayCase.removeCake(this.currentCustomer.language, cake.id);
             }
         }
 
-        gameState.addTips(tipAmount);
+        gameState.awardCoins(tipAmount);
         this.showTipFeedback(tipAmount);
     }
 
-    // Show floating tip feedback
+    // Show floating coin feedback
     showTipFeedback(amount) {
         const feedbackEl = document.getElementById('tip-feedback');
         const textEl = document.getElementById('tip-feedback-text');
@@ -322,7 +321,7 @@ export class CustomerService {
 
         // Clone to restart CSS animation, then set text on the new node
         const newText = textEl.cloneNode(true);
-        newText.textContent = `+${amount} tips`;
+        newText.textContent = `+${amount} coins`;
         textEl.parentNode.replaceChild(newText, textEl);
         feedbackEl.style.display = 'block';
 

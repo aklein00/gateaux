@@ -4,6 +4,7 @@
 import { getRecipesForLanguage, getRecipeById, getRarityLabel, RARITY_COLORS, getLevelData, getNextLevelData } from './recipeData.js';
 import { gameState } from './gameState.js';
 import { teachers } from './languageData.js';
+import { getCounterPayout } from './economy.js';
 
 let currentLanguageTab = 'french';
 let onBakeCallback = null;
@@ -53,7 +54,7 @@ function updateLevelBar() {
     if (fillEl) fillEl.style.width = `${levelInfo.progress * 100}%`;
     if (tipsEl) {
         tipsEl.textContent = nextLevel
-            ? `${levelInfo.tipsToNext} tips to next`
+            ? `${levelInfo.xpToNext} XP to next`
             : 'MAX';
     }
 }
@@ -118,7 +119,8 @@ export function showCakeDetail(recipeId) {
         : `Unlock at Level ${recipe.unlockLevel} to discover this recipe.`;
 
     document.getElementById('cake-detail-decay').textContent = `${recipe.decayHours}h`;
-    document.getElementById('cake-detail-tips').textContent = `${recipe.tipMultiplier}x`;
+    document.getElementById('cake-detail-tips').textContent =
+        `${recipe.tipMultiplier}x (${getCounterPayout(recipe)} coins)`;
 
     const teacherName = recipe.teacher === 'all'
         ? 'All Teachers'

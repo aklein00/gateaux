@@ -29,11 +29,15 @@
         <!-- Stat Bar -->
         <div class="stat-bar">
             <div class="stat-bar-left">
-                <div class="stat-pill">
-                    <img src="assets/images/ui/coin.png" alt="Coins" class="stat-icon">
-                    <span id="total-tips">0</span>
+                <div class="stat-pill coin-pill">
+                    <img src="assets/images/ui/coin.svg" alt="Coins" class="stat-icon">
+                    <span id="total-coins">0</span>
                 </div>
-                <div class="stat-pill level-pill" id="level-pill">
+                <div class="stat-pill diamond-pill">
+                    <img src="assets/images/ui/diamond.svg" alt="Diamonds" class="stat-icon">
+                    <span id="total-diamonds">0</span>
+                </div>
+                <div class="stat-pill level-pill" id="level-pill" title="Level (from XP)">
                     <span class="level-pill-label">Lv</span>
                     <span id="player-level">1</span>
                     <div class="level-progress-track">
@@ -62,6 +66,13 @@
             <div class="display-case-section">
                 <div id="display-case" class="display-case">
                     <!-- Shelves dynamically added -->
+                </div>
+                <div id="cake-doober" class="cake-doober" hidden>
+                    <button type="button" class="cake-doober-close" id="cake-doober-close" aria-label="Close">&times;</button>
+                    <p class="cake-doober-name" id="cake-doober-name"></p>
+                    <p class="cake-doober-status" id="cake-doober-status"></p>
+                    <button type="button" class="btn-currency" id="cake-doober-speedup" hidden>Speed up</button>
+                    <button type="button" class="btn-primary" id="cake-doober-serve" hidden>Cafe Counter</button>
                 </div>
             </div>
 
@@ -284,7 +295,7 @@
                 <p id="cake-detail-desc" class="cake-detail-desc"></p>
                 <div class="cake-detail-stats">
                     <div class="cake-stat"><span class="cake-stat-label">Decay</span><span id="cake-detail-decay"></span></div>
-                    <div class="cake-stat"><span class="cake-stat-label">Tips</span><span id="cake-detail-tips"></span></div>
+                    <div class="cake-stat"><span class="cake-stat-label">Payout</span><span id="cake-detail-tips"></span></div>
                     <div class="cake-stat"><span class="cake-stat-label">Teacher</span><span id="cake-detail-teacher"></span></div>
                 </div>
                 <div class="cake-detail-ai-section">
@@ -343,6 +354,10 @@
         <div class="debug-menu-actions">
             <button id="debug-back-btn" type="button">Back out</button>
             <button id="debug-finish-btn" type="button">Finish lesson</button>
+            <button id="debug-add-coins" type="button">+50 coins</button>
+            <button id="debug-sub-coins" type="button">−50 coins</button>
+            <button id="debug-add-diamonds" type="button">+10 diamonds</button>
+            <button id="debug-sub-diamonds" type="button">−10 diamonds</button>
             <button id="debug-restart-btn" class="debug-danger-btn" type="button">Restart fresh</button>
         </div>
     </div>

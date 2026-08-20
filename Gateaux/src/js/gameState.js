@@ -1,63 +1,58 @@
 // Game State Management for Gateaux
-// Handles progress tracking, leveling, achievements, and user data
+// Wallet (coins / diamonds) is separate from XP (levels the player).
 
-import { calculateLevel, getLevelProgress, getRecipesForLevel } from './recipeData.js';
+import { calculateLevel, getLevelProgress } from './recipeData.js';
+import { STARTER_COINS, STARTER_DIAMONDS, PHRASE_FIRST_LEARN_XP } from './economy.js';
 
 export const gameState = {
-    // User progress data
     progress: {
         spanish: {
             completedLessons: [],
             learnedPhrases: [],
-            totalTips: 0,
             level: 1
         },
         french: {
             completedLessons: [],
             learnedPhrases: [],
-            totalTips: 0,
             level: 1
         }
     },
 
-    // Global player state (level is global, not per-language)
+    // Global player: XP levels you; coins/diamonds are wallets
     player: {
         level: 1,
-        totalTipsEarned: 0
+        xp: 0,
+        coins: STARTER_COINS,
+        diamonds: STARTER_DIAMONDS,
+        // Migration flags
+        economyMigrated: false
     },
 
-    // Tracks which recipes have been baked and how many times
     bakedCakes: {},
-    // Example: { eclair_classique: { count: 3, firstBaked: 1707400000000 } }
 
-    // Cafe customization data
     cafe: {
         decorations: [],
         layout: 'default',
         theme: 'classic'
     },
 
-    // Settings
     settings: {
         audioEnabled: true,
         difficulty: 'normal',
         language: 'en'
     },
 
-    // Most recent completed lesson — used so café customers recycle those phrases
     lastLesson: {
         language: null,
         lessonId: null,
         phrases: []
     },
 
-    // Initialize game state
     init() {
         this.loadFromStorage();
         this.updateUI();
     },
 
-    // Save progress to localStorage
     saveToStorage() {
         try {
             localStorage.setItem('gateaux_progress', JSON.stringify(this.progress));
@@ -71,13 +66,11 @@ export const gameState = {
         }
     },
 
-    // Load progress from localStorage
     loadFromStorage() {
         try {
             const savedProgress = localStorage.getItem('gateaux_progress');
             if (savedProgress) {
                 const parsedProgress = JSON.parse(savedProgress);
-                // Safely merge saved progress to prevent errors with old data structures
                 Object.keys(this.progress).forEach(lang => {
                     if (parsedProgress[lang]) {
                         this.progress[lang] = { ...this.progress[lang], ...parsedProgress[lang] };
@@ -88,11 +81,9 @@ export const gameState = {
             const savedPlayer = localStorage.getItem('gateaux_player');
             if (savedPlayer) {
                 this.player = { ...this.player, ...JSON.parse(savedPlayer) };
-            } else {
-                // Migration: set totalTipsEarned from existing tips for old saves
-                this.player.totalTipsEarned = this.getTotalTips();
-                this.player.level = calculateLevel(this.player.totalTipsEarned);
             }
+
+            this.migrateEconomy();
 
             const savedBaked = localStorage.getItem('gateaux_baked_cakes');
             if (savedBaked) {
@@ -118,13 +109,52 @@ export const gameState = {
         }
     },
 
-    // Lesson completion
+    // Old saves: totalTipsEarned → xp, per-lang totalTips → coins seed
+    migrateEconomy() {
+        if (this.player.economyMigrated) {
+            if (this.player.xp == null && this.player.totalTipsEarned != null) {
+                this.player.xp = this.player.totalTipsEarned;
+            }
+            this.player.level = calculateLevel(this.player.xp || 0);
+            return;
+        }
+
+        const legacyXp = this.player.totalTipsEarned
+            ?? this.player.xp
+            ?? this._legacyWalletFromProgress();
+        const legacyCoins = this.player.coins
+            ?? this._legacyWalletFromProgress()
+            ?? 0;
+
+        this.player.xp = Number(legacyXp) || 0;
+        // Fresh install (no prior player save): starter wallets.
+        // Returning save with no coins field: seed from old tips balance, floor at starter.
+        const hadPlayerSave = localStorage.getItem('gateaux_player');
+        if (!hadPlayerSave) {
+            this.player.coins = STARTER_COINS;
+            this.player.diamonds = STARTER_DIAMONDS;
+        } else {
+            this.player.coins = Math.max(STARTER_COINS, Number(legacyCoins) || 0);
+            if (this.player.diamonds == null) this.player.diamonds = STARTER_DIAMONDS;
+        }
+
+        this.player.level = calculateLevel(this.player.xp);
+        this.player.economyMigrated = true;
+        delete this.player.totalTipsEarned;
+        this.saveToStorage();
+    },
+
+    _legacyWalletFromProgress() {
+        const languages = Object.keys(this.progress);
+        if (languages.length === 0) return 0;
+        return this.progress[languages[0]].totalTips || 0;
+    },
+
     completeLesson(language, lessonId) {
         if (!this.progress[language]) {
             this.progress[language] = {
                 completedLessons: [],
                 learnedPhrases: [],
-                totalTips: 0,
                 level: 1
             };
         }
@@ -163,70 +193,135 @@ export const gameState = {
         return this.lastLesson;
     },
 
-    // Check if lesson is completed
     isLessonCompleted(language, lessonId) {
         return this.progress[language]?.completedLessons?.includes(lessonId) || false;
     },
 
-    // Learn a phrase
     learnPhrase(language, phraseId) {
         if (!this.progress[language]) {
             this.progress[language] = {
                 completedLessons: [],
                 learnedPhrases: [],
-                totalTips: 0,
                 level: 1
             };
         }
 
         if (!this.progress[language].learnedPhrases.includes(phraseId)) {
             this.progress[language].learnedPhrases.push(phraseId);
-            this.addTips(5); // Small tip for learning a phrase (addTips handles save + UI)
+            this.awardXp(PHRASE_FIRST_LEARN_XP);
+            this.saveToStorage();
+            this.updateUI();
         }
     },
 
-    // Add tips (currency) and check for level-up
-    addTips(amount) {
-        // Add tips to all languages (shared currency)
-        Object.keys(this.progress).forEach(language => {
-            if (this.progress[language]) {
-                this.progress[language].totalTips += amount;
-            }
-        });
-
-        // Track lifetime tips and check level
-        this.player.totalTipsEarned += amount;
-        const newLevel = calculateLevel(this.player.totalTipsEarned);
-        if (newLevel > this.player.level) {
-            const oldLevel = this.player.level;
-            this.player.level = newLevel;
-            window.dispatchEvent(new CustomEvent('gateaux:level-up', {
-                detail: { oldLevel, newLevel, totalTipsEarned: this.player.totalTipsEarned }
-            }));
-        }
-
+    /**
+     * Cake sale (and future coin faucets): wallet only.
+     * Lessons use awardXp — coins must come from selling pastries.
+     */
+    awardCoins(amount) {
+        if (!amount) return;
+        this.player.coins = (this.player.coins || 0) + amount;
         this.saveToStorage();
         this.updateUI();
     },
 
-    // Get total tips
-    getTotalTips() {
-        const languages = Object.keys(this.progress);
-        if (languages.length === 0) return 0;
-        return this.progress[languages[0]].totalTips;
+    /** Lesson / quiz progression. Never grants coins. */
+    awardXp(amount) {
+        if (!amount) return;
+        this.addXp(amount);
+        this.saveToStorage();
+        this.updateUI();
     },
 
-    // Get player level
+    /**
+     * @deprecated Prefer awardCoins (sales) or awardXp (lessons).
+     * Kept for safety; grants coins only so old call sites don't dual-dip XP+wallet.
+     */
+    awardEarnings(amount) {
+        this.awardCoins(amount);
+    },
+
+    addXp(amount) {
+        if (!amount) return;
+        this.player.xp = (this.player.xp || 0) + amount;
+        const newLevel = calculateLevel(this.player.xp);
+        if (newLevel > this.player.level) {
+            const oldLevel = this.player.level;
+            this.player.level = newLevel;
+            window.dispatchEvent(new CustomEvent('gateaux:level-up', {
+                detail: { oldLevel, newLevel, xp: this.player.xp }
+            }));
+        }
+    },
+
+    /** @deprecated Use awardCoins / awardXp */
+    addTips(amount) {
+        this.awardCoins(amount);
+    },
+
+    getCoins() {
+        return this.player.coins || 0;
+    },
+
+    getDiamonds() {
+        return this.player.diamonds || 0;
+    },
+
+    getXp() {
+        return this.player.xp || 0;
+    },
+
+    /** @deprecated Use getCoins */
+    getTotalTips() {
+        return this.getCoins();
+    },
+
+    canAffordCoins(amount) {
+        return this.getCoins() >= amount;
+    },
+
+    canAffordDiamonds(amount) {
+        return this.getDiamonds() >= amount;
+    },
+
+    spendCoins(amount) {
+        if (amount <= 0) return true;
+        if (!this.canAffordCoins(amount)) return false;
+        this.player.coins -= amount;
+        this.saveToStorage();
+        this.updateUI();
+        return true;
+    },
+
+    spendDiamonds(amount) {
+        if (amount <= 0) return true;
+        if (!this.canAffordDiamonds(amount)) return false;
+        this.player.diamonds -= amount;
+        this.saveToStorage();
+        this.updateUI();
+        return true;
+    },
+
+    addCoins(amount) {
+        this.player.coins = (this.player.coins || 0) + amount;
+        this.saveToStorage();
+        this.updateUI();
+    },
+
+    addDiamonds(amount) {
+        this.player.diamonds = (this.player.diamonds || 0) + amount;
+        this.saveToStorage();
+        this.updateUI();
+    },
+
     getLevel() {
         return this.player.level;
     },
 
-    // Get level progress info
     getLevelProgress() {
-        return getLevelProgress(this.player.totalTipsEarned);
+        return getLevelProgress(this.player.xp || 0);
     },
 
-    // Record a baked cake
     recordBakedCake(recipeId) {
         if (!this.bakedCakes[recipeId]) {
             this.bakedCakes[recipeId] = { count: 0, firstBaked: Date.now() };
@@ -235,17 +330,14 @@ export const gameState = {
         this.saveToStorage();
     },
 
-    // Check if a recipe has been baked before
     hasBeenBaked(recipeId) {
         return !!this.bakedCakes[recipeId];
     },
 
-    // Get bake count for a recipe
     getBakeCount(recipeId) {
         return this.bakedCakes[recipeId]?.count || 0;
     },
 
-    // ── Animated number count-up ──
     _animateNumber(el, targetVal, durationMs = 300) {
         if (!el) return;
         const startVal = parseInt(el.textContent, 10) || 0;
@@ -254,7 +346,6 @@ export const gameState = {
         const startTime = performance.now();
         const step = (now) => {
             const t = Math.min((now - startTime) / durationMs, 1);
-            // ease-out cubic
             const eased = 1 - Math.pow(1 - t, 3);
             el.textContent = Math.round(startVal + diff * eased);
             if (t < 1) requestAnimationFrame(step);
@@ -262,39 +353,48 @@ export const gameState = {
         requestAnimationFrame(step);
     },
 
-    // Pulse the stat pill element briefly
     _pulsePill(el) {
         if (!el) return;
         el.classList.remove('pulse');
-        void el.offsetWidth; // reflow
+        void el.offsetWidth;
         el.classList.add('pulse');
         el.addEventListener('animationend', () => el.classList.remove('pulse'), { once: true });
     },
 
-    // Update UI elements
     updateUI() {
-        // Animate tips display
-        const tipsElement = document.getElementById('total-tips');
-        if (tipsElement) {
-            const target = this.getTotalTips();
-            const current = parseInt(tipsElement.textContent, 10) || 0;
+        const coinsEl = document.getElementById('total-coins')
+            || document.getElementById('total-tips');
+        if (coinsEl) {
+            const target = this.getCoins();
+            const current = parseInt(coinsEl.textContent, 10) || 0;
             if (current !== target) {
-                this._animateNumber(tipsElement, target, 250);
-                // Pulse the coin pill when tips change
-                const coinPill = tipsElement.closest('.stat-pill');
-                this._pulsePill(coinPill);
+                this._animateNumber(coinsEl, target, 250);
+                this._pulsePill(coinsEl.closest('.stat-pill'));
+            } else {
+                coinsEl.textContent = target;
             }
         }
 
-        // Animate level display
+        const diamondsEl = document.getElementById('total-diamonds');
+        if (diamondsEl) {
+            const target = this.getDiamonds();
+            const current = parseInt(diamondsEl.textContent, 10) || 0;
+            if (current !== target) {
+                this._animateNumber(diamondsEl, target, 250);
+                this._pulsePill(diamondsEl.closest('.stat-pill'));
+            } else {
+                diamondsEl.textContent = target;
+            }
+        }
+
         const levelEl = document.getElementById('player-level');
         if (levelEl) {
             const target = this.player.level;
             const current = parseInt(levelEl.textContent, 10) || 0;
             if (current !== target) this._animateNumber(levelEl, target, 200);
+            else levelEl.textContent = target;
         }
 
-        // Animate level progress bar
         const levelProgress = this.getLevelProgress();
         const levelFill = document.getElementById('level-progress-fill');
         if (levelFill) {
@@ -306,11 +406,9 @@ export const gameState = {
             levelLabel.textContent = levelProgress.label;
         }
 
-        // Update language card progress
         this.updateLanguageCardProgress();
     },
 
-    // Update progress bars on language cards
     updateLanguageCardProgress() {
         Object.keys(this.progress).forEach(language => {
             const card = document.querySelector(`[data-language="${language}"]`);
@@ -319,7 +417,7 @@ export const gameState = {
             const progress = this.progress[language];
             if (!progress || !progress.completedLessons) return;
 
-            const totalLessons = 5; // Estimate based on lesson structure
+            const totalLessons = 5;
             const completedCount = progress.completedLessons.length;
             const progressPercent = (completedCount / totalLessons) * 100;
 
@@ -336,43 +434,41 @@ export const gameState = {
         });
     },
 
-    // Get user statistics
     getStats() {
         const stats = {
             totalLanguages: Object.keys(this.progress).length,
             totalRecipesCompleted: 0,
             totalPhrasesLearned: 0,
-            totalTips: this.getTotalTips(),
+            coins: this.getCoins(),
+            diamonds: this.getDiamonds(),
+            xp: this.getXp(),
             level: this.player.level,
             totalCakesBaked: Object.values(this.bakedCakes).reduce((sum, b) => sum + b.count, 0),
             uniqueRecipesBaked: Object.keys(this.bakedCakes).length
         };
 
         Object.values(this.progress).forEach(languageProgress => {
-            stats.totalRecipesCompleted += languageProgress.completedLessons ? languageProgress.completedLessons.length : 0;
-            stats.totalPhrasesLearned += languageProgress.learnedPhrases ? languageProgress.learnedPhrases.length : 0;
+            stats.totalRecipesCompleted += languageProgress.completedLessons
+                ? languageProgress.completedLessons.length : 0;
+            stats.totalPhrasesLearned += languageProgress.learnedPhrases
+                ? languageProgress.learnedPhrases.length : 0;
         });
 
         return stats;
     },
 
-    // Reset all progress (for testing)
     resetProgress() {
         this.progress = {
-            spanish: {
-                completedLessons: [],
-                learnedPhrases: [],
-                totalTips: 0,
-                level: 1
-            },
-            french: {
-                completedLessons: [],
-                learnedPhrases: [],
-                totalTips: 0,
-                level: 1
-            }
+            spanish: { completedLessons: [], learnedPhrases: [], level: 1 },
+            french: { completedLessons: [], learnedPhrases: [], level: 1 }
         };
-        this.player = { level: 1, totalTipsEarned: 0 };
+        this.player = {
+            level: 1,
+            xp: 0,
+            coins: STARTER_COINS,
+            diamonds: STARTER_DIAMONDS,
+            economyMigrated: true
+        };
         this.bakedCakes = {};
         this.lastLesson = { language: null, lessonId: null, phrases: [] };
         this.cafe = {
@@ -385,7 +481,6 @@ export const gameState = {
         this.updateUI();
     },
 
-    // Export progress (for backup)
     exportProgress() {
         return {
             progress: this.progress,
@@ -398,7 +493,6 @@ export const gameState = {
         };
     },
 
-    // Import progress (for restore)
     importProgress(data) {
         try {
             if (data.progress) this.progress = data.progress;
@@ -408,6 +502,7 @@ export const gameState = {
             if (data.cafe) this.cafe = data.cafe;
             if (data.settings) this.settings = data.settings;
 
+            this.migrateEconomy();
             this.saveToStorage();
             this.updateUI();
             return true;
@@ -417,5 +512,3 @@ export const gameState = {
         }
     }
 };
-
-// gameState.init() will now be called by the main game controller after the DOM is ready.

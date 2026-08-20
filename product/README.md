@@ -13,6 +13,7 @@ Design intent still lives in `Gateaux/docs/` (GDD, characters, art). This folder
 | If you need… | Open |
 |---|---|
 | What the game is, and whether it is working | `PRESENT/status.md` |
+| Coins, diamonds, XP, pastry payouts | `PRESENT/economy.md` |
 | What to build this week | `FUTURE/this-week.md` |
 | Now / Next / Later | `FUTURE/roadmap.md` |
 | Ranked work with rationale | `FUTURE/backlog.md` |

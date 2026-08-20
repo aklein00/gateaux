@@ -17,6 +17,16 @@
     --accent-green: #7AB87A;
     --accent-blue: #87CEEB;
 
+    /* Action CTA (matches Start button) */
+    --btn-action-from: #deb87a;
+    --btn-action-to: #b87830;
+    --btn-action-text: var(--coffee-dark);
+
+    /* Currency spend / buy */
+    --btn-currency-bg: #7AB87A;
+    --btn-currency-bg-deep: #5F9A5F;
+    --btn-currency-text: #f7fff4;
+
     /* Text Colors */
     --text-dark: #2F1B14;
     --text-medium: #5D4037;
@@ -657,18 +667,19 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-primary {
-    background: var(--cafe-brown);
-    color: var(--cream);
+    background: linear-gradient(160deg, var(--btn-action-from) 0%, var(--btn-action-to) 100%);
+    color: var(--btn-action-text);
+    box-shadow: 0 3px 0 rgba(60, 36, 21, 0.25), inset 0 1px 0 rgba(255,255,255,.35);
 }
 
 .btn-primary:hover:not(:disabled) {
     transform: translateY(-1px);
-    box-shadow: var(--elev-2);
+    box-shadow: 0 5px 0 rgba(60, 36, 21, 0.22), var(--elev-2);
 }
 
 .btn-primary:active:not(:disabled) {
-    transform: scale(.96);
-    box-shadow: var(--elev-0);
+    transform: scale(.96) translateY(1px);
+    box-shadow: none;
     transition-duration: var(--t-fast);
 }
 
@@ -676,6 +687,49 @@ h1, h2, h3, h4, h5, h6 {
     opacity: 0.6;
     cursor: not-allowed;
     transform: none;
+}
+
+.btn-currency {
+    padding: var(--btn-padding);
+    border: none;
+    border-radius: var(--btn-radius);
+    font-size: var(--btn-font-size);
+    min-height: var(--btn-height);
+    font-weight: bold;
+    font-family: var(--font-heading);
+    cursor: pointer;
+    background: linear-gradient(160deg, var(--btn-currency-bg) 0%, var(--btn-currency-bg-deep) 100%);
+    color: var(--btn-currency-text);
+    box-shadow: 0 3px 0 rgba(45, 80, 45, 0.35), inset 0 1px 0 rgba(255,255,255,.25);
+    transition: transform var(--t-base) var(--ease-spring),
+                box-shadow var(--t-base) var(--ease-out);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.btn-currency:hover:not(:disabled) {
+    transform: translateY(-1px);
+}
+
+.btn-currency:active:not(:disabled) {
+    transform: scale(.96) translateY(1px);
+    box-shadow: none;
+}
+
+.btn-currency:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.stat-pill.diamond-pill {
+    background: #6B3A4A;
+}
+
+.stat-icon {
+    width: 18px;
+    height: 18px;
+    display: block;
+    flex-shrink: 0;
 }
 
 .btn-secondary {
