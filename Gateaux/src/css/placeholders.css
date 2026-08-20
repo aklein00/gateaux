@@ -66,14 +66,14 @@
     content: attr(data-image-name);
 }
 
-/* Customer Images - 120x120px */
+/* Customer Images — horizontal rounded frame, image contained (no crop) */
 .customer-image-placeholder {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
+    width: 160px;
+    height: 110px;
+    border-radius: 16px;
     margin: 0 auto;
     display: block;
-    object-fit: cover;
+    object-fit: contain;
     background-color: #c8c0b8;
 }
 
@@ -127,13 +127,16 @@
     margin: 0 auto 8px;
 }
 
-/* Customer sprite placeholder in cafe counter */
+/* Customer portrait frame in cafe counter — horizontal rounded rect */
 .customer-sprite-container {
     flex-shrink: 0;
 }
 
 .customer-sprite-container .placeholder-square {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    background-color: transparent;
 }

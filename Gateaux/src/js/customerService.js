@@ -170,11 +170,11 @@ export class CustomerService {
         if (!customerEl || !requestEl) return;
 
         // Show customer, hide the idle invitation
-        customerEl.style.display = 'block';
+        customerEl.style.display = 'flex';
         if (idleEl) idleEl.style.display = 'none';
         if (responseAreaEl) responseAreaEl.style.display = 'block';
 
-        // Update sprite with customer bust image
+        // Update sprite with customer bust image (contain so faces aren't cropped)
         if (spriteEl) {
             const imageMap = {
                 Bunny: 'tourist_bust.png',
@@ -184,23 +184,34 @@ export class CustomerService {
                 Fox: 'foodie_bust.png'
             };
             const imgFile = imageMap[this.currentCustomer.name] || 'tourist_bust.png';
+            spriteEl.classList.remove('placeholder-square');
+            spriteEl.removeAttribute('data-image-name');
             spriteEl.innerHTML = '';
             spriteEl.style.backgroundImage = `url(assets/images/customers/${imgFile})`;
-            spriteEl.style.backgroundSize = 'cover';
+            spriteEl.style.backgroundSize = 'contain';
+            spriteEl.style.backgroundRepeat = 'no-repeat';
             spriteEl.style.backgroundPosition = 'center';
+            spriteEl.style.transform = '';
         }
 
-        // Native first; English sits underneath as a hint
+        // Native speech only during the challenge — English is the answer, so hide it
         requestEl.textContent = this.currentCustomer.request.native;
         const hintEl = document.getElementById('customer-hint');
         if (hintEl) {
-            hintEl.textContent = this.currentCustomer.request.english;
-            hintEl.style.display = 'block';
+            hintEl.textContent = '';
+            hintEl.hidden = true;
         }
 
         // Generate response options
         this.generateResponseOptions();
         this.playCustomerAudio();
+    }
+
+    revealEnglishMeaning() {
+        const hintEl = document.getElementById('customer-hint');
+        if (!hintEl || !this.currentCustomer?.request) return;
+        hintEl.textContent = this.currentCustomer.request.english;
+        hintEl.hidden = false;
     }
 
     // Generate response options
@@ -256,6 +267,8 @@ export class CustomerService {
         document.querySelectorAll('.response-option').forEach(btn => {
             btn.disabled = true;
         });
+
+        this.revealEnglishMeaning();
 
         if (isCorrect) {
             button.classList.add('correct');
@@ -336,7 +349,15 @@ export class CustomerService {
             customerEl.style.display = 'none';
         }
         const hintEl = document.getElementById('customer-hint');
-        if (hintEl) hintEl.textContent = '';
+        if (hintEl) {
+            hintEl.textContent = '';
+            hintEl.hidden = true;
+        }
+
+        const spriteEl = document.querySelector('.customer-sprite');
+        if (spriteEl) {
+            spriteEl.style.transform = '';
+        }
 
         // Clear response options and go back to the idle invitation
         const container = document.getElementById('response-options');
