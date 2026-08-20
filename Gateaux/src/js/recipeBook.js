@@ -53,7 +53,7 @@ function updateLevelBar() {
     if (fillEl) fillEl.style.width = `${levelInfo.progress * 100}%`;
     if (tipsEl) {
         tipsEl.textContent = nextLevel
-            ? `${levelInfo.tipsToNext} tips to next`
+            ? `${levelInfo.xpToNext} XP to next`
             : 'MAX';
     }
 }

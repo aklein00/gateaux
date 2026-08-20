@@ -291,6 +291,11 @@ export class DisplayCase {
                 const cake = cakes[i];
                 slot.classList.add('filled', cake.freshness);
                 if (this.isSetting(cake)) slot.classList.add('setting');
+                slot.dataset.cakeId = cake.id;
+                slot.dataset.language = language;
+                slot.setAttribute('role', 'button');
+                slot.tabIndex = 0;
+                slot.setAttribute('aria-label', 'Cake details');
                 slot.innerHTML = this.getCakeVisual(language, cake);
             } else {
                 slot.classList.add('empty');
@@ -328,6 +333,19 @@ export class DisplayCase {
                 ${timerHtml}
             </div>
         `;
+    }
+
+    findCake(language, cakeId) {
+        return (this.inventory[language] || []).find(c => c.id === cakeId) || null;
+    }
+
+    speedUpCake(language, cakeId) {
+        const cake = this.findCake(language, cakeId);
+        if (!cake || this.isReady(cake)) return false;
+        cake.readyAt = Date.now();
+        this.saveToStorage();
+        this.updateDisplay();
+        return true;
     }
 
     migrateReadyAt() {

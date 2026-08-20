@@ -1,13 +1,14 @@
 // Recipe Data for Gateaux
 // Single source of truth for all cake recipes and level thresholds
 
+// Level is driven by XP (lifetime earnings), never by wallet balance.
 export const LEVEL_THRESHOLDS = [
-    { level: 1, tipsRequired: 0, label: 'Apprentice Baker' },
-    { level: 2, tipsRequired: 75, label: 'Pastry Student' },
-    { level: 3, tipsRequired: 200, label: 'Line Cook' },
-    { level: 4, tipsRequired: 400, label: 'Sous Chef' },
-    { level: 5, tipsRequired: 700, label: 'Head Patissier' },
-    { level: 6, tipsRequired: 1100, label: 'Master Baker' },
+    { level: 1, xpRequired: 0, label: 'Apprentice Baker' },
+    { level: 2, xpRequired: 75, label: 'Pastry Student' },
+    { level: 3, xpRequired: 200, label: 'Line Cook' },
+    { level: 4, xpRequired: 400, label: 'Sous Chef' },
+    { level: 5, xpRequired: 700, label: 'Head Patissier' },
+    { level: 6, xpRequired: 1100, label: 'Master Baker' },
 ];
 
 export const RECIPES = [
@@ -219,10 +220,10 @@ export function getRecipesForLevel(level) {
     return RECIPES.filter(r => r.unlockLevel === level);
 }
 
-export function calculateLevel(totalTipsEarned) {
+export function calculateLevel(xp) {
     let level = 1;
     for (let i = LEVEL_THRESHOLDS.length - 1; i >= 0; i--) {
-        if (totalTipsEarned >= LEVEL_THRESHOLDS[i].tipsRequired) {
+        if (xp >= LEVEL_THRESHOLDS[i].xpRequired) {
             level = LEVEL_THRESHOLDS[i].level;
             break;
         }
@@ -238,18 +239,18 @@ export function getNextLevelData(level) {
     return LEVEL_THRESHOLDS.find(l => l.level === level + 1) || null;
 }
 
-export function getLevelProgress(totalTipsEarned) {
-    const current = getLevelData(calculateLevel(totalTipsEarned));
+export function getLevelProgress(xp) {
+    const current = getLevelData(calculateLevel(xp));
     const next = getNextLevelData(current.level);
-    if (!next) return { level: current.level, label: current.label, progress: 1, tipsToNext: 0 };
+    if (!next) return { level: current.level, label: current.label, progress: 1, xpToNext: 0 };
 
-    const tipsInLevel = totalTipsEarned - current.tipsRequired;
-    const tipsNeeded = next.tipsRequired - current.tipsRequired;
+    const xpInLevel = xp - current.xpRequired;
+    const xpNeeded = next.xpRequired - current.xpRequired;
     return {
         level: current.level,
         label: current.label,
-        progress: Math.min(1, tipsInLevel / tipsNeeded),
-        tipsToNext: Math.max(0, next.tipsRequired - totalTipsEarned),
+        progress: Math.min(1, xpInLevel / xpNeeded),
+        xpToNext: Math.max(0, next.xpRequired - xp),
     };
 }
 

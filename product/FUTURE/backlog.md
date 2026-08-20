@@ -34,8 +34,9 @@ Impact = player feel. Effort = one-person-days, rough.
 - Voice input
 - Full AI conversation mode
 - Cake-decoration minigame (GDD) until two quiz verbs exist
-- Daily limits / IAP
-- Extra currencies (gems, energy, stars)
+- Daily limits / IAP (store deferred; debug diamond grants only for now)
+- ~~Extra currencies (gems, energy, stars)~~ → coins + diamonds shipped (D-010); energy/stars still iced
+- Extra currencies beyond coins/diamonds (energy, stars)
 
 ## How to add a ticket
 

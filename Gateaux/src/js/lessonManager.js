@@ -691,10 +691,10 @@ export class LessonManager {
 
         audioManager.playCorrect();
 
-        // Award tips with streak multiplier
+        // Award coins + XP with streak multiplier
         const multiplier = this.getStreakMultiplier();
-        const tips = 2 * multiplier;
-        gameState.addTips(tips);
+        const coins = 2 * multiplier;
+        gameState.awardEarnings(coins);
 
         const phrase = this.currentLesson.phrases[this.currentPhraseIndex];
         if (phrase.id) gameState.learnPhrase(this.currentLanguage, phrase.id);

@@ -6,11 +6,23 @@ Format: **Decision → Context → Choice → Consequence → Revisit when.**
 
 ---
 
+## D-010 — Coins, diamonds, XP (2026-08-20)
+
+**Context.** Tips were both wallet and level. Setting timers had “no skip.” Soft currency needed a sink; hard currency for speed-ups.
+
+**Choice.** Soft wallet = **coins**. Hard wallet = **diamonds** (debug grant until store). Level = **XP** (`player.xp`, formerly total tips earned). Diamonds may skip cake set wait. Replaying a cleared lesson costs coins. Cafe Counter quiz remains the only sell path.
+
+**Consequence.** Economy chrome exists; feel must stay light (starter wallets, free first clears).
+
+**Revisit when.** Store ships, or playtest shows lesson costs block the 15s-to-question feel.
+
+---
+
 ## D-009 — Cakes set before they sell (2026-08-19)
 
 **Context.** A lesson put a cake in the case and Next up could sell it immediately, so the shelf never filled. The number on each cake was a decay clock, which looked like a wait and wasn't.
 
-**Choice.** Cakes *set* before they are sellable. Common: 2 minutes (first-ever: 45 seconds). Uncommon: 20 minutes. Rare/legendary: 4 hours. Decay starts at ready. Next up only sells ready cakes. While away, ready cakes sell at about one per 4 hours, capped at half the ready stock. No skip, no energy.
+**Choice.** Cakes *set* before they are sellable. Common: 2 minutes (first-ever: 45 seconds). Uncommon: 20 minutes. Rare/legendary: 4 hours. Decay starts at ready. Next up only sells ready cakes. While away, ready cakes sell at about one per 4 hours, capped at half the ready stock. Skip via diamonds only (see D-010); no energy meter.
 
 **Consequence.** Session one can still serve after a short wait. Filling the case is the reason to come back. Overnight emptiness is explained, not random rot.
 
