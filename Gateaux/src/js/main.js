@@ -10,8 +10,8 @@ import { audioManager } from './audioManager.js';
 
 const PATH_ORDER = ['marcel', 'amelie', 'cafe', 'bisou', 'gaston', 'all'];
 const PATH_LABELS = {
-    marcel: 'Beginner slang',
-    amelie: 'Next: polite',
+    marcel: 'Slang',
+    amelie: 'Polite',
     cafe: 'Rush',
     bisou: 'Charm',
     gaston: 'Shade',
@@ -371,16 +371,19 @@ class GateauxGame {
 
     isPathUnlocked(teacherId, recipe) {
         const level = gameState.getLevel();
-        if (teacherId === 'marcel') return true;
+        if (!recipe || recipe.unlockLevel > level) return false;
         if (teacherId === 'amelie') {
             return gameState.isLessonCompleted(this.currentLanguage, MARCEL_FIRST_LESSON);
         }
-        return recipe && recipe.unlockLevel <= level;
+        return true;
     }
 
     pathLockCopy(teacherId, recipe) {
-        if (teacherId === 'amelie') return 'Finish Marcel’s first hello.';
-        if (recipe) return `Level ${recipe.unlockLevel}`;
+        const level = gameState.getLevel();
+        if (teacherId === 'amelie' && !gameState.isLessonCompleted(this.currentLanguage, MARCEL_FIRST_LESSON)) {
+            return 'Finish Marcel’s first hello.';
+        }
+        if (recipe && recipe.unlockLevel > level) return `Level ${recipe.unlockLevel}`;
         return 'Locked';
     }
 
@@ -421,7 +424,7 @@ class GateauxGame {
                          alt="${teacherName}" data-image-name="${teacherName}">
                     <div class="path-copy">
                         <h3>${teacherName}</h3>
-                        <p>${PATH_LABELS[teacherId] || ''}</p>
+                        <p>Level ${recipe?.unlockLevel || 1} · ${PATH_LABELS[teacherId] || ''}</p>
                         <span class="rp-rarity-badge rarity-${rarity}">${getRarityLabel(rarity)}</span>
                         ${unlocked ? '' : `<span class="path-lock">${this.pathLockCopy(teacherId, recipe)}</span>`}
                     </div>
@@ -502,9 +505,13 @@ class GateauxGame {
     startLesson(lesson, options = {}) {
         this.showScreen('lesson-quiz-screen');
 
+        const firstTimeHello = lesson.id === FIRST_RUN_LESSON_ID
+            && !gameState.isLessonCompleted(this.currentLanguage, lesson.id);
+        const lessonOptions = { ...options, firstRun: options.firstRun === true || firstTimeHello };
+
         this.lessonManager.startLesson(this.currentLanguage, this.currentRegion, lesson, (completed) => {
             if (completed) this.onLessonComplete(lesson);
-        }, this.currentRecipe, options);
+        }, this.currentRecipe, lessonOptions);
     }
 
     // Lesson completed (completeLesson already called by lessonManager)
