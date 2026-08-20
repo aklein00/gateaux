@@ -3,6 +3,7 @@ import { gameState } from './gameState.js';
 import { teachers, MAX_LESSON_PROMPTS, trimLessonPhrases } from './languageData.js';
 import { audioManager } from './audioManager.js';
 import { FIRST_RUN_CLOSER_IDS, FIRST_RUN_STORY } from './firstRun.js';
+import { QUIZ_BASE_PAYOUT } from './economy.js';
 
 // Timer is off for standard lessons. Kept for a future Café "Rush Hour" mode.
 const TIMER_ENABLED_DEFAULT = false;
@@ -693,7 +694,7 @@ export class LessonManager {
 
         // Award coins + XP with streak multiplier
         const multiplier = this.getStreakMultiplier();
-        const coins = 2 * multiplier;
+        const coins = QUIZ_BASE_PAYOUT * multiplier;
         gameState.awardEarnings(coins);
 
         const phrase = this.currentLesson.phrases[this.currentPhraseIndex];

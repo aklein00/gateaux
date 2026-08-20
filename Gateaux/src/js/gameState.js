@@ -2,7 +2,7 @@
 // Wallet (coins / diamonds) is separate from XP (levels the player).
 
 import { calculateLevel, getLevelProgress } from './recipeData.js';
-import { STARTER_COINS, STARTER_DIAMONDS } from './economy.js';
+import { STARTER_COINS, STARTER_DIAMONDS, PHRASE_FIRST_LEARN_BONUS } from './economy.js';
 
 export const gameState = {
     progress: {
@@ -208,7 +208,7 @@ export const gameState = {
 
         if (!this.progress[language].learnedPhrases.includes(phraseId)) {
             this.progress[language].learnedPhrases.push(phraseId);
-            this.awardEarnings(5);
+            this.awardEarnings(PHRASE_FIRST_LEARN_BONUS);
         }
     },
 

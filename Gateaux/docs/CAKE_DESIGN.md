@@ -9,20 +9,29 @@
 
 ## Currency & Leveling
 
-- **Tips** are the sole currency, earned during gameplay
-- Tips serve dual purpose: player "score" AND level progression
-- Tips are **never spent** -- cumulative lifetime tips determine level
-- A typical lesson earns ~60-80 tips (quiz answers + phrase learning + completion bonus)
+> **Superseded by** [`product/PRESENT/economy.md`](../../product/PRESENT/economy.md) (2026-08-20).
+>
+> Soft wallet = **coins**. Hard = **diamonds**. Level = **XP** (not spendable).
+> Unit of account = lesson replay cost (**12 coins**). Cafe Counter base payout equals that unit; `tipMultiplier` = how many replays one pastry sale refunds.
 
-### Level Thresholds
+### Pastry payouts (replay-units)
 
-| Level | Tips Required | Label | Unlocks | Approx. Lessons |
+| Rarity | tipMultiplier | Counter payout |
+|---|---|---|
+| Common | 1.0× | 12 coins (= 1 replay) |
+| Uncommon | 1.5× | 18 |
+| Rare | 2.0× | 24 |
+| Legendary | 3.0× | 36 |
+
+### Level Thresholds (XP)
+
+| Level | XP Required | Label | Unlocks | Approx. Lessons |
 |-------|-------------|-------|---------|-----------------|
-| 1 | 0 | Apprentice Baker | Amelie's cakes | Start |
-| 2 | 75 | Pastry Student | Marcel's cakes | ~1 lesson |
-| 3 | 200 | Line Cook | Cafe's cakes | ~3 lessons |
-| 4 | 400 | Sous Chef | Bisou's cakes | ~6 lessons |
-| 5 | 700 | Head Patissier | Gaston's cakes | ~10 lessons |
+| 1 | 0 | Apprentice Baker | Marcel commons | Start |
+| 2 | 75 | Pastry Student | Amélie commons | ~1 lesson |
+| 3 | 200 | Line Cook | Cafe uncommons | ~3 lessons |
+| 4 | 400 | Sous Chef | Bisou rares | ~6 lessons |
+| 5 | 700 | Head Patissier | Gaston rares | ~10 lessons |
 | 6 | 1100 | Master Baker | Legendary cakes | ~16 lessons |
 
 ---

@@ -4,6 +4,7 @@
 import { gameState } from './gameState.js';
 import { getRecipeById } from './recipeData.js';
 import { audioManager } from './audioManager.js';
+import { getCounterPayout } from './economy.js';
 
 export class CustomerService {
     constructor(displayCase = null) {
@@ -295,7 +296,7 @@ export class CustomerService {
 
         audioManager.playCorrect();
 
-        let tipAmount = 10; // Base tip
+        let tipAmount = getCounterPayout(null); // common base
 
         // Remove a cake and apply its tip multiplier
         if (this.displayCase) {
@@ -303,9 +304,7 @@ export class CustomerService {
             if (ready.length > 0) {
                 const cake = ready[0];
                 const recipe = getRecipeById(cake.recipeId);
-                if (recipe) {
-                    tipAmount = Math.round(10 * recipe.tipMultiplier);
-                }
+                tipAmount = getCounterPayout(recipe);
                 this.displayCase.removeCake(this.currentCustomer.language, cake.id);
             }
         }

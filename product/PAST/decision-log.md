@@ -10,7 +10,7 @@ Format: **Decision → Context → Choice → Consequence → Revisit when.**
 
 **Context.** Tips were both wallet and level. Setting timers had “no skip.” Soft currency needed a sink; hard currency for speed-ups.
 
-**Choice.** Soft wallet = **coins**. Hard wallet = **diamonds** (debug grant until store). Level = **XP** (`player.xp`, formerly total tips earned). Diamonds may skip cake set wait. Replaying a cleared lesson costs coins. Cafe Counter quiz remains the only sell path.
+**Choice.** Soft wallet = **coins**. Hard wallet = **diamonds** (debug grant until store). Level = **XP** (`player.xp`, formerly total tips earned). Diamonds may skip cake set wait. Replaying a cleared lesson costs coins. Cafe Counter quiz remains the only sell path. **Balance yardstick:** `LESSON_REPLAY_COST` (12); `COUNTER_BASE_PAYOUT` equals that so common pastry ↔ one replay (`tipMultiplier` = replays funded). See `PRESENT/economy.md`.
 
 **Consequence.** Economy chrome exists; feel must stay light (starter wallets, free first clears).
 

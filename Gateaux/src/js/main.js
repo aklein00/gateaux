@@ -7,7 +7,7 @@ import { CustomerService } from './customerService.js';
 import { getRecipesForLevel, getLevelData, getRarityLabel, getRecipeForTeacher, getRecipeById } from './recipeData.js';
 import { setOnBakeCallback, setupRecipeBookListeners } from './recipeBook.js';
 import { audioManager } from './audioManager.js';
-import { getSpeedUpDiamondCost, replayLessonCoinCost } from './economy.js';
+import { getSpeedUpDiamondCost, replayLessonCoinCost, LESSON_COMPLETE_BONUS } from './economy.js';
 
 const PATH_ORDER = ['marcel', 'amelie', 'cafe', 'bisou', 'gaston', 'all'];
 const PATH_LABELS = {
@@ -704,8 +704,8 @@ class GateauxGame {
         displayCase.addCake(this.currentLanguage, lesson.id, recipeId, { firstEver });
         this.startDecayTimer();
 
-        gameState.awardEarnings(25);
-        this.showTipFeedback('+25 coins');
+        gameState.awardEarnings(LESSON_COMPLETE_BONUS);
+        this.showTipFeedback(`+${LESSON_COMPLETE_BONUS} coins`);
 
         if (recipeId) {
             gameState.recordBakedCake(recipeId);
