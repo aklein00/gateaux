@@ -4,9 +4,20 @@ import { displayCase } from './displayCase.js';
 import { gameState } from './gameState.js';
 import { LessonManager } from './lessonManager.js';
 import { CustomerService } from './customerService.js';
-import { getRecipesForLanguage, getRecipesForLevel, getLevelData, getRarityLabel, getRecipeForTeacher } from './recipeData.js';
+import { getRecipesForLevel, getLevelData, getRarityLabel, getRecipeForTeacher } from './recipeData.js';
 import { setOnBakeCallback, setupRecipeBookListeners } from './recipeBook.js';
 import { audioManager } from './audioManager.js';
+
+const PATH_ORDER = ['marcel', 'amelie', 'cafe', 'bisou', 'gaston', 'all'];
+const PATH_LABELS = {
+    marcel: 'Beginner slang',
+    amelie: 'Next: polite',
+    cafe: 'Rush',
+    bisou: 'Charm',
+    gaston: 'Shade',
+    all: 'The whole kitchen'
+};
+const MARCEL_FIRST_LESSON = 'greetings_casual';
 
 // Replace broken <img> elements with labeled gray placeholders
 function setupImagePlaceholders() {
@@ -271,23 +282,16 @@ class GateauxGame {
             card.style.cursor = 'pointer';
         });
 
-        // Close recipe picker (closes entire overlay)
-        document.getElementById('close-recipe-picker')?.addEventListener('click', () => {
+        document.getElementById('close-path-select')?.addEventListener('click', () => {
             this.closeLessonOverlay();
-        });
-
-        // Back to recipes from lesson select
-        document.getElementById('back-to-recipes')?.addEventListener('click', () => {
-            this.showRecipePicker();
         });
 
         document.getElementById('quit-lesson')?.addEventListener('click', () => {
             this.closeLessonOverlay();
         });
 
-        // Lesson complete buttons
         document.getElementById('bake-another-btn')?.addEventListener('click', () => {
-            this.showRecipePicker();
+            this.showPathSelect();
         });
 
         document.getElementById('back-to-cafe-btn')?.addEventListener('click', () => {
@@ -324,10 +328,9 @@ class GateauxGame {
         void overlay.offsetWidth;
         overlay.classList.add('overlay-enter');
 
-        this.showRecipePicker();
+        this.showPathSelect();
     }
 
-    // Open lesson overlay with a specific recipe pre-selected (from recipe book)
     openLessonOverlayWithRecipe(recipe) {
         this.currentLanguage = recipe.language;
         this.currentRecipe = recipe;
@@ -339,12 +342,11 @@ class GateauxGame {
         void overlay.offsetWidth;
         overlay.classList.add('overlay-enter');
 
-        this.showLessonSelectionForRecipe();
+        this.showPathSelect(recipe.teacher);
     }
 
-    // Toggle lesson overlay screens with enter animation
     showScreen(screenId) {
-        const screens = ['recipe-picker-screen', 'lesson-select-screen', 'lesson-quiz-screen', 'lesson-complete-screen'];
+        const screens = ['path-select-screen', 'lesson-quiz-screen', 'lesson-complete-screen'];
         screens.forEach(id => {
             const el = document.getElementById(id);
             if (el) el.style.display = id === screenId ? 'flex' : 'none';
@@ -358,161 +360,111 @@ class GateauxGame {
     }
 
     // Show the recipe picker screen
-    showRecipePicker() {
-        this.showScreen('recipe-picker-screen');
-        this.renderRecipePicker();
+    showPathSelect(expandTeacher = null) {
+        this.showScreen('path-select-screen');
+        const title = document.getElementById('path-select-title');
+        if (title) {
+            title.textContent = this.currentLanguage === 'spanish' ? 'Spanish' : 'French';
+        }
+        this.renderPathSelect(expandTeacher);
     }
 
-    // Render recipe picker cards
-    renderRecipePicker() {
-        const grid = document.getElementById('recipe-picker-grid');
-        if (!grid) return;
-        grid.innerHTML = '';
+    isPathUnlocked(teacherId, recipe) {
+        const level = gameState.getLevel();
+        if (teacherId === 'marcel') return true;
+        if (teacherId === 'amelie') {
+            return gameState.isLessonCompleted(this.currentLanguage, MARCEL_FIRST_LESSON);
+        }
+        return recipe && recipe.unlockLevel <= level;
+    }
 
-        const recipes = getRecipesForLanguage(this.currentLanguage);
-        const playerLevel = gameState.getLevel();
+    pathLockCopy(teacherId, recipe) {
+        if (teacherId === 'amelie') return 'Finish Marcel’s first hello.';
+        if (recipe) return `Level ${recipe.unlockLevel}`;
+        return 'Locked';
+    }
 
-        recipes.forEach(recipe => {
-            const isUnlocked = recipe.unlockLevel <= playerLevel;
+    renderPathSelect(expandTeacher = null) {
+        const list = document.getElementById('path-list');
+        if (!list) return;
+        list.innerHTML = '';
+
+        const lessons = getLessons(this.currentLanguage, null) || [];
+        const openId = expandTeacher || 'marcel';
+
+        PATH_ORDER.forEach(teacherId => {
+            const recipe = getRecipeForTeacher(teacherId, this.currentLanguage);
+            if (!recipe && teacherId !== 'all') return;
+
+            const pathLessons = teacherId === 'all'
+                ? []
+                : lessons.filter(l => l.teacher === teacherId)
+                    .sort((a, b) => (a.sortOrder ?? 99) - (b.sortOrder ?? 99));
+
+            const unlocked = this.isPathUnlocked(teacherId, recipe);
+            const teacherName = teacherId === 'all'
+                ? 'Everyone'
+                : (teachers[teacherId]?.name || teacherId);
+            const rarity = recipe?.rarity || 'common';
+
             const card = document.createElement('div');
-            card.className = `recipe-picker-card${isUnlocked ? '' : ' locked'}`;
+            card.className = `path-card${unlocked ? '' : ' locked'}${openId === teacherId && unlocked ? ' expanded' : ''}`;
+            card.dataset.teacher = teacherId;
 
-            const teacherName = recipe.teacher === 'all'
-                ? 'All Teachers'
-                : (teachers[recipe.teacher]?.name || recipe.teacher);
+            const portraitFile = teacherId === 'all'
+                ? 'marcel_concept.png'
+                : `${teacherId}_concept.png`;
 
             card.innerHTML = `
-                <img class="rp-cake-img" src="assets/images/cakes/${recipe.imageFile}"
-                     alt="${recipe.name}" data-image-name="${recipe.name}">
-                <span class="rp-rarity-badge rarity-${recipe.rarity}">${getRarityLabel(recipe.rarity)}</span>
-                <span class="rp-cake-name">${isUnlocked ? recipe.name : '???'}</span>
-                <span class="rp-teacher-name">${isUnlocked ? teacherName : ''}</span>
-                ${!isUnlocked ? `<span class="rp-lock-label">Level ${recipe.unlockLevel}</span>` : ''}
-            `;
-
-            if (isUnlocked) {
-                card.addEventListener('click', () => {
-                    this.currentRecipe = recipe;
-                    this.showLessonSelectionForRecipe();
-                });
-            }
-
-            grid.appendChild(card);
-        });
-    }
-
-    // Show lesson selection filtered by the selected recipe's teacher
-    showLessonSelectionForRecipe() {
-        this.showScreen('lesson-select-screen');
-
-        // Update title
-        const title = document.getElementById('lesson-language-title');
-        if (title && this.currentRecipe) {
-            title.textContent = this.currentRecipe.name;
-        }
-
-        // Render region selector
-        this.renderRegionSelector(this.currentLanguage);
-
-        // Load lessons filtered by teacher
-        this.showLessonSelection();
-    }
-
-    // Close the lesson overlay
-    closeLessonOverlay() {
-        const overlay = document.getElementById('lesson-overlay');
-        if (overlay) overlay.style.display = 'none';
-        this.currentRecipe = null;
-        this.updateStats();
-        if (!gameState.isFirstLessonDone()) this.maybeShowFirstRun();
-    }
-
-    // Render region flag buttons
-    // Region filtering is not yet active — phrase data does not carry region tags.
-    // Keep the container empty so the selector is invisible until that data ships.
-    renderRegionSelector(language) {
-        const container = document.getElementById('region-selector');
-        if (!container) return;
-        container.innerHTML = '';
-        this.currentRegion = null;
-    }
-
-    // Show lesson selection screen (filtered by current recipe's teacher)
-    showLessonSelection() {
-
-        // Region filtering disabled: phrases.json doesn't have region data yet
-        const lessons = getLessons(this.currentLanguage, null);
-
-        const container = document.getElementById('lesson-categories');
-        if (!container) return;
-        container.innerHTML = '';
-
-        if (!lessons || lessons.length === 0) {
-            container.innerHTML = '<p style="text-align:center;color:#999;padding:20px;">No lessons available.</p>';
-            return;
-        }
-
-        // Filter by recipe teacher (unless legendary/all)
-        const teacherFilter = this.currentRecipe?.teacher;
-        const filteredLessons = teacherFilter && teacherFilter !== 'all'
-            ? lessons.filter(l => l.teacher === teacherFilter)
-            : lessons;
-
-        if (filteredLessons.length === 0) {
-            container.innerHTML = '<p style="text-align:center;color:#999;padding:20px;">No lessons available for this recipe.</p>';
-            return;
-        }
-
-        // Group by teacher
-        const teacherGroups = {};
-        filteredLessons.forEach(lesson => {
-            const tid = lesson.teacher;
-            if (!teacherGroups[tid]) {
-                teacherGroups[tid] = { teacher: teachers[tid], lessons: [] };
-            }
-            teacherGroups[tid].lessons.push(lesson);
-        });
-
-        Object.entries(teacherGroups).forEach(([teacherId, group]) => {
-            const section = document.createElement('div');
-            section.className = `lesson-category`;
-
-            const diffLabel = group.lessons[0]?.difficulty <= 1 ? 'Beginner' :
-                             group.lessons[0]?.difficulty <= 2 ? 'Elementary' : 'Intermediate';
-            const diffClass = group.lessons[0]?.difficulty <= 1 ? 'beginner' :
-                             group.lessons[0]?.difficulty <= 2 ? 'elementary' : 'intermediate';
-
-            section.innerHTML = `
-                <div class="lesson-category-hero">
-                    <img src="assets/images/characters/${teacherId}_concept.png"
-                         alt="${group.teacher.name}"
-                         class="lesson-category-hero-img"
-                         data-image-name="${group.teacher.name}">
-                    <div class="lesson-category-hero-info">
-                        <h3>${group.teacher.name} <span class="difficulty-badge ${diffClass}">${diffLabel}</span></h3>
-                        <p class="teacher-description">${group.teacher.personality}</p>
-                        <p class="teacher-specialty">${group.teacher.specialties[0]}</p>
+                <button type="button" class="path-card-row" ${unlocked ? '' : 'disabled'}>
+                    <img class="path-portrait" src="assets/images/characters/${portraitFile}"
+                         alt="${teacherName}" data-image-name="${teacherName}">
+                    <div class="path-copy">
+                        <h3>${teacherName}</h3>
+                        <p>${PATH_LABELS[teacherId] || ''}</p>
+                        <span class="rp-rarity-badge rarity-${rarity}">${getRarityLabel(rarity)}</span>
+                        ${unlocked ? '' : `<span class="path-lock">${this.pathLockCopy(teacherId, recipe)}</span>`}
                     </div>
-                </div>
+                    <img class="path-cake" src="assets/images/cakes/${recipe?.imageFile || 'eclair_fresh.png'}"
+                         alt="${recipe?.name || ''}" data-image-name="${recipe?.name || 'Cake'}">
+                </button>
+                <div class="path-lessons"></div>
             `;
 
-            const lessonList = document.createElement('div');
-            lessonList.className = 'lesson-list';
+            const row = card.querySelector('.path-card-row');
+            const lessonWrap = card.querySelector('.path-lessons');
 
-            group.lessons.forEach((lesson) => {
-                lessonList.appendChild(this.createLessonItem(lesson));
-            });
+            if (unlocked) {
+                row.addEventListener('click', () => {
+                    const wasOpen = card.classList.contains('expanded');
+                    list.querySelectorAll('.path-card').forEach(el => el.classList.remove('expanded'));
+                    if (!wasOpen) card.classList.add('expanded');
+                });
 
-            section.appendChild(lessonList);
-            container.appendChild(section);
+                pathLessons.forEach((lesson, index) => {
+                    const prev = pathLessons[index - 1];
+                    const seqLocked = index > 0 && !gameState.isLessonCompleted(this.currentLanguage, prev.id);
+                    lessonWrap.appendChild(this.createLessonItem(lesson, recipe, seqLocked));
+                });
+
+                if (teacherId === 'all' && pathLessons.length === 0) {
+                    const empty = document.createElement('p');
+                    empty.className = 'path-empty';
+                    empty.textContent = unlocked
+                        ? 'No extra lesson — that cake is the brag.'
+                        : '';
+                    if (unlocked) lessonWrap.appendChild(empty);
+                }
+            }
+
+            list.appendChild(card);
         });
     }
 
-    // Create a lesson item
-    createLessonItem(lesson) {
+    createLessonItem(lesson, recipe, seqLocked) {
         const completed = gameState.isLessonCompleted(this.currentLanguage, lesson.id);
         const item = document.createElement('div');
-        item.className = `lesson-item ${completed ? 'completed' : ''}`;
+        item.className = `lesson-item${completed ? ' completed' : ''}${seqLocked ? ' locked' : ''}`;
 
         item.innerHTML = `
             <div class="lesson-portrait-wrap">
@@ -523,16 +475,27 @@ class GateauxGame {
             </div>
             <div class="lesson-info">
                 <h4>${lesson.title}</h4>
-                <p>${lesson.description}</p>
+                <p>${seqLocked ? 'Do the one above first.' : lesson.description}</p>
                 <span class="phrase-count">${Math.min(lesson.phrases.length, 5)} phrases</span>
             </div>
         `;
 
-        item.addEventListener('click', () => {
-            this.startLesson(lesson);
-        });
+        if (!seqLocked) {
+            item.addEventListener('click', () => {
+                this.currentRecipe = recipe;
+                this.startLesson(lesson);
+            });
+        }
 
         return item;
+    }
+
+    closeLessonOverlay() {
+        const overlay = document.getElementById('lesson-overlay');
+        if (overlay) overlay.style.display = 'none';
+        this.currentRecipe = null;
+        this.updateStats();
+        if (!gameState.isFirstLessonDone()) this.maybeShowFirstRun();
     }
 
     // Start a lesson — switch to quiz screen
@@ -761,17 +724,11 @@ if (new URLSearchParams(window.location.search).has('autostart')) {
             if (!game) return;
             if (targetScreen === 'lesson-select' || targetScreen === 'quiz') {
                 game.openLessonOverlay('spanish');
-                // Click past the recipe picker to lesson selection
-                setTimeout(() => {
-                    const firstCard = document.querySelector('.recipe-picker-card');
-                    if (firstCard) firstCard.click();
-                }, 300);
-                // For quiz, also click the first lesson item
                 if (targetScreen === 'quiz') {
                     setTimeout(() => {
-                        const firstLesson = document.querySelector('.lesson-item');
+                        const firstLesson = document.querySelector('.lesson-item:not(.locked)');
                         if (firstLesson) firstLesson.click();
-                    }, 700);
+                    }, 400);
                 }
             }
         });

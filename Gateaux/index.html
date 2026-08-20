@@ -7,6 +7,8 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Gateaux - Your Language Learning Café</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="favicon.svg">
     <link rel="stylesheet" href="src/css/main.css">
     <link rel="stylesheet" href="src/css/displayCase.css">
     <link rel="stylesheet" href="src/css/lessons.css">
@@ -129,28 +131,14 @@
     <!-- Full-Screen Lesson Overlay -->
     <div id="lesson-overlay" class="lesson-overlay" style="display: none;">
 
-        <!-- Screen 0: Recipe Picker -->
-        <div id="recipe-picker-screen" class="lesson-screen" style="display: none;">
+        <!-- Path select — characters + cakes, lessons in the same page -->
+        <div id="path-select-screen" class="lesson-screen" style="display: none;">
             <div class="lesson-top-bar">
-                <button id="close-recipe-picker" class="btn-close-lesson">X</button>
-                <h3 class="lesson-bar-title">Choose a Recipe</h3>
+                <button id="close-path-select" class="btn-close-lesson">X</button>
+                <h3 id="path-select-title" class="lesson-bar-title">Who's teaching?</h3>
             </div>
-            <div class="recipe-picker-scroll">
-                <div id="recipe-picker-grid" class="recipe-picker-grid">
-                    <!-- Recipe cards dynamically added -->
-                </div>
-            </div>
-        </div>
-
-        <!-- Screen 1: Lesson Selection -->
-        <div id="lesson-select-screen" class="lesson-screen" style="display: none;">
-            <div class="lesson-top-bar">
-                <button id="back-to-recipes" class="btn-close-lesson">&larr;</button>
-                <h3 id="lesson-language-title" class="lesson-bar-title">Lessons</h3>
-            </div>
-            <div id="region-selector" class="region-selector"></div>
-            <div class="lesson-scroll-area">
-                <div id="lesson-categories" class="lesson-categories-list"></div>
+            <div class="path-scroll-area">
+                <div id="path-list" class="path-list"></div>
             </div>
         </div>
 
@@ -167,6 +155,8 @@
                     <span id="streak-label" class="streak-label"></span>
                 </div>
             </div>
+
+            <div class="quiz-body">
 
             <div class="quiz-phrase-area">
                 <div class="quiz-character-row">
@@ -244,6 +234,7 @@
                     <p id="wrong-explanation" class="wrong-explanation-text"></p>
                     <button id="wrong-continue-btn" class="btn-primary">Try that again</button>
                 </div>
+            </div>
             </div>
         </div>
 

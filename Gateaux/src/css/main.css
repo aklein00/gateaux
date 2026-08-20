@@ -108,7 +108,9 @@ body {
     min-height: 100vh;
     background: var(--cream);
     position: relative;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 /* Soft radial pool of light — replaces the muddy wallpaper overlay */
@@ -214,6 +216,8 @@ body {
     align-items: center;
     justify-content: center;
     padding: 20px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .tutorial-modal {
@@ -223,6 +227,7 @@ body {
     max-width: 380px;
     width: 100%;
     box-shadow: var(--shadow-heavy);
+    margin: auto;
 }
 
 .tutorial-title {
