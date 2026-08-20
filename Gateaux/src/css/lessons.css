@@ -622,12 +622,31 @@
     flex-shrink: 0;
 }
 
+#lesson-quiz-screen {
+    position: relative;
+    overflow: hidden;
+}
+
+.quiz-confetti {
+    z-index: 20;
+    pointer-events: none;
+}
+
 .match-status {
     min-height: 1.1em;
     margin: 0;
     font-size: 0.9rem;
     font-weight: 700;
     color: var(--coffee-dark);
+    text-align: center;
+}
+
+.match-teach {
+    min-height: 1.15em;
+    margin: 0 0 4px;
+    font-size: 0.8rem;
+    line-height: 1.35;
+    color: var(--text-medium);
     text-align: center;
 }
 

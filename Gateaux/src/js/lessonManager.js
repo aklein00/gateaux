@@ -247,9 +247,15 @@ export class LessonManager {
         return btn;
     }
 
-    updateMatchStatus(text) {
+    updateMatchStatus(text, teach = '') {
         const el = document.getElementById('match-status');
+        const teachEl = document.getElementById('match-teach');
         if (el) el.textContent = text;
+        if (teachEl) teachEl.textContent = teach;
+    }
+
+    matchPhraseForTile(btn) {
+        return this.currentLesson.phrases.find(p => p.id === btn.dataset.phraseId);
     }
 
     onMatchTile(btn) {
@@ -265,7 +271,6 @@ export class LessonManager {
             document.querySelectorAll('.match-tile.selected').forEach(el => el.classList.remove('selected'));
             btn.classList.add('selected');
             this.matchSelected = btn;
-            this.updateMatchStatus('');
             return;
         }
 
@@ -295,18 +300,26 @@ export class LessonManager {
             const fill = document.getElementById('quiz-progress-fill');
             if (fill) fill.style.width = `${(this.matchCount / this.currentLesson.phrases.length) * 80}%`;
 
-            const phrase = this.currentLesson.phrases.find(p => p.id === a.dataset.phraseId);
+            const phrase = this.matchPhraseForTile(a);
             if (phrase?.id) gameState.learnPhrase(this.currentLanguage, phrase.id);
 
             if (this.matchCount >= this.currentLesson.phrases.length) {
-                setTimeout(() => this.showFirstRunStory(), 450);
+                this.spawnConfetti(document.getElementById('quiz-confetti'));
+                this.updateMatchStatus('Nailed it.');
+                setTimeout(() => this.showFirstRunStory(), 900);
             }
         } else {
             a.classList.add('miss');
             b.classList.add('miss');
             this._vibrateWrong();
             audioManager.playWrong();
-            this.updateMatchStatus('Nah.');
+            const phrase = this.matchPhraseForTile(a);
+            const native = phrase ? this.nativeOf(phrase) : '';
+            const english = phrase?.english || '';
+            this.updateMatchStatus(
+                `Nah. ${native} is “${english}.”`,
+                firstSentence(phrase?.context || '')
+            );
             const first = a;
             const second = b;
             this.matchSelected = null;
@@ -784,10 +797,9 @@ export class LessonManager {
         }
     }
 
-    spawnConfetti() {
-        const container = document.getElementById('confetti-container');
+    spawnConfetti(container = document.getElementById('confetti-container')) {
         if (!container) return;
-        // On-palette confetti: warm golds, greens, muted reds
+        container.innerHTML = '';
         const colors = ['#c49a30', '#deb87a', '#7ab87a', '#c9807a', '#d4a574', '#a8d4a8'];
         for (let i = 0; i < 30; i++) {
             const p = document.createElement('div');
@@ -798,6 +810,9 @@ export class LessonManager {
             p.style.animationDelay = `${Math.random() * 0.3}s`;
             p.style.animationDuration = `${0.8 + Math.random() * 0.6}s`;
             container.appendChild(p);
+        }
+        if (container.id === 'quiz-confetti') {
+            setTimeout(() => { container.innerHTML = ''; }, 1600);
         }
     }
 
