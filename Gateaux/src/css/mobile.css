@@ -61,6 +61,18 @@ body {
     padding: 20px 0;
   }
 
+  body.game-started .stat-bar {
+    top: 20px;
+    width: 430px;
+    max-width: 430px;
+    padding-top: 10px;
+    border-radius: 20px 20px 0 0;
+  }
+
+  body.game-started #game-container {
+    padding-top: var(--stat-bar-h);
+  }
+
   #game-container {
     width: 430px;
     max-width: 430px;
@@ -80,24 +92,23 @@ body {
   .tutorial-overlay {
     width: 430px;
     height: min(932px, calc(100vh - 40px));
-    height: min(932px, calc(100dvh - 40px));
-    max-height: min(932px, calc(100dvh - 40px));
-    top: 20px;
+    height: calc(min(932px, 100dvh - 40px) - var(--stat-bar-h));
+    max-height: calc(min(932px, 100dvh - 40px) - var(--stat-bar-h));
+    top: calc(20px + var(--stat-bar-h));
     right: auto;
     bottom: auto;
     left: 50%;
     transform: translateX(-50%);
-    border-radius: 20px;
+    border-radius: 0 0 20px 20px;
     overflow: hidden;
   }
 
   /* Level-up uses flex centering internally, so avoid transform conflict */
   .level-up-overlay {
     width: 430px;
-    height: min(932px, calc(100vh - 40px));
-    height: min(932px, calc(100dvh - 40px));
-    max-height: min(932px, calc(100dvh - 40px));
-    top: 20px;
+    height: calc(min(932px, 100dvh - 40px) - var(--stat-bar-h));
+    max-height: calc(min(932px, 100dvh - 40px) - var(--stat-bar-h));
+    top: calc(20px + var(--stat-bar-h));
     bottom: auto;
     left: 0;
     right: 0;

@@ -16,6 +16,7 @@ export class DisplayCase {
         this.maxCakesPerShelf = 8;
         this.lastSeenAt = null;
         this.lastAwaySales = 0;
+        this._suppressSave = false;
 
         this.loadFromStorage();
         this.migrateReadyAt();
@@ -194,6 +195,7 @@ export class DisplayCase {
     }
 
     touchLastSeen() {
+        if (this._suppressSave) return;
         this.lastSeenAt = Date.now();
         this.saveToStorage();
     }
@@ -362,6 +364,7 @@ export class DisplayCase {
     }
 
     saveToStorage() {
+        if (this._suppressSave) return;
         try {
             localStorage.setItem('gateaux_display_case', JSON.stringify({
                 inventory: this.inventory,
@@ -370,6 +373,10 @@ export class DisplayCase {
         } catch (error) {
             console.error('Failed to save display case:', error);
         }
+    }
+
+    suppressPersistence() {
+        this._suppressSave = true;
     }
 
     loadFromStorage() {

@@ -177,11 +177,13 @@
 
 .recipe-book-overlay {
     position: fixed;
-    inset: 0;
+    top: calc(var(--stat-bar-h) + env(safe-area-inset-top, 0px));
+    right: 0;
+    bottom: 0;
+    left: 0;
     width: 100%;
-    height: 100%;
-    height: 100dvh;
-    max-height: 100dvh;
+    height: auto;
+    max-height: none;
     background: var(--warm-white);
     z-index: 2500;
     display: flex;
@@ -328,7 +330,8 @@
     width: 64px;
     height: 64px;
     object-fit: contain;
-    border-radius: 8px;
+    border-radius: var(--r-md);
+    overflow: hidden;
 }
 
 /* Locked cakes render as dark silhouette with faint gold tint */
@@ -519,13 +522,15 @@
 .quiz-cake-preview {
     width: 56px;
     height: 56px;
+    border-radius: var(--r-md);
+    overflow: hidden;
 }
 
 .quiz-cake-img {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    border-radius: 6px;
+    border-radius: var(--r-md);
     border: 2px solid var(--coffee-light);
 }
 
@@ -555,11 +560,13 @@
 
 .level-up-overlay {
     position: fixed;
-    inset: 0;
+    top: calc(var(--stat-bar-h) + env(safe-area-inset-top, 0px));
+    right: 0;
+    bottom: 0;
+    left: 0;
     width: 100%;
-    height: 100%;
-    height: 100dvh;
-    max-height: 100dvh;
+    height: auto;
+    max-height: none;
     background: rgba(30,16,8,.72);
     z-index: 3000;
     display: flex;

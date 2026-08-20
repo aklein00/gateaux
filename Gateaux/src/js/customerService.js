@@ -178,11 +178,11 @@ export class CustomerService {
         // Update sprite with customer bust image (contain so faces aren't cropped)
         if (spriteEl) {
             const imageMap = {
-                Bunny: 'tourist_bust.png',
-                Cat: 'hipster_bust.png',
-                Dog: 'business_bust.png',
-                Bear: 'love_struck_bust.png',
-                Fox: 'foodie_bust.png'
+                Bunny: 'bunny_bust.png',
+                Cat: 'cat_bust.png',
+                Dog: 'dog_bust.png',
+                Bear: 'bear_bust.png',
+                Fox: 'fox_bust.png'
             };
             const imgFile = imageMap[this.currentCustomer.name] || 'tourist_bust.png';
             spriteEl.classList.remove('placeholder-square');

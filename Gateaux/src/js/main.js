@@ -208,6 +208,10 @@ class GateauxGame {
             );
             if (!confirmed) return;
 
+            this.hideCakeDoober();
+            displayCase.reset();
+            displayCase.suppressPersistence();
+            gameState.resetProgress();
             Object.keys(localStorage)
                 .filter(key => key.startsWith('gateaux_'))
                 .forEach(key => localStorage.removeItem(key));
@@ -868,6 +872,11 @@ class GateauxGame {
     }
 }
 
+function showGameChrome() {
+    document.body.classList.add('game-started');
+    document.getElementById('stat-bar')?.removeAttribute('hidden');
+}
+
 // Start screen handler
 function setupStartScreen() {
     const startBtn = document.getElementById('start-game-btn');
@@ -881,6 +890,7 @@ function setupStartScreen() {
             setTimeout(() => {
                 startScreen.style.display = 'none';
                 gameContainer.style.display = 'block';
+                showGameChrome();
                 gameContainer.classList.remove('overlay-enter');
                 void gameContainer.offsetWidth;
                 gameContainer.classList.add('overlay-enter');
@@ -905,6 +915,7 @@ if (new URLSearchParams(window.location.search).has('autostart')) {
     if (startScreen && gameContainer) {
         startScreen.style.display = 'none';
         gameContainer.style.display = 'block';
+        showGameChrome();
     }
     localStorage.setItem('gateaux_tutorial_seen', '1');
     const firstRun = document.getElementById('first-run-overlay');

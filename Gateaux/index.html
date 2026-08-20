@@ -25,38 +25,37 @@
         <button id="start-game-btn" class="btn-start">Start</button>
     </div>
 
-    <div id="game-container" style="display: none;">
-        <!-- Stat Bar -->
-        <div class="stat-bar">
-            <div class="stat-bar-left">
-                <div class="stat-pill coin-pill">
-                    <img src="assets/images/ui/coin.svg" alt="Coins" class="stat-icon">
-                    <span id="total-coins">0</span>
-                </div>
-                <div class="stat-pill diamond-pill">
-                    <img src="assets/images/ui/diamond.svg" alt="Diamonds" class="stat-icon">
-                    <span id="total-diamonds">0</span>
-                </div>
-                <div class="stat-pill level-pill" id="level-pill" title="Level (from XP)">
-                    <span class="level-pill-label">Lv</span>
-                    <span id="player-level">1</span>
-                    <div class="level-progress-track">
-                        <div id="level-progress-fill" class="level-progress-fill"></div>
-                    </div>
-                </div>
+    <div class="stat-bar" id="stat-bar" hidden>
+        <div class="stat-bar-left">
+            <div class="stat-pill coin-pill">
+                <img src="assets/images/ui/coin.svg" alt="Coins" class="stat-icon">
+                <span id="total-coins">0</span>
             </div>
-            <div class="stat-bar-right">
-                <button class="stat-pill recipe-book-btn" id="recipe-book-btn" type="button"
-                        disabled aria-disabled="true" title="Recipe Book — not in this build">
-                    Recipe Book
-                </button>
-                <button class="stat-pill mute-btn" id="mute-btn" title="Toggle Sound" aria-label="Toggle Sound">
-                    <span class="mute-icon-on">&#9834;</span>
-                    <span class="mute-icon-off">&#9834;&#x20D8;</span>
-                </button>
+            <div class="stat-pill diamond-pill">
+                <img src="assets/images/ui/diamond.svg" alt="Diamonds" class="stat-icon">
+                <span id="total-diamonds">0</span>
+            </div>
+            <div class="stat-pill level-pill" id="level-pill" title="Level (from XP)">
+                <span class="level-pill-label">Lv</span>
+                <span id="player-level">1</span>
+                <div class="level-progress-track">
+                    <div id="level-progress-fill" class="level-progress-fill"></div>
+                </div>
             </div>
         </div>
+        <div class="stat-bar-right">
+            <button class="stat-pill recipe-book-btn" id="recipe-book-btn" type="button"
+                    disabled aria-disabled="true" title="Recipe Book — not in this build">
+                Recipe Book
+            </button>
+            <button class="stat-pill mute-btn" id="mute-btn" title="Toggle Sound" aria-label="Toggle Sound">
+                <span class="mute-icon-on">&#9834;</span>
+                <span class="mute-icon-off">&#9834;&#x20D8;</span>
+            </button>
+        </div>
+    </div>
 
+    <div id="game-container" style="display: none;">
         <!-- Main Game Area -->
         <div class="main-game-area">
             <div id="welcome-banner" class="welcome-banner">
@@ -82,22 +81,20 @@
                 <div class="language-cards">
                     <div class="language-card" data-language="spanish">
                         <div class="cake-preview">
-                            <img src="assets/images/cakes/tres_leches_fresh.png" alt="Tres Leches" class="cake-card-image">
+                            <img src="assets/images/ui/marcel_bake_es.png" alt="Marcel eating tres leches" class="cake-card-image">
                         </div>
                         <div class="card-body">
                             <h4>Spanish</h4>
-                            <div class="cake-type">Tres Leches</div>
                         </div>
                         <button class="btn-bake" data-language="spanish">Bake</button>
                     </div>
 
                     <div class="language-card" data-language="french">
                         <div class="cake-preview">
-                            <img src="assets/images/cakes/eclair_fresh.png" alt="Eclair" class="cake-card-image">
+                            <img src="assets/images/ui/amelie_bake_fr.png" alt="Amélie eating an éclair" class="cake-card-image">
                         </div>
                         <div class="card-body">
                             <h4>French</h4>
-                            <div class="cake-type">Eclair</div>
                         </div>
                         <button class="btn-bake" data-language="french">Bake</button>
                     </div>
@@ -117,11 +114,13 @@
                             <div class="customer-sprite placeholder-square" data-image-name="Customer"></div>
                         </div>
                         <div class="customer-speech">
-                            <div class="customer-speech-text">
-                                <p id="customer-request"></p>
-                                <p id="customer-hint" class="customer-hint" hidden></p>
-                            </div>
-                            <button class="btn-audio" id="play-customer-audio">Hear it</button>
+                            <p id="customer-request"></p>
+                            <button class="btn-audio" id="play-customer-audio" type="button" aria-label="Hear it">
+                                <svg class="btn-audio-icon" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path fill="currentColor" d="M4 9v6h4l5 4V5L8 9H4zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                                </svg>
+                            </button>
+                            <p id="customer-hint" class="customer-hint" hidden></p>
                         </div>
                     </div>
 
