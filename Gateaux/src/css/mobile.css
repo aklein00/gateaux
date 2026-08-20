@@ -13,12 +13,28 @@
 }
 
 /* Prevent text selection and tap highlighting on mobile */
+html {
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 body {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
   overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Fixed backgrounds break scrolling on many mobile browsers */
+@media screen and (max-width: 767px) {
+  body {
+    background-attachment: scroll;
+  }
 }
 
 /* Apply safe area padding to game container */
@@ -49,11 +65,13 @@ body {
     width: 430px;
     max-width: 430px;
     height: min(932px, calc(100vh - 40px));
+    height: min(932px, calc(100dvh - 40px));
     min-height: 0;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
     border-radius: 20px;
     overflow-x: hidden;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   /* Constrain all fixed overlays to match the game container width */
@@ -62,7 +80,10 @@ body {
   .tutorial-overlay {
     width: 430px;
     height: min(932px, calc(100vh - 40px));
+    height: min(932px, calc(100dvh - 40px));
+    max-height: min(932px, calc(100dvh - 40px));
     top: 20px;
+    right: auto;
     bottom: auto;
     left: 50%;
     transform: translateX(-50%);
@@ -74,6 +95,8 @@ body {
   .level-up-overlay {
     width: 430px;
     height: min(932px, calc(100vh - 40px));
+    height: min(932px, calc(100dvh - 40px));
+    max-height: min(932px, calc(100dvh - 40px));
     top: 20px;
     bottom: auto;
     left: 0;
@@ -128,9 +151,14 @@ button,
    ======================================== */
 
 @media screen and (max-width: 767px) {
-  /* Reduce overall padding on small screens */
+  /* Grow with content; page (html/body) scrolls */
   #game-container {
-    padding: max(12px, var(--safe-area-top)) max(12px, var(--safe-area-right)) max(12px, var(--safe-area-bottom)) max(12px, var(--safe-area-left));
+    height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: hidden;
+    overflow-y: visible;
+    padding: max(12px, var(--safe-area-top)) max(12px, var(--safe-area-right)) max(24px, var(--safe-area-bottom)) max(12px, var(--safe-area-left));
   }
 
   /* Header adjustments */

@@ -2,10 +2,11 @@
 
 .start-screen {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+  max-height: 100dvh;
   background-image: url('../../public/assets/images/splash.jpeg');
   background-size: cover;
   background-position: center;
@@ -13,47 +14,62 @@
   background-color: #2a1810;
   z-index: 10000;
   animation: fadeIn 0.5s ease-in;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom));
+  box-sizing: border-box;
 }
 
 .start-screen.hidden {
   animation: fadeOut 0.3s ease-out forwards;
 }
 
-/* Logo layer — centered near top */
+/* Logo layer — near top */
 .splash-logo {
-  position: absolute;
-  top: 6vh;
-  left: 50%;
-  transform: translateX(-50%);
+  position: relative;
+  top: auto;
+  left: auto;
+  transform: none;
   width: 60%;
   max-width: 425px;
   height: auto;
+  flex-shrink: 0;
   pointer-events: none;
   animation: scaleIn 0.6s ease-out 0.2s backwards;
   z-index: 2;
+  margin-top: 2vh;
 }
 
-/* Characters layer — centered, fills most of the screen */
+/* Characters layer — fills middle */
 .splash-characters {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
+  position: relative;
+  bottom: auto;
+  left: auto;
+  transform: none;
   width: 100%;
   max-width: 800px;
+  max-height: min(58dvh, 520px);
   height: auto;
+  object-fit: contain;
+  object-position: bottom center;
+  flex: 1 1 auto;
+  min-height: 0;
   pointer-events: none;
   animation: scaleIn 0.5s ease-out 0.4s backwards;
   z-index: 1;
 }
 
-/* Start button — near the very bottom */
+/* Start button — near the bottom */
 .btn-start {
-  position: absolute;
-  bottom: 5vh;
-  left: 50%;
-  transform: translateX(-50%);
+  position: relative;
+  bottom: auto;
+  left: auto;
+  transform: none;
   z-index: 3;
   font-size: 1.4rem;
   padding: 16px 56px;
@@ -72,16 +88,18 @@
   min-height: 60px;
   letter-spacing: 1.5px;
   -webkit-tap-highlight-color: transparent;
+  flex-shrink: 0;
+  margin-bottom: 2vh;
 }
 
 .btn-start:hover {
-  transform: translateX(-50%) translateY(-2px) scale(1.04);
+  transform: translateY(-2px) scale(1.04);
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255,255,255,.35);
   animation: none;
 }
 
 .btn-start:active {
-  transform: translateX(-50%) scale(0.96);
+  transform: scale(0.96);
   transition-duration: var(--t-fast);
 }
 
@@ -97,17 +115,17 @@
 }
 
 @keyframes scaleIn {
-  from { opacity: 0; transform: translateX(-50%) scale(0.9); }
-  to { opacity: 1; transform: translateX(-50%) scale(1); }
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 @keyframes startPulse {
   0%, 100% {
-    transform: translateX(-50%) scale(1);
+    transform: scale(1);
     box-shadow: 0 4px 18px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.35);
   }
   50% {
-    transform: translateX(-50%) scale(1.03);
+    transform: scale(1.03);
     box-shadow: 0 8px 26px rgba(0,0,0,.35), 0 0 24px rgba(184,120,48,.40), inset 0 1px 0 rgba(255,255,255,.35);
   }
 }
@@ -116,9 +134,13 @@
 @media screen and (min-width: 768px) {
   .start-screen {
     top: 20px;
+    right: auto;
+    bottom: auto;
     left: 50%;
     width: 430px;
     height: min(932px, calc(100vh - 40px));
+    height: min(932px, calc(100dvh - 40px));
+    max-height: min(932px, calc(100dvh - 40px));
     transform: translateX(-50%);
     border-radius: 20px;
   }
@@ -131,28 +153,26 @@
 /* Mobile adjustments */
 @media screen and (max-width: 767px) {
   .splash-logo {
-    top: 4vh;
     width: 80%;
+    margin-top: 1vh;
   }
 
   .btn-start {
-    bottom: 4vh;
     font-size: 1.3rem;
     padding: 15px 50px;
     min-width: 180px;
     min-height: 55px;
+    margin-bottom: 1vh;
   }
 }
 
 /* Small mobile */
 @media screen and (max-width: 375px) {
   .splash-logo {
-    top: 3vh;
     width: 85%;
   }
 
   .btn-start {
-    bottom: 3vh;
     font-size: 1.2rem;
     padding: 12px 40px;
     min-width: 160px;
@@ -162,18 +182,26 @@
 
 /* Landscape mode on mobile */
 @media screen and (max-width: 768px) and (orientation: landscape) {
+  .start-screen {
+    justify-content: center;
+    gap: 8px;
+  }
+
   .splash-logo {
-    top: 3vh;
-    width: 40%;
+    width: 28%;
+    max-width: 180px;
+    margin-top: 0;
   }
 
   .splash-characters {
-    max-width: 500px;
+    max-height: 42dvh;
+    max-width: 420px;
   }
 
   .btn-start {
-    bottom: 3vh;
     font-size: 1.2rem;
-    padding: 14px 45px;
+    padding: 12px 40px;
+    min-height: 48px;
+    margin-bottom: 0;
   }
 }
