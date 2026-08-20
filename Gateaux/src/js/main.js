@@ -233,7 +233,7 @@ class GateauxGame {
             void overlay.offsetWidth;
             overlay.classList.add('overlay-enter');
         }
-        this.startLesson(lesson);
+        this.startLesson(lesson, { firstRun: true });
     }
 
     setupPageLifecycle() {
@@ -536,12 +536,12 @@ class GateauxGame {
     }
 
     // Start a lesson — switch to quiz screen
-    startLesson(lesson) {
+    startLesson(lesson, options = {}) {
         this.showScreen('lesson-quiz-screen');
 
         this.lessonManager.startLesson(this.currentLanguage, this.currentRegion, lesson, (completed) => {
             if (completed) this.onLessonComplete(lesson);
-        }, this.currentRecipe);
+        }, this.currentRecipe, options);
     }
 
     // Lesson completed (completeLesson already called by lessonManager)

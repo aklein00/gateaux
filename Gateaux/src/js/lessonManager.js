@@ -2,6 +2,7 @@
 import { gameState } from './gameState.js';
 import { teachers, MAX_LESSON_PROMPTS, trimLessonPhrases } from './languageData.js';
 import { audioManager } from './audioManager.js';
+import { FIRST_RUN_CLOSER_IDS, FIRST_RUN_STORY } from './firstRun.js';
 
 // Timer is off for standard lessons. Kept for a future Café "Rush Hour" mode.
 const TIMER_ENABLED_DEFAULT = false;
@@ -130,6 +131,10 @@ export class LessonManager {
         this.timerSeconds = 0;
         this.timerMax = 15;
         this.questionMode = 'meaning';
+        this.isFirstRun = false;
+        this.firstRunPhase = 'quiz';
+        this.matchSelected = null;
+        this.matchCount = 0;
 
         // Streak state
         this.streak = 0;
@@ -140,6 +145,9 @@ export class LessonManager {
     setupEventListeners() {
         document.getElementById('quiz-action-btn')?.addEventListener('click', () => {
             this.checkAnswer();
+        });
+        document.getElementById('first-run-story-go')?.addEventListener('click', () => {
+            this.startFirstRunCloser();
         });
     }
 
@@ -156,6 +164,182 @@ export class LessonManager {
         this.timerEnabled = options.timed === true;
         this.timerMax = TIMER_BY_DIFFICULTY[lesson.difficulty] || 15;
         this.setTimerVisible(this.timerEnabled);
+
+        this.isFirstRun = options.firstRun === true;
+        this.firstRunPhase = this.isFirstRun ? 'match' : 'quiz';
+        this.matchSelected = null;
+        this.matchCount = 0;
+
+        if (this.isFirstRun) {
+            this.startMatchRound();
+        } else {
+            this.setQuizLayout('quiz');
+            this.loadCurrentPhrase();
+        }
+    }
+
+    setQuizLayout(mode) {
+        const matchBoard = document.getElementById('match-board');
+        const story = document.getElementById('first-run-story');
+        const answerArea = document.querySelector('.quiz-answer-area');
+        const listenBtn = document.getElementById('quiz-listen-btn');
+
+        if (matchBoard) matchBoard.style.display = mode === 'match' ? 'flex' : 'none';
+        if (story) story.style.display = mode === 'story' ? 'flex' : 'none';
+        if (answerArea) answerArea.style.display = mode === 'quiz' ? '' : 'none';
+        if (listenBtn && mode !== 'quiz') listenBtn.style.display = 'none';
+    }
+
+    nativeOf(phrase) {
+        return phrase[this.currentLanguage] || phrase.french || phrase.spanish;
+    }
+
+    startMatchRound() {
+        this.firstRunPhase = 'match';
+        this.matchSelected = null;
+        this.matchCount = 0;
+        this.setQuizLayout('match');
+        this.setupQuizChrome();
+        this.stopTimer();
+
+        const phrases = this.currentLesson.phrases;
+        const fill = document.getElementById('quiz-progress-fill');
+        if (fill) fill.style.width = '0%';
+
+        const nativeEl = document.getElementById('quiz-phrase-native');
+        const pronEl = document.getElementById('quiz-phrase-pronunciation');
+        const contextEl = document.getElementById('quiz-phrase-context');
+        if (nativeEl) nativeEl.textContent = 'Tap the pairs.';
+        if (pronEl) pronEl.textContent = '';
+        if (contextEl) contextEl.textContent = 'Same meaning. Two taps.';
+
+        this.updateMatchStatus('');
+
+        const enCol = document.getElementById('match-col-en');
+        const nativeCol = document.getElementById('match-col-native');
+        if (!enCol || !nativeCol) return;
+        enCol.innerHTML = '';
+        nativeCol.innerHTML = '';
+
+        const enTiles = this.shuffleArray(phrases.map(p => ({
+            phraseId: p.id,
+            side: 'en',
+            text: p.english
+        })));
+        const nativeTiles = this.shuffleArray(phrases.map(p => ({
+            phraseId: p.id,
+            side: 'native',
+            text: this.nativeOf(p)
+        })));
+
+        enTiles.forEach(tile => enCol.appendChild(this.createMatchTile(tile)));
+        nativeTiles.forEach(tile => nativeCol.appendChild(this.createMatchTile(tile)));
+    }
+
+    createMatchTile(tile) {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'match-tile';
+        btn.textContent = tile.text;
+        btn.dataset.phraseId = tile.phraseId;
+        btn.dataset.side = tile.side;
+        btn.addEventListener('click', () => this.onMatchTile(btn));
+        return btn;
+    }
+
+    updateMatchStatus(text) {
+        const el = document.getElementById('match-status');
+        if (el) el.textContent = text;
+    }
+
+    onMatchTile(btn) {
+        if (btn.classList.contains('matched') || btn.disabled) return;
+
+        if (this.matchSelected === btn) {
+            btn.classList.remove('selected');
+            this.matchSelected = null;
+            return;
+        }
+
+        if (!this.matchSelected) {
+            document.querySelectorAll('.match-tile.selected').forEach(el => el.classList.remove('selected'));
+            btn.classList.add('selected');
+            this.matchSelected = btn;
+            this.updateMatchStatus('');
+            return;
+        }
+
+        if (this.matchSelected.dataset.side === btn.dataset.side) {
+            this.matchSelected.classList.remove('selected');
+            btn.classList.add('selected');
+            this.matchSelected = btn;
+            return;
+        }
+
+        const a = this.matchSelected;
+        const b = btn;
+        const isMatch = a.dataset.phraseId === b.dataset.phraseId;
+
+        if (isMatch) {
+            a.classList.remove('selected');
+            b.classList.remove('selected');
+            a.classList.add('matched');
+            b.classList.add('matched');
+            a.disabled = true;
+            b.disabled = true;
+            this.matchSelected = null;
+            this.matchCount++;
+            this._vibrateCorrect();
+            audioManager.playCorrect();
+            this.updateMatchStatus('Yeah.');
+            const fill = document.getElementById('quiz-progress-fill');
+            if (fill) fill.style.width = `${(this.matchCount / this.currentLesson.phrases.length) * 80}%`;
+
+            const phrase = this.currentLesson.phrases.find(p => p.id === a.dataset.phraseId);
+            if (phrase?.id) gameState.learnPhrase(this.currentLanguage, phrase.id);
+
+            if (this.matchCount >= this.currentLesson.phrases.length) {
+                setTimeout(() => this.showFirstRunStory(), 450);
+            }
+        } else {
+            a.classList.add('miss');
+            b.classList.add('miss');
+            this._vibrateWrong();
+            audioManager.playWrong();
+            this.updateMatchStatus('Nah.');
+            const first = a;
+            const second = b;
+            this.matchSelected = null;
+            setTimeout(() => {
+                first.classList.remove('selected', 'miss');
+                second.classList.remove('selected', 'miss');
+            }, 420);
+        }
+    }
+
+    showFirstRunStory() {
+        this.firstRunPhase = 'story';
+        this.setQuizLayout('story');
+        this.updateMatchStatus('');
+
+        const nativeEl = document.getElementById('quiz-phrase-native');
+        const contextEl = document.getElementById('quiz-phrase-context');
+        if (nativeEl) nativeEl.textContent = 'Ok. That was the easy part.';
+        if (contextEl) contextEl.textContent = '';
+
+        const linesEl = document.getElementById('first-run-story-lines');
+        const lines = FIRST_RUN_STORY[this.currentLanguage] || FIRST_RUN_STORY.french;
+        if (linesEl) {
+            linesEl.innerHTML = lines.map(line => `<p>${line}</p>`).join('');
+        }
+    }
+
+    startFirstRunCloser() {
+        this.firstRunPhase = 'closer';
+        this.setQuizLayout('quiz');
+        const closerId = FIRST_RUN_CLOSER_IDS[this.currentLanguage];
+        const idx = this.currentLesson.phrases.findIndex(p => p.id === closerId);
+        this.currentPhraseIndex = idx >= 0 ? idx : Math.min(3, this.currentLesson.phrases.length - 1);
         this.loadCurrentPhrase();
     }
 
@@ -167,12 +351,19 @@ export class LessonManager {
 
         const phrase = this.currentLesson.phrases[this.currentPhraseIndex];
 
-        // Update progress bar
-        const progress = (this.currentPhraseIndex / this.currentLesson.phrases.length) * 100;
+        const progress = this.firstRunPhase === 'closer'
+            ? 90
+            : (this.currentPhraseIndex / this.currentLesson.phrases.length) * 100;
         const fill = document.getElementById('quiz-progress-fill');
         if (fill) fill.style.width = `${progress}%`;
 
-        // Set character — full-body concept image; reset badge to thinking
+        this.setupQuizChrome();
+        this.renderQuizQuestion(phrase);
+        if (this.timerEnabled) this.startTimer();
+        else this.stopTimer();
+    }
+
+    setupQuizChrome() {
         const charImg = document.getElementById('quiz-character-img');
         if (charImg && this.currentLesson.teacher) {
             const teacherId = this.currentLesson.teacher;
@@ -199,10 +390,6 @@ export class LessonManager {
         } else if (cakePreview) {
             cakePreview.style.display = 'none';
         }
-
-        this.renderQuizQuestion(phrase);
-        if (this.timerEnabled) this.startTimer();
-        else this.stopTimer();
     }
 
     setTimerVisible(visible) {
@@ -329,8 +516,12 @@ export class LessonManager {
 
     renderQuizQuestion(phrase) {
         const nativeText = phrase[this.currentLanguage] || phrase.french || phrase.spanish;
-        const modeIndex = this.currentPhraseIndex % 3;
-        this.questionMode = modeIndex === 2 ? 'listen' : (modeIndex === 1 ? 'reverse' : 'meaning');
+        if (this.firstRunPhase === 'closer') {
+            this.questionMode = 'meaning';
+        } else {
+            const modeIndex = this.currentPhraseIndex % 3;
+            this.questionMode = modeIndex === 2 ? 'listen' : (modeIndex === 1 ? 'reverse' : 'meaning');
+        }
 
         const nativeEl = document.getElementById('quiz-phrase-native');
         const pronEl = document.getElementById('quiz-phrase-pronunciation');
@@ -525,6 +716,10 @@ export class LessonManager {
                 const confetti = document.getElementById('confetti-container');
                 if (confetti) confetti.innerHTML = '';
                 this._setQuizTeacherExpression('neutral');
+                if (this.firstRunPhase === 'closer') {
+                    this.completeLesson();
+                    return;
+                }
                 this.currentPhraseIndex++;
                 this.loadCurrentPhrase();
             };
