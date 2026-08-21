@@ -297,7 +297,11 @@ export class DisplayCase {
                 slot.dataset.language = language;
                 slot.setAttribute('role', 'button');
                 slot.tabIndex = 0;
-                slot.setAttribute('aria-label', 'Cake details');
+                const recipe = getRecipeById(cake.recipeId);
+                const pastryName = recipe?.name || (language === 'french' ? 'Eclair' : 'Tres Leches');
+                slot.setAttribute('aria-label', pastryName);
+                slot.title = pastryName;
+                slot.dataset.tooltip = pastryName;
                 slot.innerHTML = this.getCakeVisual(language, cake);
             } else {
                 slot.classList.add('empty');

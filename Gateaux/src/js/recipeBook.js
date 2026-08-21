@@ -65,26 +65,27 @@ function renderCakeGrid(language) {
     grid.innerHTML = '';
 
     const recipes = getRecipesForLanguage(language);
-    const playerLevel = gameState.getLevel();
 
     recipes.forEach(recipe => {
-        const isUnlocked = recipe.unlockLevel <= playerLevel;
+        const bakeCount = gameState.getBakeCount(recipe.id);
+        const isUnlocked = bakeCount > 0;
+        const teacherName = recipe.teacher === 'all'
+            ? 'the whole kitchen'
+            : (teachers[recipe.teacher]?.name || recipe.teacher);
         const card = document.createElement('div');
         card.className = `rb-cake-card${isUnlocked ? '' : ' locked'}`;
-
-        const bakeCount = gameState.getBakeCount(recipe.id);
+        card.title = isUnlocked
+            ? recipe.name
+            : `Keep practicing — finish ${teacherName}'s exercises to unlock this kitchen recipe.`;
 
         card.innerHTML = `
             <img class="rb-cake-img" src="assets/images/cakes/${recipe.imageFile}"
                  alt="${recipe.name}" data-image-name="${recipe.name}">
             <span class="rp-rarity-badge rarity-${recipe.rarity}">${getRarityLabel(recipe.rarity)}</span>
             <span class="rb-cake-name">${isUnlocked ? recipe.name : '???'}</span>
-            ${isUnlocked && bakeCount > 0
+            ${isUnlocked
                 ? `<span class="rb-baked-count">Baked ${bakeCount}x</span>`
-                : ''}
-            ${!isUnlocked
-                ? `<span class="rb-lock-info">Level ${recipe.unlockLevel}</span>`
-                : ''}
+                : `<span class="rb-lock-info">Keep practicing</span>`}
         `;
 
         card.addEventListener('click', () => {
@@ -102,9 +103,8 @@ export function showCakeDetail(recipeId) {
     const popup = document.getElementById('cake-detail-popup');
     if (!popup) return;
 
-    const playerLevel = gameState.getLevel();
-    const isUnlocked = recipe.unlockLevel <= playerLevel;
     const bakeCount = gameState.getBakeCount(recipe.id);
+    const isUnlocked = bakeCount > 0;
 
     document.getElementById('cake-detail-img').src = `assets/images/cakes/${recipe.imageFile}`;
     document.getElementById('cake-detail-img').alt = recipe.name;
@@ -114,22 +114,33 @@ export function showCakeDetail(recipeId) {
     rarityEl.textContent = getRarityLabel(recipe.rarity);
     rarityEl.className = `cake-detail-rarity rarity-${recipe.rarity}`;
 
+    const teacherName = recipe.teacher === 'all'
+        ? 'All Teachers'
+        : (teachers[recipe.teacher]?.name || recipe.teacher);
+
     document.getElementById('cake-detail-desc').textContent = isUnlocked
         ? recipe.description
-        : `Unlock at Level ${recipe.unlockLevel} to discover this recipe.`;
+        : `Keep practicing with ${teacherName}. Bake this pastry in a lesson to unlock the real kitchen recipe.`;
+
+    const kitchenEl = document.getElementById('cake-detail-kitchen');
+    if (kitchenEl) {
+        if (isUnlocked && recipe.kitchenRecipe) {
+            kitchenEl.hidden = false;
+            kitchenEl.innerHTML = `<h4>Kitchen recipe</h4><p>${recipe.kitchenRecipe}</p>`;
+        } else {
+            kitchenEl.hidden = true;
+            kitchenEl.innerHTML = '';
+        }
+    }
 
     document.getElementById('cake-detail-decay').textContent = `${recipe.decayHours}h`;
     document.getElementById('cake-detail-tips').textContent =
         `${recipe.tipMultiplier}x (${getCounterPayout(recipe)} coins)`;
-
-    const teacherName = recipe.teacher === 'all'
-        ? 'All Teachers'
-        : (teachers[recipe.teacher]?.name || recipe.teacher);
     document.getElementById('cake-detail-teacher').textContent = teacherName;
 
     document.getElementById('cake-detail-ai-effect').textContent = isUnlocked
         ? recipe.aiEffect
-        : 'Unlock this recipe to learn its effect.';
+        : 'Unlock this pastry by doing the exercises — the kitchen recipe comes with it.';
 
     const bakedEl = document.getElementById('cake-detail-baked');
     if (bakeCount > 0) {
@@ -142,7 +153,7 @@ export function showCakeDetail(recipeId) {
 
     const bakeBtn = document.getElementById('cake-detail-bake-btn');
     if (isUnlocked) {
-        bakeBtn.textContent = 'Bake This';
+        bakeBtn.textContent = 'Bake again';
         bakeBtn.className = 'btn-primary cake-detail-bake-btn';
         bakeBtn.onclick = () => {
             closeCakeDetail();
@@ -150,7 +161,7 @@ export function showCakeDetail(recipeId) {
             if (onBakeCallback) onBakeCallback(recipe);
         };
     } else {
-        bakeBtn.textContent = `Unlock at Level ${recipe.unlockLevel}`;
+        bakeBtn.textContent = 'Keep practicing';
         bakeBtn.className = 'btn-primary cake-detail-bake-btn locked';
         bakeBtn.onclick = null;
     }
@@ -172,5 +183,4 @@ export function closeCakeDetail() {
 export function setupRecipeBookListeners() {
     document.getElementById('close-recipe-book')?.addEventListener('click', closeRecipeBook);
     document.getElementById('close-cake-detail')?.addEventListener('click', closeCakeDetail);
-    // Recipe Book is parked for now — button stays in the chrome, disabled.
 }

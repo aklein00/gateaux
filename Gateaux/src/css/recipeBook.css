@@ -236,6 +236,13 @@
     white-space: nowrap;
 }
 
+.rb-intro {
+    margin: 0 16px 10px;
+    font-size: 0.85rem;
+    color: var(--cafe-brown);
+    line-height: 1.35;
+}
+
 .recipe-book-tabs {
     display: flex;
     gap: 0;
@@ -435,6 +442,29 @@
     margin: 0 0 16px 0;
     font-style: italic;
     text-align: center;
+}
+
+.cake-detail-kitchen {
+    margin: 0 0 16px;
+    padding: 12px 14px;
+    border-radius: var(--r-md);
+    background: rgba(245, 237, 227, 0.9);
+    border: 1.5px solid rgba(107, 58, 42, 0.12);
+}
+
+.cake-detail-kitchen h4 {
+    margin: 0 0 8px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--cafe-brown);
+}
+
+.cake-detail-kitchen p {
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.45;
+    color: var(--coffee-dark);
 }
 
 .cake-detail-stats {

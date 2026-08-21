@@ -36,6 +36,8 @@ Only after Next.
 - Café dress-up as a *reward* for streaks, not a sim.
 - Shareable web link (`gateaux.utilityinfielder.com`).
 - A third language, if two feel great.
+- More simple drills after Marcel/Amélie tap-to-match (Café / Bisou / Gaston still use quiz for now).
+- Multiple-choice may eventually live only on the Cafe Counter, not in early lessons.
 
 ## Not on the roadmap
 

@@ -5,7 +5,7 @@ import { gameState } from './gameState.js';
 import { LessonManager } from './lessonManager.js';
 import { CustomerService } from './customerService.js';
 import { getRecipesForLevel, getLevelData, getRarityLabel, getRecipeForTeacher, getRecipeById } from './recipeData.js';
-import { setOnBakeCallback, setupRecipeBookListeners } from './recipeBook.js';
+import { setOnBakeCallback, setupRecipeBookListeners, openRecipeBook } from './recipeBook.js';
 import { audioManager } from './audioManager.js';
 import { getSpeedUpDiamondCost, replayLessonCoinCost, LESSON_COMPLETE_XP } from './economy.js';
 
@@ -24,6 +24,7 @@ const MARCEL_FIRST_LESSON = 'greetings_casual';
 function setupImagePlaceholders() {
     document.addEventListener('error', (e) => {
         if (e.target.tagName !== 'IMG' || e.target.dataset.placeholderApplied) return;
+        if (e.target.classList.contains('stat-icon')) return;
         e.target.dataset.placeholderApplied = 'true';
 
         const description = e.target.dataset.imageName || e.target.alt || 'Missing image';
@@ -464,6 +465,10 @@ class GateauxGame {
             this.closeLessonOverlay();
         });
 
+        document.getElementById('recipe-book-btn')?.addEventListener('click', () => {
+            openRecipeBook();
+        });
+
         // Customer service
         document.getElementById('new-customer-btn')?.addEventListener('click', () => {
             this.customerService.generateNewCustomer();
@@ -595,7 +600,8 @@ class GateauxGame {
                         ${unlocked ? '' : `<span class="path-lock">${this.pathLockCopy(teacherId, recipe)}</span>`}
                     </div>
                     <img class="path-cake" src="assets/images/cakes/${recipe?.imageFile || 'eclair_fresh.png'}"
-                         alt="${recipe?.name || ''}" data-image-name="${recipe?.name || 'Cake'}">
+                         alt="${recipe?.name || ''}" title="${recipe?.name || ''}"
+                         data-tooltip="${recipe?.name || ''}" data-image-name="${recipe?.name || 'Cake'}">
                 </button>
                 <div class="path-lessons"></div>
             `;
@@ -693,7 +699,7 @@ class GateauxGame {
 
         this.showScreen('lesson-quiz-screen');
 
-        const lessonOptions = { ...options, firstRun };
+        const lessonOptions = { ...options, firstRun, useMatch: ['marcel', 'amelie'].includes(lesson.teacher) };
 
         this.lessonManager.startLesson(this.currentLanguage, this.currentRegion, lesson, (completed) => {
             if (completed) this.onLessonComplete(lesson);

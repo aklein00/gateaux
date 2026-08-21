@@ -220,6 +220,8 @@ body.game-started #game-container {
     color: var(--cafe-brown);
     font-family: var(--font-body);
     box-shadow: none;
+    cursor: pointer;
+    border: none;
 }
 
 .stat-pill.recipe-book-btn:disabled {
@@ -378,7 +380,7 @@ body.game-started #game-container {
 /* ── Welcome Banner ── */
 .welcome-banner {
     text-align: center;
-    padding: 0 0 8px;
+    padding: 12px 0 10px;
     color: var(--cafe-brown);
 }
 

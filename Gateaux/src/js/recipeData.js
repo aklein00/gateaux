@@ -27,6 +27,7 @@ export const RECIPES = [
         imageFile: 'eclair_fresh.png',
         description: "The foundation of any self-respecting patisserie. Amelie insists each one is piped to perfection -- even if it's just going to be eaten by a tourist who pronounces 'eclair' like 'ee-CLAIR.'",
         aiEffect: 'Phrases are formal, properly conjugated, and dripping with Parisian politeness. Amelie would rather close the cafe than let you use "tu" with a stranger.',
+        kitchenRecipe: "Amélie: Bonjour, bienvenue. Pour l'éclair classique — pâte à choux, four chaud. Voulez-vous un café ou un thé pendant que ça dore? Quand c'est prêt: Ce sera tout? On garnit de crème, glaçage chocolat. Merci et bonne journée — et s'il vous plaît, pas de tu avec un inconnu.",
     },
     {
         id: 'crepe_de_rue',
@@ -42,6 +43,7 @@ export const RECIPES = [
         imageFile: 'crepe_de_rue_fresh.png',
         description: "Folded with the casual confidence of someone who learned to cook on a Montmartre street corner. Marcel says the secret ingredient is 'not caring what Amelie thinks.'",
         aiEffect: 'Slang-heavy, casual, and full of shortcuts. Marcel drops half the syllables and adds twice the personality.',
+        kitchenRecipe: "Marcel: Salut, ça va? Crêpe de rue — une poêle chaude, comme d'hab. Qu'est-ce que je te sers, Nutella ou sucre? Un petit noir à côté si t'es en forme. À plus — et t'inquiète, ça se plie tout seul.",
     },
     {
         id: 'moka_express',
@@ -57,6 +59,7 @@ export const RECIPES = [
         imageFile: 'moka_express_fresh.png',
         description: "A cake that tastes like it was made during a rush, because it was. Cafe swears the slightly burnt edges are 'intentional caramelization.'",
         aiEffect: 'Fast-paced cafe service language. Short sentences, urgent tone, and the kind of multitasking vocabulary you need when three customers are yelling at once.',
+        kitchenRecipe: "Café: Deux secondes! Moka Express — café serré dans le gâteau, on accélère. Derrière toi! Un à la fois. Service! Si c'est brûlé sur le bord: nickel, c'est la caramelisation. On respire après.",
     },
     {
         id: 'mille_feuille_amour',
@@ -72,6 +75,7 @@ export const RECIPES = [
         imageFile: 'mille_feuille_amour_fresh.png',
         description: "A thousand layers of pastry, each whispering sweet nothings. Bisou claims she invented it after a particularly moving sunset. Nobody has the heart to correct her.",
         aiEffect: 'Romantic vocabulary, compliments, and social charm. Every sentence sounds like it belongs in a love letter -- even when ordering napkins.',
+        kitchenRecipe: "Bisou: Chaque couche est une déclaration d'amour. Mille-feuille — pâte, crème, encore une couche. C'est un délice, vraiment. Restez un peu plus longtemps. Encore une part, je vous en supplie. Le caramel chante.",
     },
     {
         id: 'croquembouche_critique',
@@ -87,6 +91,7 @@ export const RECIPES = [
         imageFile: 'croquembouche_critique_fresh.png',
         description: "A towering monument to everything Gaston finds wrong with the world. Each cream puff represents a different complaint. The caramel represents his grudging respect for craftsmanship.",
         aiEffect: 'Sarcastic, opinionated, and brutally honest. Gaston teaches you to complain with style and defend your terrible coffee choices with panache.',
+        kitchenRecipe: "Gaston: Charmant. Vraiment. Croquembouche — choux, caramel, de l'audace. Bravo pour l'effort si ça penche. Ce n'est pas à la hauteur? Recommencez. Je note. Intérieurement. Le four a fait de son mieux.",
     },
     {
         id: 'gateau_parfait',
@@ -102,6 +107,7 @@ export const RECIPES = [
         imageFile: 'gateau_parfait_fresh.png',
         description: "The mythical perfect cake. Every teacher claims credit. Amelie says technique, Marcel says vibes, Cafe says speed, Bisou says love, and Gaston says it's 'acceptable.' They're all wrong. It's about the player who made it.",
         aiEffect: 'All five teachers in one lesson -- the formality of Amélie, the slang of Marcel, the chaos of Café, the charm of Bisou, and the critique of Gaston. This is where the training wheels come off.',
+        kitchenRecipe: "Tout le monde: Bonjour. Salut. Deux secondes. C'est un délice. Charmant. Le gâteau parfait — génoise, crème, patience. Ce sera tout? Comme d'hab? Service! Encore une part. Je vais m'en souvenir.",
     },
 
     // ── Spanish Cakes ──
@@ -119,6 +125,7 @@ export const RECIPES = [
         imageFile: 'tres_leches_fresh.png',
         description: "Three milks, one purpose: teaching you to say 'por favor' without sounding like a guidebook. Amelie soaks each layer with the precision of a diplomat.",
         aiEffect: 'Formal Spanish with proper usted conjugations. Amelie is the same in every language: polite to a fault.',
+        kitchenRecipe: "Amélie: Encantado de recibirle. Tres leches — bizcocho, tres leches, paciencia. ¿Me permite un momento? Cuando esté listo: ¿será todo? Gracias por su visita. Que tenga un lindo día — y por favor, use usted.",
     },
     {
         id: 'churros_callejeros',
@@ -134,6 +141,7 @@ export const RECIPES = [
         imageFile: 'churros_callejeros_fresh.png',
         description: "Dusted with sugar and attitude. Marcel fries these the way he teaches -- fast, loud, and with zero regard for your feelings about irregular verbs.",
         aiEffect: 'Street Spanish, local slang, and the kind of shortcuts that make textbook teachers weep.',
+        kitchenRecipe: "Marcel: ¿Qué onda? Churros callejeros — masa, aceite caliente, como de hab. ¿Qué te sirvo, chocolate o nada? Un cortado al lado si andas puro vida. Nos vemos luego. No te preocupes, se fríen solos.",
     },
     {
         id: 'cafe_con_leche_rapido',
@@ -149,6 +157,7 @@ export const RECIPES = [
         imageFile: 'cafe_con_leche_rapido_fresh.png',
         description: "Half cake, half coffee, fully chaotic. Cafe invented this during a morning rush when she accidentally dropped a muffin in a latte and a customer said it was 'the best thing on the menu.'",
         aiEffect: 'Service-industry Spanish at full speed. Orders, complaints, and the sacred art of saying "one moment please" while everything is on fire.',
+        kitchenRecipe: "Café: ¡Dos segundos! Café con leche rápido — muffin en el latte, aceleramos. ¡Atrás de ti! ¡Uno a la vez! ¡Servicio! Si se quema el borde: todo tranqui, es caramelo. Respiramos después.",
     },
     {
         id: 'flan_de_amor',
@@ -164,6 +173,7 @@ export const RECIPES = [
         imageFile: 'flan_de_amor_fresh.png',
         description: "Impossibly smooth, dangerously sweet, and guaranteed to make someone fall in love with you. Or at least with the flan. Bisou makes no promises.",
         aiEffect: 'Spanish romance vocabulary. Compliments, terms of endearment, and phrases that sound corny right up until they work.',
+        kitchenRecipe: "Bisou: Cada capa es una carta de amor. Flan de amor — huevos, leche, caramelo que canta. Es un deleite, de verdad. Quédese un rato más. Otra porción, se lo ruego. Me derrito por esta tarta.",
     },
     {
         id: 'tarta_del_critico',
@@ -179,6 +189,7 @@ export const RECIPES = [
         imageFile: 'tarta_del_critico_fresh.png',
         description: "A tart so bitter it could write restaurant reviews. Gaston considers it his masterpiece because 'finally, a dessert that tells the truth.'",
         aiEffect: 'Spanish complaints, opinions, and witty comebacks. Learn to send food back with devastating politeness.',
+        kitchenRecipe: "Gaston: Encantador. De verdad. Tarta del crítico — masa, cítricos, audacia. Bravo por el esfuerzo si queda chueca. ¿No está a la altura? Empiece de nuevo. Lo anoto. Por dentro. El horno hizo lo que pudo.",
     },
     {
         id: 'pastel_maestro',
@@ -194,6 +205,7 @@ export const RECIPES = [
         imageFile: 'pastel_maestro_fresh.png',
         description: "The cake that ends arguments. Every teacher agrees it exists. None agree on the recipe. The only thing they know for certain is that you have to earn it.",
         aiEffect: 'All five teaching styles in one lesson. Formal, casual, urgent, romantic, and brutally honest -- sometimes in the same sentence. This is not a cake -- it is a graduation ceremony.',
+        kitchenRecipe: "Todos: Encantado. ¿Qué onda? ¡Dos segundos! Es un deleite. Encantador. Pastel maestro — bizcocho, crema, paciencia. ¿Será todo? ¿Lo de siempre? ¡Servicio! Otra porción. Me voy a acordar de esto.",
     },
 ];
 

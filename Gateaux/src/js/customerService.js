@@ -5,6 +5,7 @@ import { gameState } from './gameState.js';
 import { getRecipeById } from './recipeData.js';
 import { audioManager } from './audioManager.js';
 import { getCounterPayout } from './economy.js';
+import { getPhraseById } from './languageData.js';
 
 export class CustomerService {
     constructor(displayCase = null) {
@@ -98,6 +99,21 @@ export class CustomerService {
 
     // Prefer phrases from the lesson the player just baked
     generateRequest(language) {
+        const learnedIds = gameState.getLearnedPhraseIds(language);
+        const learned = learnedIds
+            .map(id => getPhraseById(id))
+            .filter(Boolean)
+            .map(phrase => ({
+                english: phrase.english,
+                native: phrase[language] || phrase.french || phrase.spanish,
+                expectedResponse: phrase.english
+            }))
+            .filter(p => p.native && p.english);
+
+        if (learned.length) {
+            return learned[Math.floor(Math.random() * learned.length)];
+        }
+
         const last = gameState.getLastLesson();
         if (last?.language === language && last.phrases?.length) {
             const phrase = last.phrases[Math.floor(Math.random() * last.phrases.length)];

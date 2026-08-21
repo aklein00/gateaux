@@ -127,7 +127,8 @@
     object-fit: contain;
     flex-shrink: 0;
     border-radius: var(--r-md);
-    overflow: hidden;
+    overflow: visible;
+    position: relative;
 }
 
 .path-lessons {

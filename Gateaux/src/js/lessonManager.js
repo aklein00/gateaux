@@ -1,6 +1,6 @@
 // Lesson Manager for Gateaux — Quiz with Timer + Streak
 import { gameState } from './gameState.js';
-import { teachers, MAX_LESSON_PROMPTS, trimLessonPhrases } from './languageData.js';
+import { teachers, MAX_LESSON_PROMPTS, selectLessonPhrasePack } from './languageData.js';
 import { audioManager } from './audioManager.js';
 import { FIRST_RUN_CLOSER_IDS, FIRST_RUN_STORY } from './firstRun.js';
 import { QUIZ_BASE_XP } from './economy.js';
@@ -155,7 +155,8 @@ export class LessonManager {
     startLesson(language, region, lesson, onComplete, recipe = null, options = {}) {
         this.currentLanguage = language;
         this.currentRegion = region;
-        this.currentLesson = trimLessonPhrases(lesson, MAX_LESSON_PROMPTS);
+        const packIndex = gameState.getLessonPlayCount(language, lesson.id);
+        this.currentLesson = selectLessonPhrasePack(lesson, packIndex, MAX_LESSON_PROMPTS);
         this.currentRecipe = recipe;
         this.currentPhraseIndex = 0;
         this.completionCallback = onComplete;
@@ -167,11 +168,12 @@ export class LessonManager {
         this.setTimerVisible(this.timerEnabled);
 
         this.isFirstRun = options.firstRun === true;
-        this.firstRunPhase = this.isFirstRun ? 'match' : 'quiz';
+        this.useMatch = options.useMatch === true || this.isFirstRun;
+        this.firstRunPhase = this.useMatch ? 'match' : 'quiz';
         this.matchSelected = null;
         this.matchCount = 0;
 
-        if (this.isFirstRun) {
+        if (this.useMatch) {
             this.startMatchRound();
         } else {
             this.setQuizLayout('quiz');
@@ -307,7 +309,10 @@ export class LessonManager {
             if (this.matchCount >= this.currentLesson.phrases.length) {
                 this.spawnConfetti(document.getElementById('quiz-confetti'));
                 this.updateMatchStatus('Nailed it.');
-                setTimeout(() => this.showFirstRunStory(), 900);
+                setTimeout(() => {
+                    if (this.isFirstRun) this.showFirstRunStory();
+                    else this.completeLesson();
+                }, 900);
             }
         } else {
             a.classList.add('miss');

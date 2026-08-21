@@ -51,6 +51,23 @@ export function getPhrases(filters = {}) {
 
 export const FIRST_RUN_LESSON_ID = 'greetings_casual';
 export const MAX_LESSON_PROMPTS = 5;
+export const PHRASE_PACK_SIZE = 5;
+
+export function getPhraseById(phraseId) {
+    if (!phrasesData || !phraseId) return null;
+    return phrasesData.phrases.find(p => p.id === phraseId) || null;
+}
+
+export function selectLessonPhrasePack(lesson, packIndex = 0, packSize = PHRASE_PACK_SIZE) {
+    if (!lesson) return lesson;
+    const phrases = lesson.phrases || [];
+    const packs = Math.max(1, Math.ceil(phrases.length / packSize));
+    const index = ((packIndex % packs) + packs) % packs;
+    return {
+        ...lesson,
+        phrases: phrases.slice(index * packSize, index * packSize + packSize)
+    };
+}
 
 // Get lesson structure (organized by category and teacher)
 export function getLessons(language, region = null) {
@@ -93,11 +110,7 @@ export function getLessonById(language, lessonId, region = null) {
 }
 
 export function trimLessonPhrases(lesson, max = MAX_LESSON_PROMPTS) {
-    if (!lesson) return lesson;
-    return {
-        ...lesson,
-        phrases: (lesson.phrases || []).slice(0, max)
-    };
+    return selectLessonPhrasePack(lesson, 0, max);
 }
 
 // Get teacher info

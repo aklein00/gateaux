@@ -28,7 +28,11 @@
     <div class="stat-bar" id="stat-bar" hidden>
         <div class="stat-bar-left">
             <div class="stat-pill coin-pill">
-                <img src="assets/images/ui/coin.svg" alt="Coins" class="stat-icon">
+                <svg class="stat-icon" viewBox="0 0 32 32" width="18" height="18" aria-hidden="true">
+                    <circle cx="16" cy="16" r="14" fill="#E8B84A" stroke="#C4922E" stroke-width="2"/>
+                    <circle cx="16" cy="16" r="10" fill="none" stroke="#F5D78A" stroke-width="1.5"/>
+                    <text x="16" y="21" text-anchor="middle" font-size="12" font-family="Georgia, serif" font-weight="700" fill="#8A5A18">¢</text>
+                </svg>
                 <span id="total-coins">0</span>
             </div>
             <div class="stat-pill diamond-pill">
@@ -45,7 +49,7 @@
         </div>
         <div class="stat-bar-right">
             <button class="stat-pill recipe-book-btn" id="recipe-book-btn" type="button"
-                    disabled aria-disabled="true" title="Recipe Book — not in this build">
+                    title="Unlock real recipes by baking with the staff">
                 Recipe Book
             </button>
             <button class="stat-pill mute-btn" id="mute-btn" title="Toggle Sound" aria-label="Toggle Sound">
@@ -58,9 +62,6 @@
     <div id="game-container" style="display: none;">
         <!-- Main Game Area -->
         <div class="main-game-area">
-            <div id="welcome-banner" class="welcome-banner">
-                <p id="welcome-text">Pick a language. We'll start with how locals say hi.</p>
-            </div>
             <!-- Display Case — hero element -->
             <div class="display-case-section">
                 <div id="display-case" class="display-case">
@@ -75,13 +76,17 @@
                 </div>
             </div>
 
+            <div id="welcome-banner" class="welcome-banner">
+                <p id="welcome-text">Pick a language. We'll start with how locals say hi.</p>
+            </div>
+
             <!-- Language Cards — compact bake action row -->
             <div class="language-selection">
                 <p class="language-section-label">Bake</p>
                 <div class="language-cards">
                     <div class="language-card" data-language="spanish">
                         <div class="cake-preview">
-                            <img src="assets/images/ui/marcel_bake_es.png" alt="Marcel eating tres leches" class="cake-card-image">
+                            <img src="assets/images/ui/marcel_bake_es.png" alt="Marcel serving Spanish pastries" class="cake-card-image">
                         </div>
                         <div class="card-body">
                             <h4>Spanish</h4>
@@ -91,7 +96,7 @@
 
                     <div class="language-card" data-language="french">
                         <div class="cake-preview">
-                            <img src="assets/images/ui/amelie_bake_fr.png" alt="Amélie eating an éclair" class="cake-card-image">
+                            <img src="assets/images/ui/amelie_bake_fr.png" alt="Amélie serving French pastries" class="cake-card-image">
                         </div>
                         <div class="card-body">
                             <h4>French</h4>
@@ -269,6 +274,7 @@
             <button id="close-recipe-book" class="btn-close-lesson">X</button>
             <h3 class="lesson-bar-title">Recipe Book</h3>
         </div>
+        <p class="rb-intro">Bake with the staff to unlock real recipes you can cook.</p>
         <div class="recipe-book-level-bar">
             <span id="recipe-book-level-label" class="rb-level-label">Apprentice Baker</span>
             <div class="rb-level-track">
@@ -292,6 +298,7 @@
                 <h3 id="cake-detail-name" class="cake-detail-name"></h3>
                 <span id="cake-detail-rarity" class="cake-detail-rarity"></span>
                 <p id="cake-detail-desc" class="cake-detail-desc"></p>
+                <div id="cake-detail-kitchen" class="cake-detail-kitchen"></div>
                 <div class="cake-detail-stats">
                     <div class="cake-stat"><span class="cake-stat-label">Decay</span><span id="cake-detail-decay"></span></div>
                     <div class="cake-stat"><span class="cake-stat-label">Payout</span><span id="cake-detail-tips"></span></div>

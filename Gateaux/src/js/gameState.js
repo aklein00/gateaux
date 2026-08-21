@@ -48,6 +48,11 @@ export const gameState = {
         phrases: []
     },
 
+    lessonPlayCount: {
+        spanish: {},
+        french: {}
+    },
+
     init() {
         this.loadFromStorage();
         this.updateUI();
@@ -61,6 +66,7 @@ export const gameState = {
             localStorage.setItem('gateaux_cafe', JSON.stringify(this.cafe));
             localStorage.setItem('gateaux_settings', JSON.stringify(this.settings));
             localStorage.setItem('gateaux_last_lesson', JSON.stringify(this.lastLesson));
+            localStorage.setItem('gateaux_lesson_plays', JSON.stringify(this.lessonPlayCount));
         } catch (error) {
             console.error('Failed to save game state:', error);
         }
@@ -103,6 +109,11 @@ export const gameState = {
             const savedLast = localStorage.getItem('gateaux_last_lesson');
             if (savedLast) {
                 this.lastLesson = { ...this.lastLesson, ...JSON.parse(savedLast) };
+            }
+
+            const savedPlays = localStorage.getItem('gateaux_lesson_plays');
+            if (savedPlays) {
+                this.lessonPlayCount = { spanish: {}, french: {}, ...JSON.parse(savedPlays) };
             }
         } catch (error) {
             console.error('Failed to load game state:', error);
@@ -161,9 +172,23 @@ export const gameState = {
 
         if (!this.progress[language].completedLessons.includes(lessonId)) {
             this.progress[language].completedLessons.push(lessonId);
-            this.saveToStorage();
-            this.updateUI();
         }
+        this.bumpLessonPlayCount(language, lessonId);
+        this.saveToStorage();
+        this.updateUI();
+    },
+
+    getLessonPlayCount(language, lessonId) {
+        return this.lessonPlayCount?.[language]?.[lessonId] || 0;
+    },
+
+    bumpLessonPlayCount(language, lessonId) {
+        if (!this.lessonPlayCount[language]) this.lessonPlayCount[language] = {};
+        this.lessonPlayCount[language][lessonId] = (this.lessonPlayCount[language][lessonId] || 0) + 1;
+    },
+
+    getLearnedPhraseIds(language) {
+        return this.progress[language]?.learnedPhrases || [];
     },
 
     isFirstLessonDone() {
@@ -471,6 +496,7 @@ export const gameState = {
         };
         this.bakedCakes = {};
         this.lastLesson = { language: null, lessonId: null, phrases: [] };
+        this.lessonPlayCount = { spanish: {}, french: {} };
         this.cafe = {
             decorations: [],
             layout: 'default',
