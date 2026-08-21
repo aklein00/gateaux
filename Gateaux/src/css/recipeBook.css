@@ -182,8 +182,12 @@
     bottom: 0;
     left: 0;
     width: 100%;
+    max-width: var(--mobile-max-width, 480px);
+    margin-left: auto;
+    margin-right: auto;
     height: auto;
     max-height: none;
+    box-sizing: border-box;
     background: var(--warm-white);
     z-index: 2500;
     display: flex;
@@ -209,7 +213,9 @@
 
 .recipe-book-grid {
     flex: 1;
+    min-width: 0;
     min-height: 0;
+    overflow-x: hidden;
     overflow-y: auto;
     padding: 4px 16px 24px;
     display: flex;
@@ -220,9 +226,12 @@
 
 .rb-mag-row {
     display: grid;
-    grid-template-columns: 42% 1fr;
+    grid-template-columns: minmax(0, 148px) minmax(0, 1fr);
+    grid-template-areas: "img copy";
     gap: 10px;
     align-items: center;
+    width: 100%;
+    max-width: 100%;
     padding: 8px 0;
     border-bottom: 1px solid rgba(107, 58, 42, 0.12);
     cursor: pointer;
@@ -230,23 +239,23 @@
 }
 
 .rb-mag-row.flip {
-    grid-template-columns: 1fr 42%;
-}
-
-.rb-mag-row.flip .rb-mag-img {
-    order: 2;
-}
-
-.rb-mag-row.flip .rb-mag-copy {
-    order: 1;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 148px);
+    grid-template-areas: "copy img";
 }
 
 .rb-mag-img {
+    grid-area: img;
     width: 100%;
+    max-width: 100%;
     aspect-ratio: 16 / 9;
     object-fit: cover;
     border-radius: var(--r-md);
     background: var(--cream);
+}
+
+.rb-mag-copy {
+    grid-area: copy;
+    min-width: 0;
 }
 
 .rb-mag-row.locked .rb-mag-img {
@@ -272,8 +281,8 @@
 
 .rb-mag-blurb {
     margin: 0;
-    font-size: 0.72rem;
-    line-height: 1.35;
+    font-size: 0.8rem;
+    line-height: 1.4;
     color: var(--text-medium);
 }
 

@@ -102,9 +102,10 @@ body {
     overflow: hidden;
   }
 
-  /* Recipe book: no transform — overlay-enter would wipe translateX(-50%) */
-  .recipe-book-overlay {
+  /* Recipe book: ID selector beats recipeBook.css width:100% (that file loads last) */
+  #recipe-book-overlay {
     width: 430px;
+    max-width: 430px;
     height: calc(min(932px, 100dvh - 40px) - var(--stat-bar-h));
     max-height: calc(min(932px, 100dvh - 40px) - var(--stat-bar-h));
     top: calc(20px + var(--stat-bar-h));
