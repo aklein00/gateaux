@@ -88,7 +88,6 @@ body {
 
   /* Constrain all fixed overlays to match the game container width */
   .lesson-overlay,
-  .recipe-book-overlay,
   .tutorial-overlay {
     width: 430px;
     height: min(932px, calc(100vh - 40px));
@@ -99,6 +98,21 @@ body {
     bottom: auto;
     left: 50%;
     transform: translateX(-50%);
+    border-radius: 0 0 20px 20px;
+    overflow: hidden;
+  }
+
+  /* Recipe book: no transform — overlay-enter would wipe translateX(-50%) */
+  .recipe-book-overlay {
+    width: 430px;
+    height: calc(min(932px, 100dvh - 40px) - var(--stat-bar-h));
+    max-height: calc(min(932px, 100dvh - 40px) - var(--stat-bar-h));
+    top: calc(20px + var(--stat-bar-h));
+    right: 0;
+    bottom: auto;
+    left: 0;
+    margin: 0 auto;
+    transform: none;
     border-radius: 0 0 20px 20px;
     overflow: hidden;
   }

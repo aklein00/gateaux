@@ -275,41 +275,17 @@
             <h3 class="lesson-bar-title">Recipe Book</h3>
         </div>
         <p class="rb-intro">Bake with the staff to unlock real recipes you can cook.</p>
-        <div class="recipe-book-level-bar">
-            <span id="recipe-book-level-label" class="rb-level-label">Apprentice Baker</span>
-            <div class="rb-level-track">
-                <div id="rb-level-fill" class="rb-level-fill"></div>
-            </div>
-            <span id="recipe-book-level-tips" class="rb-level-tips"></span>
-        </div>
-        <div class="recipe-book-tabs">
-            <button class="rb-tab active" data-rb-lang="french">French</button>
-            <button class="rb-tab" data-rb-lang="spanish">Spanish</button>
-        </div>
-        <div id="recipe-book-grid" class="recipe-book-grid">
-            <!-- Cake cards dynamically added -->
-        </div>
+        <div id="recipe-book-grid" class="recipe-book-grid"></div>
 
-        <!-- Cake Detail Popup -->
         <div id="cake-detail-popup" class="cake-detail-popup" style="display: none;">
-            <div class="cake-detail-modal">
+            <div class="cake-detail-modal cookbook-page">
                 <button id="close-cake-detail" class="btn-close-lesson cake-detail-close">X</button>
-                <img id="cake-detail-img" class="cake-detail-img" src="" alt="" data-image-name="Cake">
+                <p id="cake-detail-teacher" class="cookbook-kicker"></p>
                 <h3 id="cake-detail-name" class="cake-detail-name"></h3>
-                <span id="cake-detail-rarity" class="cake-detail-rarity"></span>
-                <p id="cake-detail-desc" class="cake-detail-desc"></p>
-                <div id="cake-detail-kitchen" class="cake-detail-kitchen"></div>
-                <div class="cake-detail-stats">
-                    <div class="cake-stat"><span class="cake-stat-label">Decay</span><span id="cake-detail-decay"></span></div>
-                    <div class="cake-stat"><span class="cake-stat-label">Payout</span><span id="cake-detail-tips"></span></div>
-                    <div class="cake-stat"><span class="cake-stat-label">Teacher</span><span id="cake-detail-teacher"></span></div>
-                </div>
-                <div class="cake-detail-ai-section">
-                    <h4>Conversation Effect</h4>
-                    <p id="cake-detail-ai-effect" class="cake-detail-ai-text"></p>
-                </div>
-                <div id="cake-detail-baked" class="cake-detail-baked"></div>
-                <button id="cake-detail-bake-btn" class="btn-primary cake-detail-bake-btn">Bake This</button>
+                <div id="cake-detail-meta" class="cookbook-meta"></div>
+                <img id="cake-detail-img" class="cake-detail-img cookbook-topdown" src="" alt="" data-image-name="Cake">
+                <div id="cake-detail-body" class="cookbook-body"></div>
+                <button id="cake-detail-bake-btn" class="btn-primary cake-detail-bake-btn">Keep practicing</button>
             </div>
         </div>
     </div>
