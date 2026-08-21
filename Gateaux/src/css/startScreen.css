@@ -52,8 +52,8 @@
   left: auto;
   transform: none;
   width: 100%;
-  max-width: 800px;
-  max-height: min(58dvh, 520px);
+  max-width: 880px;
+  max-height: min(64dvh, 572px);
   height: auto;
   object-fit: contain;
   object-position: bottom center;
@@ -194,8 +194,8 @@
   }
 
   .splash-characters {
-    max-height: 42dvh;
-    max-width: 420px;
+    max-height: 46dvh;
+    max-width: 462px;
   }
 
   .btn-start {
